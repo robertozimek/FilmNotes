@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		080F508A166795E000595BDF /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F5089166795E000595BDF /* MoreInfoViewController.m */; };
+		080F508D1667CF4E00595BDF /* RollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F508C1667CF4E00595BDF /* RollViewController.m */; };
+		085CB70A16692ABA00AA7D74 /* NewRollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085CB70916692ABA00AA7D74 /* NewRollViewController.m */; };
+		086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 086D888B1669CF7D00E90A91 /* libsqlite3.dylib */; };
+		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
+		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5316671A0F00668779 /* UIKit.framework */; };
 		08D14F5616671A0F00668779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5516671A0F00668779 /* Foundation.framework */; };
 		08D14F5816671A0F00668779 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5716671A0F00668779 /* CoreGraphics.framework */; };
@@ -16,13 +22,19 @@
 		08D14F6616671A1000668779 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F6516671A1000668779 /* Default.png */; };
 		08D14F6816671A1000668779 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F6716671A1000668779 /* Default@2x.png */; };
 		08D14F6A16671A1000668779 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F6916671A1000668779 /* Default-568h@2x.png */; };
-		08D14F6D16671A1000668779 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F6B16671A1000668779 /* MainStoryboard.storyboard */; };
 		08D14F7016671A1000668779 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D14F6F16671A1000668779 /* ViewController.m */; };
 		08D14F7816671A1000668779 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F7716671A1000668779 /* SenTestingKit.framework */; };
 		08D14F7916671A1000668779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5316671A0F00668779 /* UIKit.framework */; };
 		08D14F7A16671A1000668779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5516671A0F00668779 /* Foundation.framework */; };
 		08D14F8216671A1000668779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F8016671A1000668779 /* InfoPlist.strings */; };
 		08D14F8516671A1100668779 /* FilmNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D14F8416671A1000668779 /* FilmNotesTests.m */; };
+		08D14F9216671B8F00668779 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D14F9116671B8F00668779 /* CustomCell.m */; };
+		08D14F9416671BE200668779 /* CustomCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F9316671BE200668779 /* CustomCellView.xib */; };
+		08E02C9616672B3000AD45DA /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */; };
+		08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */; };
+		08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E144AF166C20110004ACAD /* MainStoryboard.storyboard */; };
+		08E144B2166C20110004ACAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E144AF166C20110004ACAD /* MainStoryboard.storyboard */; };
+		08E56E02166833820055DEC9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E56E01166833820055DEC9 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +48,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		080F5088166795E000595BDF /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreInfoViewController.h; path = ../MoreInfoViewController.h; sourceTree = "<group>"; };
+		080F5089166795E000595BDF /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreInfoViewController.m; path = ../MoreInfoViewController.m; sourceTree = "<group>"; };
+		080F508B1667CF4E00595BDF /* RollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollViewController.h; sourceTree = "<group>"; };
+		080F508C1667CF4E00595BDF /* RollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollViewController.m; sourceTree = "<group>"; };
+		085CB70816692ABA00AA7D74 /* NewRollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRollViewController.h; sourceTree = "<group>"; };
+		085CB70916692ABA00AA7D74 /* NewRollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRollViewController.m; sourceTree = "<group>"; };
+		086D888B1669CF7D00E90A91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
+		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
 		08D14F4F16671A0F00668779 /* FilmNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D14F5316671A0F00668779 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		08D14F5516671A0F00668779 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -49,7 +70,6 @@
 		08D14F6516671A1000668779 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		08D14F6716671A1000668779 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		08D14F6916671A1000668779 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		08D14F6C16671A1000668779 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		08D14F6E16671A1000668779 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		08D14F6F16671A1000668779 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		08D14F7616671A1000668779 /* FilmNotesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FilmNotesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +78,12 @@
 		08D14F8116671A1000668779 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08D14F8316671A1000668779 /* FilmNotesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FilmNotesTests.h; sourceTree = "<group>"; };
 		08D14F8416671A1000668779 /* FilmNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilmNotesTests.m; sourceTree = "<group>"; };
+		08D14F9016671B8F00668779 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
+		08D14F9116671B8F00668779 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
+		08D14F9316671BE200668779 /* CustomCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCellView.xib; sourceTree = "<group>"; };
+		08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walkway_SemiBold.ttf; sourceTree = "<group>"; };
+		08E144B0166C20110004ACAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		08E56E01166833820055DEC9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */,
+				08E56E02166833820055DEC9 /* QuartzCore.framework in Frameworks */,
 				08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */,
 				08D14F5616671A0F00668779 /* Foundation.framework in Frameworks */,
 				08D14F5816671A0F00668779 /* CoreGraphics.framework in Frameworks */,
@@ -106,6 +134,8 @@
 		08D14F5216671A0F00668779 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				086D888B1669CF7D00E90A91 /* libsqlite3.dylib */,
+				08E56E01166833820055DEC9 /* QuartzCore.framework */,
 				08D14F5316671A0F00668779 /* UIKit.framework */,
 				08D14F5516671A0F00668779 /* Foundation.framework */,
 				08D14F5716671A0F00668779 /* CoreGraphics.framework */,
@@ -117,11 +147,22 @@
 		08D14F5916671A0F00668779 /* FilmNotes */ = {
 			isa = PBXGroup;
 			children = (
+				08E144AF166C20110004ACAD /* MainStoryboard.storyboard */,
+				080F5088166795E000595BDF /* MoreInfoViewController.h */,
+				080F5089166795E000595BDF /* MoreInfoViewController.m */,
+				08D14F9316671BE200668779 /* CustomCellView.xib */,
 				08D14F6216671A1000668779 /* AppDelegate.h */,
 				08D14F6316671A1000668779 /* AppDelegate.m */,
-				08D14F6B16671A1000668779 /* MainStoryboard.storyboard */,
+				085CB70816692ABA00AA7D74 /* NewRollViewController.h */,
+				085CB70916692ABA00AA7D74 /* NewRollViewController.m */,
+				080F508B1667CF4E00595BDF /* RollViewController.h */,
+				080F508C1667CF4E00595BDF /* RollViewController.m */,
 				08D14F6E16671A1000668779 /* ViewController.h */,
 				08D14F6F16671A1000668779 /* ViewController.m */,
+				086E6D5B166B3A88001D11BB /* DatabaseControl.h */,
+				086E6D5C166B3A89001D11BB /* DatabaseControl.m */,
+				08D14F9016671B8F00668779 /* CustomCell.h */,
+				08D14F9116671B8F00668779 /* CustomCell.m */,
 				08D14F5A16671A0F00668779 /* Supporting Files */,
 			);
 			path = FilmNotes;
@@ -130,6 +171,7 @@
 		08D14F5A16671A0F00668779 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */,
 				08D14F5B16671A1000668779 /* FilmNotes-Info.plist */,
 				08D14F5C16671A1000668779 /* InfoPlist.strings */,
 				08D14F5F16671A1000668779 /* main.m */,
@@ -235,7 +277,9 @@
 				08D14F6616671A1000668779 /* Default.png in Resources */,
 				08D14F6816671A1000668779 /* Default@2x.png in Resources */,
 				08D14F6A16671A1000668779 /* Default-568h@2x.png in Resources */,
-				08D14F6D16671A1000668779 /* MainStoryboard.storyboard in Resources */,
+				08D14F9416671BE200668779 /* CustomCellView.xib in Resources */,
+				08E02C9616672B3000AD45DA /* Walkway_SemiBold.ttf in Resources */,
+				08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +288,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				08D14F8216671A1000668779 /* InfoPlist.strings in Resources */,
+				08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */,
+				08E144B2166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +319,11 @@
 				08D14F6016671A1000668779 /* main.m in Sources */,
 				08D14F6416671A1000668779 /* AppDelegate.m in Sources */,
 				08D14F7016671A1000668779 /* ViewController.m in Sources */,
+				08D14F9216671B8F00668779 /* CustomCell.m in Sources */,
+				080F508A166795E000595BDF /* MoreInfoViewController.m in Sources */,
+				080F508D1667CF4E00595BDF /* RollViewController.m in Sources */,
+				085CB70A16692ABA00AA7D74 /* NewRollViewController.m in Sources */,
+				086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +332,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08D14F8516671A1100668779 /* FilmNotesTests.m in Sources */,
+				086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,20 +355,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		08D14F6B16671A1000668779 /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				08D14F6C16671A1000668779 /* en */,
-			);
-			name = MainStoryboard.storyboard;
-			sourceTree = "<group>";
-		};
 		08D14F8016671A1000668779 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				08D14F8116671A1000668779 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		08E144AF166C20110004ACAD /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				08E144B0166C20110004ACAD /* en */,
+			);
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -447,6 +499,7 @@
 				08D14F8A16671A1100668779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08D14F8B16671A1100668779 /* Build configuration list for PBXNativeTarget "FilmNotesTests" */ = {
 			isa = XCConfigurationList;
@@ -455,6 +508,7 @@
 				08D14F8D16671A1100668779 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
