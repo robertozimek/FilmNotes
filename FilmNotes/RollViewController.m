@@ -104,7 +104,7 @@
 {
     currentExposure = [exposureLabel.text substringToIndex:[exposureLabel.text rangeOfString:@"/"].location];
     NSString *updateAperture = [NSString stringWithFormat:@"UPDATE Exposure SET Aperture = '%@' WHERE id=%@ AND Roll_id=%@",aperatureTextField.text,currentExposure,RollNumber];
-    NSString *updateShutter = [NSString stringWithFormat:@"UPDATE Exposure SET Shutter = '%@/%@' WHERE id=%@ AND Roll_id=%@",numeratorShutterSpeedTextField.text,denominatorShutterSpeedTextField.text,currentExposure,RollNumber];
+    NSString *updateShutter = [NSString stringWithFormat:@"UPDATE Exposure SET Shutter = \"%@/%@\" WHERE id=%@ AND Roll_id=%@",numeratorShutterSpeedTextField.text,denominatorShutterSpeedTextField.text,currentExposure,RollNumber];
     NSString *updateFocal = [NSString stringWithFormat:@"UPDATE Exposure SET Focal = '%@' WHERE id=%@ AND Roll_id=%@",focalLengthTextField.text,currentExposure,RollNumber];
     
     [self.dataController sendSqlData:updateAperture whichTable:@"Exposure"];
@@ -115,23 +115,18 @@
 -(void)advance
 {
     [self updateDatabase];
-    NSLog(@"test1");
     
     if(![currentExposure isEqualToString:[[rollData objectAtIndex:0]objectAtIndex:1]])
          {
-             NSLog(@"test2");
              int nextExposureId = [currentExposure intValue] + 1;
              NSString *checkForNextExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT id FROM Exposure WHERE id=%d AND Roll_id=%@",nextExposureId,RollNumber]];
-             NSLog(@"test3");
              if(checkForNextExposure == nil)
              {
-                 NSLog(@"test4");
                  NSString *insertExposure = [NSString stringWithFormat:@"INSERT INTO Exposure ('id','Roll_id') VALUES ('%d','%@')",nextExposureId,RollNumber];
                  [self.dataController sendSqlData:insertExposure whichTable:@"Exposure"];
                  [self clearFields];
              }else
              {
-                 NSLog(@"test5");
                  [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",nextExposureId,RollNumber]];
                  
              }
@@ -170,12 +165,12 @@
     [self clearFields];
     exposureData = [self.dataController readTable:selectExposure];
     
-    NSLog(@"exposureData count = %d",[[exposureData objectAtIndex:0] count]);
+    //NSLog(@"exposureData count = %d",[[exposureData objectAtIndex:0] count]);
     if ([[exposureData objectAtIndex:0] count] == 7){
     if ([[[exposureData objectAtIndex:0] objectAtIndex:5] length]>1)
     {
         NSString *numeratorShutterData = [[[exposureData objectAtIndex:0] objectAtIndex:5] substringToIndex:[[[exposureData objectAtIndex:0] objectAtIndex:5] rangeOfString:@"/"].location];
-        NSString *denominatorShutterData = [[[exposureData objectAtIndex:0] objectAtIndex:5] substringToIndex:[[[exposureData objectAtIndex:0] objectAtIndex:5] rangeOfString:@"/"].location];
+        NSString *denominatorShutterData = [[[exposureData objectAtIndex:0] objectAtIndex:5] substringFromIndex:[[[exposureData objectAtIndex:0] objectAtIndex:5] rangeOfString:@"/"].location+1];
         numeratorShutterSpeedTextField.text = numeratorShutterData;
         denominatorShutterSpeedTextField.text  = denominatorShutterData;
     }
