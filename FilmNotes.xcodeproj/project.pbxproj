@@ -9,10 +9,31 @@
 /* Begin PBXBuildFile section */
 		080F508A166795E000595BDF /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F5089166795E000595BDF /* MoreInfoViewController.m */; };
 		080F508D1667CF4E00595BDF /* RollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F508C1667CF4E00595BDF /* RollViewController.m */; };
+		081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */; };
+		081C39ED1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */; };
+		081C39F11681EC93004BC752 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C39F01681EC93004BC752 /* CustomTextView.m */; };
+		081C39F21681EC93004BC752 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C39F01681EC93004BC752 /* CustomTextView.m */; };
+		081C39F91682851F004BC752 /* NumberKeypadBackSlash.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		081C39FA1682851F004BC752 /* NumberKeypadBackSlash.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */; };
+		081C3A0516829B7D004BC752 /* RDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C3A0416829B7C004BC752 /* RDActionSheet.m */; };
+		081C3A0616829B7D004BC752 /* RDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C3A0416829B7C004BC752 /* RDActionSheet.m */; };
+		084552581681AD79002C7BFB /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 084552571681AD79002C7BFB /* LoadingView.m */; };
 		085CB70A16692ABA00AA7D74 /* NewRollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085CB70916692ABA00AA7D74 /* NewRollViewController.m */; };
+		086B143E167015D700E7A76F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086B143D167015D700E7A76F /* MapViewController.m */; };
 		086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 086D888B1669CF7D00E90A91 /* libsqlite3.dylib */; };
 		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
+		08838E4B1682C01200195750 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* MyCLController.m */; };
+		08838E4C1682C01200195750 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* MyCLController.m */; };
+		08955500166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
+		08955501166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
+		08955508166DDB850081AD46 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955507166DDB850081AD46 /* MapKit.framework */; };
+		08955549166DF2FD0081AD46 /* AddressAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08955548166DF2FD0081AD46 /* AddressAnnotation.m */; };
+		0895554A166DF2FD0081AD46 /* AddressAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 08955548166DF2FD0081AD46 /* AddressAnnotation.m */; };
+		08955556166DFE480081AD46 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955555166DFE480081AD46 /* CoreLocation.framework */; };
+		08AEE7821683A35400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
+		08AEE7831683A3C400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
+		08C041C51670262E0091756E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C041C41670262E0091756E /* AddressBook.framework */; };
 		08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5316671A0F00668779 /* UIKit.framework */; };
 		08D14F5616671A0F00668779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5516671A0F00668779 /* Foundation.framework */; };
 		08D14F5816671A0F00668779 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5716671A0F00668779 /* CoreGraphics.framework */; };
@@ -52,11 +73,32 @@
 		080F5089166795E000595BDF /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreInfoViewController.m; path = ../MoreInfoViewController.m; sourceTree = "<group>"; };
 		080F508B1667CF4E00595BDF /* RollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollViewController.h; sourceTree = "<group>"; };
 		080F508C1667CF4E00595BDF /* RollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollViewController.m; sourceTree = "<group>"; };
+		081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backSlashKeyDownBackground.png; sourceTree = "<group>"; };
+		081C39EF1681EC92004BC752 /* CustomTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextView.h; sourceTree = "<group>"; };
+		081C39F01681EC93004BC752 /* CustomTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextView.m; sourceTree = "<group>"; };
+		081C39F71682851E004BC752 /* NumberKeypadBackSlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberKeypadBackSlash.h; sourceTree = "<group>"; };
+		081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberKeypadBackSlash.m; sourceTree = "<group>"; };
+		081C3A0316829B7B004BC752 /* RDActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDActionSheet.h; sourceTree = "<group>"; };
+		081C3A0416829B7C004BC752 /* RDActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDActionSheet.m; sourceTree = "<group>"; };
+		084552561681AD78002C7BFB /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
+		084552571681AD79002C7BFB /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		085CB70816692ABA00AA7D74 /* NewRollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRollViewController.h; sourceTree = "<group>"; };
 		085CB70916692ABA00AA7D74 /* NewRollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRollViewController.m; sourceTree = "<group>"; };
+		086B143C167015D700E7A76F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		086B143D167015D700E7A76F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		086D888B1669CF7D00E90A91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
+		08838E491682C01200195750 /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
+		08838E4A1682C01200195750 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
+		089554FE166DB6000081AD46 /* TTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAlertView.h; sourceTree = "<group>"; };
+		089554FF166DB6000081AD46 /* TTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAlertView.m; sourceTree = "<group>"; };
+		08955507166DDB850081AD46 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		08955547166DF2FD0081AD46 /* AddressAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddressAnnotation.h; path = ../../learnCoreLocations/learnCoreLocations/AddressAnnotation.h; sourceTree = "<group>"; };
+		08955548166DF2FD0081AD46 /* AddressAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressAnnotation.m; path = ../../learnCoreLocations/learnCoreLocations/AddressAnnotation.m; sourceTree = "<group>"; };
+		08955555166DFE480081AD46 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		08AEE7801683A35400038F37 /* settings-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-gear.png"; sourceTree = "<group>"; };
+		08C041C41670262E0091756E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		08D14F4F16671A0F00668779 /* FilmNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D14F5316671A0F00668779 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		08D14F5516671A0F00668779 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -91,6 +133,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08C041C51670262E0091756E /* AddressBook.framework in Frameworks */,
+				08955556166DFE480081AD46 /* CoreLocation.framework in Frameworks */,
+				08955508166DDB850081AD46 /* MapKit.framework in Frameworks */,
 				086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */,
 				08E56E02166833820055DEC9 /* QuartzCore.framework in Frameworks */,
 				08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */,
@@ -112,6 +157,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		081C39FC16828532004BC752 /* NumberKeypadBackSlash */ = {
+			isa = PBXGroup;
+			children = (
+				081C39F71682851E004BC752 /* NumberKeypadBackSlash.h */,
+				081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */,
+			);
+			name = NumberKeypadBackSlash;
+			sourceTree = "<group>";
+		};
+		081C3A0716829B88004BC752 /* RDActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				081C3A0316829B7B004BC752 /* RDActionSheet.h */,
+				081C3A0416829B7C004BC752 /* RDActionSheet.m */,
+			);
+			name = RDActionSheet;
+			sourceTree = "<group>";
+		};
+		08955554166DFCF50081AD46 /* TTAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				089554FE166DB6000081AD46 /* TTAlertView.h */,
+				089554FF166DB6000081AD46 /* TTAlertView.m */,
+			);
+			name = TTAlertView;
+			sourceTree = "<group>";
+		};
 		08D14F4416671A0F00668779 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +206,9 @@
 		08D14F5216671A0F00668779 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08C041C41670262E0091756E /* AddressBook.framework */,
+				08955555166DFE480081AD46 /* CoreLocation.framework */,
+				08955507166DDB850081AD46 /* MapKit.framework */,
 				086D888B1669CF7D00E90A91 /* libsqlite3.dylib */,
 				08E56E01166833820055DEC9 /* QuartzCore.framework */,
 				08D14F5316671A0F00668779 /* UIKit.framework */,
@@ -147,22 +222,35 @@
 		08D14F5916671A0F00668779 /* FilmNotes */ = {
 			isa = PBXGroup;
 			children = (
+				08838E491682C01200195750 /* MyCLController.h */,
+				08838E4A1682C01200195750 /* MyCLController.m */,
+				081C3A0716829B88004BC752 /* RDActionSheet */,
+				081C39FC16828532004BC752 /* NumberKeypadBackSlash */,
+				08955547166DF2FD0081AD46 /* AddressAnnotation.h */,
+				08955548166DF2FD0081AD46 /* AddressAnnotation.m */,
 				08E144AF166C20110004ACAD /* MainStoryboard.storyboard */,
+				086B143C167015D700E7A76F /* MapViewController.h */,
+				086B143D167015D700E7A76F /* MapViewController.m */,
 				080F5088166795E000595BDF /* MoreInfoViewController.h */,
 				080F5089166795E000595BDF /* MoreInfoViewController.m */,
-				08D14F9316671BE200668779 /* CustomCellView.xib */,
 				08D14F6216671A1000668779 /* AppDelegate.h */,
 				08D14F6316671A1000668779 /* AppDelegate.m */,
 				085CB70816692ABA00AA7D74 /* NewRollViewController.h */,
 				085CB70916692ABA00AA7D74 /* NewRollViewController.m */,
 				080F508B1667CF4E00595BDF /* RollViewController.h */,
 				080F508C1667CF4E00595BDF /* RollViewController.m */,
+				081C39EF1681EC92004BC752 /* CustomTextView.h */,
+				081C39F01681EC93004BC752 /* CustomTextView.m */,
+				084552561681AD78002C7BFB /* LoadingView.h */,
+				084552571681AD79002C7BFB /* LoadingView.m */,
 				08D14F6E16671A1000668779 /* ViewController.h */,
 				08D14F6F16671A1000668779 /* ViewController.m */,
 				086E6D5B166B3A88001D11BB /* DatabaseControl.h */,
 				086E6D5C166B3A89001D11BB /* DatabaseControl.m */,
+				08D14F9316671BE200668779 /* CustomCellView.xib */,
 				08D14F9016671B8F00668779 /* CustomCell.h */,
 				08D14F9116671B8F00668779 /* CustomCell.m */,
+				08955554166DFCF50081AD46 /* TTAlertView */,
 				08D14F5A16671A0F00668779 /* Supporting Files */,
 			);
 			path = FilmNotes;
@@ -171,6 +259,8 @@
 		08D14F5A16671A0F00668779 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				08AEE7801683A35400038F37 /* settings-gear.png */,
+				081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */,
 				08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */,
 				08D14F5B16671A1000668779 /* FilmNotes-Info.plist */,
 				08D14F5C16671A1000668779 /* InfoPlist.strings */,
@@ -273,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08AEE7831683A3C400038F37 /* settings-gear.png in Resources */,
 				08D14F5E16671A1000668779 /* InfoPlist.strings in Resources */,
 				08D14F6616671A1000668779 /* Default.png in Resources */,
 				08D14F6816671A1000668779 /* Default@2x.png in Resources */,
@@ -280,6 +371,7 @@
 				08D14F9416671BE200668779 /* CustomCellView.xib in Resources */,
 				08E02C9616672B3000AD45DA /* Walkway_SemiBold.ttf in Resources */,
 				08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
+				081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +382,8 @@
 				08D14F8216671A1000668779 /* InfoPlist.strings in Resources */,
 				08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */,
 				08E144B2166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
+				081C39ED1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
+				08AEE7821683A35400038F37 /* settings-gear.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +418,14 @@
 				080F508D1667CF4E00595BDF /* RollViewController.m in Sources */,
 				085CB70A16692ABA00AA7D74 /* NewRollViewController.m in Sources */,
 				086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */,
+				08955500166DB6010081AD46 /* TTAlertView.m in Sources */,
+				08955549166DF2FD0081AD46 /* AddressAnnotation.m in Sources */,
+				086B143E167015D700E7A76F /* MapViewController.m in Sources */,
+				084552581681AD79002C7BFB /* LoadingView.m in Sources */,
+				081C39F11681EC93004BC752 /* CustomTextView.m in Sources */,
+				081C39F91682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
+				081C3A0516829B7D004BC752 /* RDActionSheet.m in Sources */,
+				08838E4B1682C01200195750 /* MyCLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +435,12 @@
 			files = (
 				08D14F8516671A1100668779 /* FilmNotesTests.m in Sources */,
 				086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */,
+				08955501166DB6010081AD46 /* TTAlertView.m in Sources */,
+				0895554A166DF2FD0081AD46 /* AddressAnnotation.m in Sources */,
+				081C39F21681EC93004BC752 /* CustomTextView.m in Sources */,
+				081C39FA1682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
+				081C3A0616829B7D004BC752 /* RDActionSheet.m in Sources */,
+				08838E4C1682C01200195750 /* MyCLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

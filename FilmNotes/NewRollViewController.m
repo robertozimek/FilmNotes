@@ -9,9 +9,16 @@
 #import "NewRollViewController.h"
 #import "DatabaseControl.h"
 #import "MoreInfoViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import <dispatch/dispatch.h> 
+#import "TTAlertView.h"
+#import "LoadingView.h"
 
 @interface NewRollViewController ()
+@property (strong, nonatomic) LoadingView *loadingView;
 @property (strong, nonatomic) DatabaseControl *dataController;
+@property (strong, nonatomic) MyCLController *locationController;
+@property (strong, nonatomic) NSString *gps;
 @end
 
 @implementation NewRollViewController
@@ -23,6 +30,9 @@
 @synthesize focalLengthField;
 @synthesize apertureField;
 @synthesize gpsButton;
+@synthesize locationController;
+@synthesize loadingView;
+@synthesize gps;
 @synthesize dataController = _dataController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,41 +50,96 @@
     return _dataController;
 }
 
-- (IBAction)saveData
+- (IBAction)gpsButtonPressed:(UIButton *)sender {
+    if([sender.currentTitle isEqualToString:@"NO"])
+    {
+        [self.locationController.locationManager startUpdatingLocation];
+        if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+        {
+            loadingView = [LoadingView loadLoadingViewIntoView:self.view];
+            [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+        }else
+        {
+            BOOL loop = YES;
+            while (loop)
+            {
+                if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+                {
+                    loop = NO;
+                    loadingView = [LoadingView loadLoadingViewIntoView:self.view];
+                    [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+                }
+            }
+            
+        }
+        [self animateButton:@"FromBottom"];
+        [gpsButton setTitle:@"YES" forState: UIControlStateNormal];
+    }
+    else
+    {
+        
+        [self animateButton:@"FromTop"];
+        gps = @"No GPS";
+        [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
+    }
+}
+
+
+- (void)locationUpdate:(CLLocation *)location
 {
-    if(filmField.text.length > 0 && isoField.text.length > 0 && exposureField.text.length > 0 && cameraField.text.length > 0 && focalLengthField.text.length > 2 && apertureField.text.length > 2){
+    gps = [NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude];
+}
+
+- (void)locationError:(NSError *)error
+{
+    
+}
+
+-(void) retrieveGPS
+{
+    [loadingView removeLoadingView];
+    [self.locationController.locationManager stopUpdatingLocation];
+}
+
+- (void)saveData
+{
+    if(filmField.text.length > 0 && isoField.text.length > 0 && exposureField.text.length > 0 && cameraField.text.length > 0){
         NSString *film = filmField.text;
-        int iso = [isoField.text intValue];
-        int exposure = [exposureField.text intValue];
         NSString *camera = cameraField.text;
+        NSString *focal = @"";
+        NSString *aperture = @"";
+        if (focalLengthField.text.length > 2)
+            focal = [focalLengthField.text substringToIndex:focalLengthField.text.length-2];
+        if (apertureField.text.length > 2)
+            aperture = [apertureField.text substringFromIndex:2];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"MMM. dd. yyyy"];
         NSString *theDate = [formatter stringFromDate:[NSDate date]];
-        
-        int focal = [[focalLengthField.text substringToIndex:focalLengthField.text.length-2] intValue];
-        double aperture = [[apertureField.text substringFromIndex:2] doubleValue];
-        NSString *gps = [gpsButton currentTitle];
-        
-
-        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('ExposureId','FilmName','Iso','Camera','Date') VALUES ('%d','%@','%d','%@','%@');",exposure,film,iso,camera,theDate];
+        NSLog(@"GPS: %@",gps);
+        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('ExposureId','FilmName','Iso','Camera','Date') VALUES ('%@','%@','%@','%@','%@');",exposureField.text,film,isoField.text,camera,theDate];
         
         [self.dataController sendSqlData:rollTable whichTable:@"Roll"];
         
         int rollId = [[self.dataController singleRead:@"SELECT MAX(ID) FROM Roll"] intValue];
-        NSString *exposureTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Focal','Aperture','Shutter','Gps') VALUES ('%d','%d','%d','%d','%f','%@','%@');",1,rollId,exposure,focal,aperture,@"",gps];
+        NSString *exposureTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%d','%@','%@','%@','%@','%@','%@');",1,rollId,exposureField.text,focal,aperture,@"",gps,@"Notes:"];
         [self.dataController sendSqlData:exposureTable whichTable:@"Exposure"];
-        
-        filmField.text = @"";
-        isoField.text = @"";
-        exposureField.text = @"";
-        cameraField.text = @"";
-        focalLengthField.text = @"";
-        apertureField.text = @"";
+    
     }
     else
     {
-        NSLog(@"empty filmField");
+        TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Roll Not Saved"
+                                                        message:@"Roll was not saved because required fields film name, iso, exposure, and camera were not filled out."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [self dismissKeyboard];
     }
+    
+}
+- (IBAction)startButton:(id)sender {
+    [self saveData];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
@@ -82,10 +147,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    locationController = [[MyCLController alloc] init];
+	locationController.delegate = self;
+    
     UISwipeGestureRecognizer *recognizer;
     
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
@@ -101,9 +168,9 @@
     UIFont *generalFont = [UIFont fontWithName:@"Walkway SemiBold" size:24];
     UIColor *fontColor = [UIColor whiteColor];
     gpsButton.titleLabel.font = generalFont;
+    gpsButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     gpsButton.titleLabel.textColor = fontColor;
     [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
-    
     
     filmField.textColor = fontColor;
     filmField.textAlignment = NSTextAlignmentLeft;
@@ -139,7 +206,11 @@
     apertureField.textAlignment = NSTextAlignmentLeft;
     apertureField.font = generalFont;
     apertureField.placeholder = @"F/2.8";
+    
+    gps = @"No GPS";
 }
+
+
 
 - (void)dismissKeyboard
 {
@@ -211,16 +282,16 @@
         [self performSelector:@selector(dismissKeyboard)];
     }
 }
-- (IBAction)gpsButtonPressed:(UIButton *)sender {
-    if([sender.currentTitle isEqualToString:@"NO"])
-        [gpsButton setTitle:@"YES" forState: UIControlStateNormal];
-    else
-        [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
-    //[gpsButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-     gpsButton.backgroundColor = [UIColor clearColor];
-}
-- (IBAction)gpsButtonTouchDown:(id)sender {
-    gpsButton.backgroundColor = [UIColor redColor];
+- (void) animateButton:(NSString*)direction{
+	CATransition *animation = [CATransition animation];
+	[animation setDuration:0.35];
+	[animation setType:kCATransitionPush];
+    if ([direction isEqualToString:@"FromBottom"])
+        [animation setSubtype:kCATransitionFromBottom];
+    else if ([direction isEqualToString:@"FromTop"])
+        [animation setSubtype:kCATransitionFromTop];
+	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
+    [[gpsButton layer] addAnimation:animation forKey:direction];
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {

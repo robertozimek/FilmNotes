@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">3080</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3083</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">2078</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -42,7 +42,7 @@
 							<object class="IBUILabel" id="1035471767">
 								<reference key="NSNextResponder" ref="911302037"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{129, 21}, {171, 21}}</string>
+								<string key="NSFrame">{{129, 15}, {171, 21}}</string>
 								<reference key="NSSuperview" ref="911302037"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="240484320"/>
@@ -59,10 +59,10 @@
 								<bool key="IBUIUsesAttributedText">YES</bool>
 								<object class="NSAttributedString" key="IBUIAttributedText">
 									<string key="NSString">Label</string>
-									<dictionary key="NSAttributes" id="1058121994">
-										<object class="NSColor" key="NSColor" id="705443201">
-											<int key="NSColorSpace">1</int>
-											<bytes key="NSRGB">MSAxIDEAA</bytes>
+									<dictionary key="NSAttributes" id="762836171">
+										<object class="NSColor" key="NSColor">
+											<int key="NSColorSpace">2</int>
+											<bytes key="NSRGB">MC45MDk4MDM5ODY1IDAuOTA5ODAzOTg2NSAwLjkwOTgwMzk4NjUAA</bytes>
 										</object>
 										<object class="NSFont" key="NSFont">
 											<string key="NSName">WalkwaySemiBold</string>
@@ -99,7 +99,7 @@
 								<bool key="IBUIUsesAttributedText">YES</bool>
 								<object class="NSAttributedString" key="IBUIAttributedText">
 									<string key="NSString">Label</string>
-									<reference key="NSAttributes" ref="1058121994"/>
+									<reference key="NSAttributes" ref="762836171"/>
 								</object>
 								<reference key="IBUIHighlightedColor" ref="295137180"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -108,11 +108,10 @@
 							<object class="IBUILabel" id="353892696">
 								<reference key="NSNextResponder" ref="911302037"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{129, 61}, {171, 21}}</string>
+								<string key="NSFrame">{{129, 68}, {171, 21}}</string>
 								<reference key="NSSuperview" ref="911302037"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<reference key="IBUIBackgroundColor" ref="103039445"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -121,7 +120,7 @@
 								<bool key="IBUIUsesAttributedText">YES</bool>
 								<object class="NSAttributedString" key="IBUIAttributedText">
 									<string key="NSString">Label</string>
-									<reference key="NSAttributes" ref="1058121994"/>
+									<reference key="NSAttributes" ref="762836171"/>
 								</object>
 								<reference key="IBUIHighlightedColor" ref="295137180"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -135,7 +134,10 @@
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1035471767"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<reference key="IBUIBackgroundColor" ref="705443201"/>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">2</int>
+									<bytes key="NSRGB">MC45MDk4MDM5ODY1IDAuOTA5ODAzOTg2NSAwLjkwOTgwMzk4NjUAA</bytes>
+								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -146,8 +148,8 @@
 									<string key="NSString">Label</string>
 									<dictionary key="NSAttributes">
 										<object class="NSColor" key="NSColor">
-											<int key="NSColorSpace">1</int>
-											<bytes key="NSRGB">MCAwIDAAA</bytes>
+											<int key="NSColorSpace">2</int>
+											<bytes key="NSRGB">MC4wOTAxOTYwODA1MSAwLjA5MDE5NjA4MDUxIDAuMDkwMTk2MDgwNTEAA</bytes>
 										</object>
 										<object class="NSFont" key="NSFont">
 											<string key="NSName">Helvetica</string>
@@ -262,9 +264,9 @@
 						<reference key="object" ref="771320257"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1035471767"/>
-							<reference ref="240484320"/>
 							<reference ref="353892696"/>
 							<reference ref="103175745"/>
+							<reference ref="240484320"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -347,6 +349,6 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<string key="IBCocoaTouchPluginVersion">2078</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

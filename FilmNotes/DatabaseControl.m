@@ -37,7 +37,7 @@
 {
     [self openDB];
     char *err;
-    NSString *sql = @"CREATE TABLE IF NOT EXISTS Roll (id INTEGER PRIMARY KEY AUTOINCREMENT,ExposureId INTEGER,FilmName TEXT,Iso INTEGER,Camera TEXT,Date TEXT);CREATE TABLE IF NOT EXISTS Exposure (id INTEGER NOT NULL,Roll_id INTEGER,Exposure_Id INTEGER,Focal INTEGER,Aperture DOUBLE,Shutter TEXT,Gps TEXT,FOREIGN KEY (Roll_id) REFERENCES Roll(id) ON DELETE CASCADE);";
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS Roll (id INTEGER PRIMARY KEY AUTOINCREMENT,ExposureId INTEGER,FilmName TEXT,Iso INTEGER,Camera TEXT,Date TEXT);CREATE TABLE IF NOT EXISTS Exposure (id INTEGER NOT NULL,Roll_id INTEGER,Exposure_Id INTEGER,Focal INTEGER,Aperture DOUBLE,Shutter TEXT,Gps TEXT, Notes TEXT,FOREIGN KEY (Roll_id) REFERENCES Roll(id) ON DELETE CASCADE);";
     if(sqlite3_exec(_FilmNotesDB, [sql UTF8String], NULL,NULL,&err) != SQLITE_OK)
     {
         sqlite3_close(_FilmNotesDB);
@@ -45,7 +45,6 @@
     }else{
         NSLog(@"table_create");
     }
-    
 }
 
 -(void) sendSqlData:(NSString *)sql whichTable:(NSString *)table
@@ -54,7 +53,7 @@
     char *err;
     if(sqlite3_exec(_FilmNotesDB,[sql UTF8String],NULL,NULL,&err) !=SQLITE_OK)
     {
-        NSLog(@"%@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(_FilmNotesDB)]);
+        NSLog(@"%@ 444", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(_FilmNotesDB)]);
         NSAssert(0,@"Could not update %@ table",table);
     }else{
         NSLog(@"%@ table updated",table);
@@ -72,57 +71,72 @@
     {
         while (sqlite3_step(statement)==SQLITE_ROW)
         {
+            NSString *field1Str = @"";
+            NSString *field2Str = @"";
+            NSString *field3Str = @"";
+            NSString *field4Str = @"";
+            NSString *field5Str = @"";
+            NSString *field6Str = @"";
+            NSString *field7Str = @"";
+            NSString *field8Str = @"";
+            
             
             char *field1 = (char *) sqlite3_column_text(statement,0);
-            if (field1 != NULL){
-                NSString *field1Str = [[NSString alloc]initWithUTF8String:field1];
-                [entries addObject:field1Str];
-            }
+            if (field1 != NULL)
+                field1Str = [[NSString alloc]initWithUTF8String:field1];
+            [entries addObject:field1Str];
+                
             
             char *field2 = (char *) sqlite3_column_text(statement,1);
-            if (field2 != NULL){
-                NSString *field2Str = [[NSString alloc]initWithUTF8String:field2];
-                [entries addObject:field2Str];
-            }
+            if (field2 != NULL)
+                field2Str = [[NSString alloc]initWithUTF8String:field2];
+            [entries addObject:field2Str];
+            
             
             char *field3 = (char *) sqlite3_column_text(statement,2);
-            if (field3 != NULL){
-                NSString *field3Str = [[NSString alloc]initWithUTF8String:field3];
-                [entries addObject:field3Str];
-            }
+            if (field3 != NULL)
+                field3Str = [[NSString alloc]initWithUTF8String:field3];
+            [entries addObject:field3Str];
+            
             
             char *field4 = (char *) sqlite3_column_text(statement,3);
-            if (field4 != NULL){
-                NSString *field4Str = [[NSString alloc]initWithUTF8String:field4];
-                [entries addObject:field4Str];
-            }
+            if (field4 != NULL)
+                field4Str = [[NSString alloc]initWithUTF8String:field4];
+            [entries addObject:field4Str];
+            
             
             char *field5 = (char *) sqlite3_column_text(statement,4);
-            if (field5 != NULL){
-                NSString *field5Str = [[NSString alloc]initWithUTF8String:field5];
-                [entries addObject:field5Str];
-            }
+            if (field5 != NULL)
+                field5Str = [[NSString alloc]initWithUTF8String:field5];
+            [entries addObject:field5Str];
+            
             
             char *field6 = (char *) sqlite3_column_text(statement,5);
-            if (field1 != NULL){
-                NSString *field6Str = [[NSString alloc]initWithUTF8String:field6];
-                [entries addObject:field6Str];
-            }
+            if (field6 != NULL)
+                field6Str = [[NSString alloc]initWithUTF8String:field6];
+            [entries addObject:field6Str];
+            
             
             char *field7 = (char *) sqlite3_column_text(statement,6);
             if (field7 != NULL)
-            {
-                NSString *field7Str = [[NSString alloc]initWithUTF8String:field7];
-                [entries addObject:field7Str];
-            }
+                field7Str = [[NSString alloc]initWithUTF8String:field7];
+            [entries addObject:field7Str];
+            
+            char *field8 = (char *) sqlite3_column_text(statement,7);
+            if (field8 != NULL)
+                field8Str = [[NSString alloc]initWithUTF8String:field8];
+            [entries addObject:field8Str];
+            
  
             [filmArray addObject:[entries copy]];
             [entries removeAllObjects];
         }
     }
+    else
+        NSLog(@"ERROR: %@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(_FilmNotesDB)]);
     sqlite3_finalize(statement);
     sqlite3_close(_FilmNotesDB);
-
+    
     return filmArray;
 }
 
@@ -141,12 +155,14 @@
         {
             char *field1 = (char *) sqlite3_column_text(statement,0);
             NSString *field1Str = [[NSString alloc]initWithUTF8String:field1];
-            NSLog(@"field1Str: %@",field1Str);
             str = [[NSString alloc] initWithFormat:@"%@",field1Str];
         }
     }
+    else
+        NSLog(@"ERROR: %@", [NSString stringWithUTF8String:(char*)sqlite3_errmsg(_FilmNotesDB)]);
     sqlite3_finalize(statement);
     sqlite3_close(_FilmNotesDB);
+
     return str;
 }
 -(void)removeRoll:(NSString *)rollId

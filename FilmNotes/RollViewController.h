@@ -7,17 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyCLController.h"
 #import "ViewController.h"
+#import "CustomTextView.h"
+#import "NumberKeypadBackSlash.h"
 
-@interface RollViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UITextField *aperatureTextField;
-@property (weak, nonatomic) IBOutlet UITextField *numeratorShutterSpeedTextField;
-@property (weak, nonatomic) IBOutlet UITextField *denominatorShutterSpeedTextField;
+@interface RollViewController : UIViewController <MyCLControllerDelegate>
+{
+    
+}
+
+@property (weak, nonatomic) IBOutlet UITextField *apertureTextField;
+@property (weak, nonatomic) IBOutlet UITextField *currentExposureTextField;
 @property (weak, nonatomic) IBOutlet UITextField *focalLengthTextField;
-@property (weak, nonatomic) IBOutlet UILabel *filmNameLabel;
+@property (weak, nonatomic) IBOutlet UITextField *shutterSpeedTextField;
+
+@property (weak, nonatomic) IBOutlet UIButton *gpsButton;
 @property (weak, nonatomic) IBOutlet UILabel *exposureLabel;
+@property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (weak, nonatomic) IBOutlet UILabel *isoLabel;
 
 @property (strong, nonatomic) NSString *RollNumber;
+@property (strong, nonatomic) NumberKeypadBackSlash *numberKeyPad;
+@property (strong, nonatomic) NSTimer *locationTimer;
 
 @end

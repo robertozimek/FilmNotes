@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <sqlite3.h>
 
-
-
 @interface ViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *aTableView;
+@property (weak, nonatomic) IBOutlet UIButton *rollButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingGearButton;
 @property (weak, nonatomic) NSArray *data;
 @end

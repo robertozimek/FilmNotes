@@ -17,7 +17,9 @@
 @end
 
 @implementation ViewController
+@synthesize rollButton;
 @synthesize aTableView;
+@synthesize settingGearButton;
 @synthesize data;
 @synthesize dataController=_dataController;
 
@@ -53,12 +55,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    rollButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    [rollButton setTitle: @"New Roll" forState: UIControlStateNormal];
+    rollButton.titleLabel.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    [rollButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
+    rollButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
+    
     [self.dataController createTable];
     UISwipeGestureRecognizer *recognizer;
     
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:UISwipeGestureRecognizerDirectionUp];
     [self.view addGestureRecognizer:recognizer];
+
 }
 
 - (BOOL)shouldAutorotate {
@@ -94,14 +103,15 @@
         NSArray *nibObjects = [[NSBundle mainBundle] loadNibNamed:@"CustomCellView" owner:self options:nil];
         cell = [nibObjects objectAtIndex:0];
     }
-    cell.roll.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
-    cell.film.font = [UIFont fontWithName:@"Walkway SemiBold" size:14];
-    cell.camera.font = [UIFont fontWithName:@"Walkway SemiBold" size:14];
-    cell.date.font = [UIFont fontWithName:@"Walkway SemiBold" size:14];
+    cell.roll.font = [UIFont fontWithName:@"Walkway SemiBold" size:24];
+    cell.film.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
+    cell.camera.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
+    cell.date.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
     
-    cell.film.textColor = [UIColor whiteColor];
-    cell.camera.textColor = [UIColor whiteColor];
-    cell.date.textColor = [UIColor whiteColor];
+    UIColor *cellTextColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    cell.film.textColor = cellTextColor;
+    cell.camera.textColor = cellTextColor;
+    cell.date.textColor = cellTextColor;
 
     cell.roll.text = [NSString stringWithFormat:@"%d",[data count]-indexPath.row];
     cell.film.text = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:2];

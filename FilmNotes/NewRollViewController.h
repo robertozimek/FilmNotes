@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyCLController.h"
 #import <sqlite3.h>
 
-@interface NewRollViewController : UIViewController
+@interface NewRollViewController : UIViewController <MyCLControllerDelegate>
+{
+    
+}
 @property (weak, nonatomic) IBOutlet UITextField *filmField;
 @property (weak, nonatomic) IBOutlet UITextField *isoField;
 @property (weak, nonatomic) IBOutlet UITextField *exposureField;
@@ -18,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *apertureField;
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
 
+- (void)saveData;
 
 @end
