@@ -1,24 +1,29 @@
-//
-//  LocationController.h
-//  FilmNotes
-//
-//  Created by Robert Ozimek on 12/4/12.
-//  Copyright (c) 2012 wtc. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import "AddressAnnotation.h"
-#import "TTAlertView.h"
 
-@interface LocationController : NSObject <CLLocationManagerDelegate,MKAnnotation>{
-    CLLocationCoordinate2D coordinate;
-    
+@protocol LocationControllerDelegate <NSObject>
+@required
+- (void)locationUpdate:(CLLocation *)location;
+- (void)locationError:(NSError *)error;
+@end
+
+@interface LocationController : NSObject <CLLocationManagerDelegate> {
+	CLLocationManager *locationManager;
+	id delegate;
 }
-@property (strong, nonatomic) CLLocationManager *location;
-@property (strong, nonatomic) NSString *lat;
-@property (strong, nonatomic) NSString *lon;
-@property (strong, nonatomic) NSTimer *locationTimer;
+
+@property (strong,nonatomic) CLLocationManager *locationManager;
+@property (strong,nonatomic) id <LocationControllerDelegate> delegate;
+
+- (void)locationManager:(CLLocationManager *)manager
+	didUpdateToLocation:(CLLocation *)newLocation
+		   fromLocation:(CLLocation *)oldLocation;
+
+- (void)locationManager:(CLLocationManager *)manager
+	   didFailWithError:(NSError *)error;
 -(NSString *)locationServicesStatus;
+
+
 @end

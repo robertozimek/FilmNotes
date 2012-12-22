@@ -17,8 +17,9 @@
 @interface NewRollViewController ()
 @property (strong, nonatomic) LoadingView *loadingView;
 @property (strong, nonatomic) DatabaseControl *dataController;
-@property (strong, nonatomic) MyCLController *locationController;
+@property (strong, nonatomic) LocationController *locationController;
 @property (strong, nonatomic) NSString *gps;
+@property (strong, nonatomic) NSArray *data;
 @end
 
 @implementation NewRollViewController
@@ -30,9 +31,11 @@
 @synthesize focalLengthField;
 @synthesize apertureField;
 @synthesize gpsButton;
+@synthesize startButton;
 @synthesize locationController;
 @synthesize loadingView;
 @synthesize gps;
+@synthesize data;
 @synthesize dataController = _dataController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -73,14 +76,14 @@
             
         }
         [self animateButton:@"FromBottom"];
-        [gpsButton setTitle:@"YES" forState: UIControlStateNormal];
+        [sender setTitle:@"YES" forState: UIControlStateNormal];
     }
     else
     {
         
         [self animateButton:@"FromTop"];
         gps = @"No GPS";
-        [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
+        [sender setTitle:@"NO" forState: UIControlStateNormal];
     }
 }
 
@@ -104,8 +107,6 @@
 - (void)saveData
 {
     if(filmField.text.length > 0 && isoField.text.length > 0 && exposureField.text.length > 0 && cameraField.text.length > 0){
-        NSString *film = filmField.text;
-        NSString *camera = cameraField.text;
         NSString *focal = @"";
         NSString *aperture = @"";
         if (focalLengthField.text.length > 2)
@@ -116,7 +117,8 @@
         [formatter setDateFormat:@"MMM. dd. yyyy"];
         NSString *theDate = [formatter stringFromDate:[NSDate date]];
         NSLog(@"GPS: %@",gps);
-        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('ExposureId','FilmName','Iso','Camera','Date') VALUES ('%@','%@','%@','%@','%@');",exposureField.text,film,isoField.text,camera,theDate];
+        
+        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('ExposureId','FilmName','Iso','Camera','Date') VALUES ('%@','%@','%@','%@','%@');",exposureField.text,filmField.text,isoField.text,cameraField.text,theDate];
         
         [self.dataController sendSqlData:rollTable whichTable:@"Roll"];
         
@@ -143,14 +145,13 @@
 }
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
-    [self saveData];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    locationController = [[MyCLController alloc] init];
+    locationController = [[LocationController alloc] init];
 	locationController.delegate = self;
     
     UISwipeGestureRecognizer *recognizer;
@@ -165,11 +166,13 @@
     
     [self.view addGestureRecognizer:tap];
     
+    data = [self.dataController readTable:@"SELECT * FROM Defaults WHERE isDefault = 1"];
+    
     UIFont *generalFont = [UIFont fontWithName:@"Walkway SemiBold" size:24];
-    UIColor *fontColor = [UIColor whiteColor];
+    UIColor *fontColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
     gpsButton.titleLabel.font = generalFont;
     gpsButton.titleLabel.textAlignment = NSTextAlignmentLeft;
-    gpsButton.titleLabel.textColor = fontColor;
+    [gpsButton setTitleColor:fontColor forState:UIControlStateNormal];
     [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
     
     filmField.textColor = fontColor;
@@ -183,7 +186,7 @@
     isoField.font = generalFont;
     isoField.placeholder = @"1600";
     isoField.clearsOnBeginEditing = YES;
-    
+        
     exposureField.textColor = fontColor;
     exposureField.textAlignment = NSTextAlignmentLeft;
     exposureField.font = generalFont;
@@ -195,6 +198,7 @@
     cameraField.font = generalFont;
     cameraField.placeholder = @"Canonet 28";
     cameraField.clearsOnBeginEditing = YES;
+        
     
     focalLengthField.textColor = fontColor;
     focalLengthField.textAlignment = NSTextAlignmentLeft;
@@ -208,9 +212,40 @@
     apertureField.placeholder = @"F/2.8";
     
     gps = @"No GPS";
+    
+    if (data.count != 0)
+    {
+        if(!([[[data objectAtIndex:0] objectAtIndex:2] isEqualToString:@""]))
+            filmField.text = [[data objectAtIndex:0] objectAtIndex:2];
+        if(!([[[data objectAtIndex:0] objectAtIndex:3] isEqualToString:@""]))
+            isoField.text = [[data objectAtIndex:0] objectAtIndex:3];
+        if(!([[[data objectAtIndex:0] objectAtIndex:4] isEqualToString:@""]))
+            exposureField.text = [[data objectAtIndex:0] objectAtIndex:4];
+        if(!([[[data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""]))
+            cameraField.text = [[data objectAtIndex:0] objectAtIndex:5];
+        if(!([[[data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""]))
+            focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:6]];
+        if(!([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@""]))
+            apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:7]];
+    }
+    
+    startButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    startButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    startButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
+    [startButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
+    [startButton setTitle:@"Start" forState: UIControlStateNormal];
+    
 }
 
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(data.count != 0)
+        if([[[data objectAtIndex:0] objectAtIndex:8] isEqualToString:@"YES"])
+        {
+            [gpsButton setTitle:@"NO" forState:UIControlStateNormal];
+            [self performSelector:@selector(gpsButtonPressed:) withObject:gpsButton];
+        }
+}
 
 - (void)dismissKeyboard
 {
@@ -245,43 +280,7 @@
     
     [UIView commitAnimations];
 }
-- (IBAction)isoEditingChanged:(id)sender {
-    if((isoField.text.length >= 4)){
-        isoField.text = [isoField.text substringToIndex:4];
-        [self performSelector:@selector(dismissKeyboard)];
-    }
-}
-- (IBAction)exposureEditingChanged:(id)sender {
-    if((exposureField.text.length >= 2)){
-        exposureField.text = [exposureField.text substringToIndex:2];
-        [self performSelector:@selector(dismissKeyboard)];
-    }
-}
 
-- (IBAction)moveUpTextField:(id)sender {
-    [self setViewMovedUp:YES];
-}
-- (IBAction)moveDownTextFIeld:(id)sender {
-    [self setViewMovedUp:NO];
-}
-- (IBAction)aperatureEditingDidBegin:(id)sender {
-    apertureField.text = @"F/";
-}
-- (IBAction)focalLengthEditingDidBegin:(id)sender {
-    focalLengthField.text = @"mm";
-}
-- (IBAction)focalLengthEditingChanged:(id)sender {
-    if((focalLengthField.text.length >= 6)){
-        focalLengthField.text = [focalLengthField.text substringToIndex:6];
-        [self performSelector:@selector(dismissKeyboard)];
-    }
-}
-- (IBAction)aperatureEditingChanged:(id)sender {
-    if((apertureField.text.length >= 6)){
-        apertureField.text = [apertureField.text substringToIndex:6];
-        [self performSelector:@selector(dismissKeyboard)];
-    }
-}
 - (void) animateButton:(NSString*)direction{
 	CATransition *animation = [CATransition animation];
 	[animation setDuration:0.35];
@@ -296,9 +295,111 @@
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     if([textField isEqual:focalLengthField])
+    {
+        [self setViewMovedUp:YES];
+        textField.text = @"mm";
         textField.selectedTextRange = [textField
                                    textRangeFromPosition:textField.beginningOfDocument
                                    toPosition:textField.beginningOfDocument];
+    }
+    if([textField isEqual:apertureField])
+    {
+        [self setViewMovedUp:YES];
+        textField.text = @"F/";
+    }
+    
+}
+
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (data.count != 0)
+    {
+        if([textField isEqual:filmField] && !([[[data objectAtIndex:0] objectAtIndex:2] isEqualToString:@""]) && [filmField.text isEqualToString:@""])
+            textField.text = [[data objectAtIndex:0] objectAtIndex:2];
+        if([textField isEqual:isoField] && !([[[data objectAtIndex:0] objectAtIndex:3] isEqualToString:@""]) && [isoField.text isEqualToString:@""])
+            textField.text = [[data objectAtIndex:0] objectAtIndex:3];
+        if([textField isEqual:exposureField] && !([[[data objectAtIndex:0] objectAtIndex:4] isEqualToString:@""]) && [exposureField.text isEqualToString:@""])
+            textField.text = [[data objectAtIndex:0] objectAtIndex:4];
+        if([textField isEqual:cameraField] && !([[[data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""]) && [cameraField.text isEqualToString:@""])
+            textField.text = [[data objectAtIndex:0] objectAtIndex:5];
+        if([textField isEqual:focalLengthField] && !([[[data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""]) && ([focalLengthField.text isEqualToString:@""] || [focalLengthField.text isEqualToString:@"mm"]))
+            textField.text = [[data objectAtIndex:0] objectAtIndex:6];
+        if([textField isEqual:apertureField] && !([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@""]) &&([apertureField.text isEqualToString:@""] || [apertureField.text isEqualToString:@"F/"]))
+            textField.text = [[data objectAtIndex:0] objectAtIndex:7];
+    }
+    if([textField isEqual:focalLengthField] || [textField isEqual:apertureField])
+        [self setViewMovedUp:NO];
+       
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([textField isEqual:apertureField])
+    {
+        if((textField.text.length >= 6) && ![string isEqualToString:@""]){
+            textField.text = [textField.text substringToIndex:6];
+            [self performSelector:@selector(dismissKeyboard)];
+        }
+        UITextPosition* beginning = textField.beginningOfDocument;
+        
+        UITextRange* selectedRange = textField.selectedTextRange;
+        UITextPosition* selectionStart = selectedRange.start;
+        UITextPosition* selectionEnd = selectedRange.end;
+        
+        const NSInteger location = [textField offsetFromPosition:beginning toPosition:selectionStart];
+        const NSInteger length = [textField offsetFromPosition:selectionStart toPosition:selectionEnd];
+        
+        NSRange cursorPositon = NSMakeRange(location, length);
+        if((textField.text.length == cursorPositon.length) || (textField.text.length-1 == cursorPositon.length))
+        {
+            UITextPosition *cutOffPositon = [textField positionFromPosition:beginning offset:2];
+            [textField setSelectedTextRange:[textField textRangeFromPosition:cutOffPositon toPosition:selectionEnd]];
+        }
+        if(((cursorPositon.location <= 2 && [string isEqualToString:@""]) || cursorPositon.location < 2) && cursorPositon.length < 1)
+            return NO;
+    }
+    if ([textField isEqual:focalLengthField])
+    {
+        if((textField.text.length >= 6) && ![string isEqualToString:@""]){
+            textField.text = [textField.text substringToIndex:6];
+            [self performSelector:@selector(dismissKeyboard)];
+        }
+        UITextPosition* beginning = textField.beginningOfDocument;
+        
+        UITextRange* selectedRange = textField.selectedTextRange;
+        UITextPosition* selectionStart = selectedRange.start;
+        UITextPosition* selectionEnd = selectedRange.end;
+        
+        const NSInteger location = [textField offsetFromPosition:beginning toPosition:selectionStart];
+        const NSInteger length = [textField offsetFromPosition:selectionStart toPosition:selectionEnd];
+        
+        NSRange cursorPositon = NSMakeRange(location, length);
+        if((textField.text.length == cursorPositon.length) || (textField.text.length-1 == cursorPositon.length))
+        {
+            UITextPosition *cutOffPositon = [textField positionFromPosition:selectionStart offset:textField.text.length-2];
+            [textField setSelectedTextRange:[textField textRangeFromPosition:selectionStart toPosition:cutOffPositon]];
+        }
+        if(cursorPositon.location > textField.text.length - 2)
+            return NO;
+    }
+    
+    if ([textField isEqual:filmField] || [textField isEqual:cameraField])
+        if((textField.text.length >= 12)){
+            textField.text = [textField.text substringToIndex:12];
+            [self performSelector:@selector(dismissKeyboard)];
+        }
+    if ([textField isEqual:isoField])
+        if((textField.text.length >= 4)){
+            textField.text = [textField.text substringToIndex:4];
+            [self performSelector:@selector(dismissKeyboard)];
+        }
+    if ([textField isEqual:exposureField])
+        if((textField.text.length >= 2)){
+            textField.text = [textField.text substringToIndex:2];
+            [self performSelector:@selector(dismissKeyboard)];
+        }
+    
+    return YES;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -308,15 +409,6 @@
     }
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if(([textField.text isEqualToString:@"F/"] || [[textField.text substringFromIndex:textField.text.length-2] isEqualToString:@"mm"]) && [string isEqualToString:@""] && textField.text.length == 2){
-        return NO;
-    }
-    
-    
-    return YES;
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

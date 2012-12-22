@@ -33,7 +33,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	location = [[CLLocation alloc] initWithLatitude:[lat floatValue] longitude:[lon floatValue]];
+	
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    location = [[CLLocation alloc] initWithLatitude:[lat floatValue] longitude:[lon floatValue]];
     AddressAnnotation *addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:location.coordinate];
     addAnnotation.title = [NSString stringWithFormat:@"Exposure %@",exposure];
     MKCoordinateSpan span;

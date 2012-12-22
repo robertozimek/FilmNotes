@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyCLController.h"
+#import "LocationController.h"
 #import "ViewController.h"
 #import "CustomTextView.h"
 #import "NumberKeypadBackSlash.h"
 
-@interface RollViewController : UIViewController <MyCLControllerDelegate>
+@interface RollViewController : UIViewController <LocationControllerDelegate>
 {
     
 }
@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *shutterSpeedTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
+@property (weak, nonatomic) IBOutlet UIButton *advanceButton;
 @property (weak, nonatomic) IBOutlet UILabel *exposureLabel;
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (weak, nonatomic) IBOutlet UILabel *isoLabel;

@@ -21,10 +21,11 @@
 		085CB70A16692ABA00AA7D74 /* NewRollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085CB70916692ABA00AA7D74 /* NewRollViewController.m */; };
 		086B143E167015D700E7A76F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086B143D167015D700E7A76F /* MapViewController.m */; };
 		086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 086D888B1669CF7D00E90A91 /* libsqlite3.dylib */; };
+		086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 086E3B7016845E8A00F3ECA1 /* edit-arrow.png */; };
 		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
-		08838E4B1682C01200195750 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* MyCLController.m */; };
-		08838E4C1682C01200195750 /* MyCLController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* MyCLController.m */; };
+		08838E4B1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
+		08838E4C1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		08955500166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
 		08955501166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
 		08955508166DDB850081AD46 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955507166DDB850081AD46 /* MapKit.framework */; };
@@ -33,6 +34,12 @@
 		08955556166DFE480081AD46 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955555166DFE480081AD46 /* CoreLocation.framework */; };
 		08AEE7821683A35400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
 		08AEE7831683A3C400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
+		08AEE78A1683BA7F00038F37 /* SettingDefaultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7891683BA7F00038F37 /* SettingDefaultsViewController.m */; };
+		08AEE78B1683BA7F00038F37 /* SettingDefaultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7891683BA7F00038F37 /* SettingDefaultsViewController.m */; };
+		08AEE7921683CB8300038F37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7911683CB8300038F37 /* SettingViewController.m */; };
+		08AEE7931683CB8300038F37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7911683CB8300038F37 /* SettingViewController.m */; };
+		08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
+		08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
 		08C041C51670262E0091756E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C041C41670262E0091756E /* AddressBook.framework */; };
 		08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5316671A0F00668779 /* UIKit.framework */; };
 		08D14F5616671A0F00668779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5516671A0F00668779 /* Foundation.framework */; };
@@ -50,7 +57,6 @@
 		08D14F8216671A1000668779 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F8016671A1000668779 /* InfoPlist.strings */; };
 		08D14F8516671A1100668779 /* FilmNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D14F8416671A1000668779 /* FilmNotesTests.m */; };
 		08D14F9216671B8F00668779 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D14F9116671B8F00668779 /* CustomCell.m */; };
-		08D14F9416671BE200668779 /* CustomCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 08D14F9316671BE200668779 /* CustomCellView.xib */; };
 		08E02C9616672B3000AD45DA /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */; };
 		08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */; };
 		08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E144AF166C20110004ACAD /* MainStoryboard.storyboard */; };
@@ -87,10 +93,11 @@
 		086B143C167015D700E7A76F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		086B143D167015D700E7A76F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		086D888B1669CF7D00E90A91 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		086E3B7016845E8A00F3ECA1 /* edit-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow.png"; sourceTree = "<group>"; };
 		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
-		08838E491682C01200195750 /* MyCLController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCLController.h; sourceTree = "<group>"; };
-		08838E4A1682C01200195750 /* MyCLController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCLController.m; sourceTree = "<group>"; };
+		08838E491682C01200195750 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
+		08838E4A1682C01200195750 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		089554FE166DB6000081AD46 /* TTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAlertView.h; sourceTree = "<group>"; };
 		089554FF166DB6000081AD46 /* TTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAlertView.m; sourceTree = "<group>"; };
 		08955507166DDB850081AD46 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -98,6 +105,12 @@
 		08955548166DF2FD0081AD46 /* AddressAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddressAnnotation.m; path = ../../learnCoreLocations/learnCoreLocations/AddressAnnotation.m; sourceTree = "<group>"; };
 		08955555166DFE480081AD46 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		08AEE7801683A35400038F37 /* settings-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-gear.png"; sourceTree = "<group>"; };
+		08AEE7881683BA7E00038F37 /* SettingDefaultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingDefaultsViewController.h; sourceTree = "<group>"; };
+		08AEE7891683BA7F00038F37 /* SettingDefaultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingDefaultsViewController.m; sourceTree = "<group>"; };
+		08AEE7901683CB8300038F37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = ../SettingViewController.h; sourceTree = "<group>"; };
+		08AEE7911683CB8300038F37 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = ../SettingViewController.m; sourceTree = "<group>"; };
+		08AEE7941683D09100038F37 /* CustomDefaultsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDefaultsCell.h; sourceTree = "<group>"; };
+		08AEE7951683D09300038F37 /* CustomDefaultsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDefaultsCell.m; sourceTree = "<group>"; };
 		08C041C41670262E0091756E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		08D14F4F16671A0F00668779 /* FilmNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D14F5316671A0F00668779 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -122,7 +135,6 @@
 		08D14F8416671A1000668779 /* FilmNotesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FilmNotesTests.m; sourceTree = "<group>"; };
 		08D14F9016671B8F00668779 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		08D14F9116671B8F00668779 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
-		08D14F9316671BE200668779 /* CustomCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCellView.xib; sourceTree = "<group>"; };
 		08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walkway_SemiBold.ttf; sourceTree = "<group>"; };
 		08E144B0166C20110004ACAD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		08E56E01166833820055DEC9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -175,6 +187,15 @@
 			name = RDActionSheet;
 			sourceTree = "<group>";
 		};
+		086E3B7216850DC800F3ECA1 /* LocationController */ = {
+			isa = PBXGroup;
+			children = (
+				08838E491682C01200195750 /* LocationController.h */,
+				08838E4A1682C01200195750 /* LocationController.m */,
+			);
+			name = LocationController;
+			sourceTree = "<group>";
+		};
 		08955554166DFCF50081AD46 /* TTAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,13 +243,16 @@
 		08D14F5916671A0F00668779 /* FilmNotes */ = {
 			isa = PBXGroup;
 			children = (
-				08838E491682C01200195750 /* MyCLController.h */,
-				08838E4A1682C01200195750 /* MyCLController.m */,
+				086E3B7216850DC800F3ECA1 /* LocationController */,
 				081C3A0716829B88004BC752 /* RDActionSheet */,
 				081C39FC16828532004BC752 /* NumberKeypadBackSlash */,
 				08955547166DF2FD0081AD46 /* AddressAnnotation.h */,
 				08955548166DF2FD0081AD46 /* AddressAnnotation.m */,
 				08E144AF166C20110004ACAD /* MainStoryboard.storyboard */,
+				08AEE7901683CB8300038F37 /* SettingViewController.h */,
+				08AEE7911683CB8300038F37 /* SettingViewController.m */,
+				08AEE7881683BA7E00038F37 /* SettingDefaultsViewController.h */,
+				08AEE7891683BA7F00038F37 /* SettingDefaultsViewController.m */,
 				086B143C167015D700E7A76F /* MapViewController.h */,
 				086B143D167015D700E7A76F /* MapViewController.m */,
 				080F5088166795E000595BDF /* MoreInfoViewController.h */,
@@ -247,7 +271,8 @@
 				08D14F6F16671A1000668779 /* ViewController.m */,
 				086E6D5B166B3A88001D11BB /* DatabaseControl.h */,
 				086E6D5C166B3A89001D11BB /* DatabaseControl.m */,
-				08D14F9316671BE200668779 /* CustomCellView.xib */,
+				08AEE7941683D09100038F37 /* CustomDefaultsCell.h */,
+				08AEE7951683D09300038F37 /* CustomDefaultsCell.m */,
 				08D14F9016671B8F00668779 /* CustomCell.h */,
 				08D14F9116671B8F00668779 /* CustomCell.m */,
 				08955554166DFCF50081AD46 /* TTAlertView */,
@@ -259,6 +284,7 @@
 		08D14F5A16671A0F00668779 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				086E3B7016845E8A00F3ECA1 /* edit-arrow.png */,
 				08AEE7801683A35400038F37 /* settings-gear.png */,
 				081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */,
 				08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */,
@@ -368,10 +394,10 @@
 				08D14F6616671A1000668779 /* Default.png in Resources */,
 				08D14F6816671A1000668779 /* Default@2x.png in Resources */,
 				08D14F6A16671A1000668779 /* Default-568h@2x.png in Resources */,
-				08D14F9416671BE200668779 /* CustomCellView.xib in Resources */,
 				08E02C9616672B3000AD45DA /* Walkway_SemiBold.ttf in Resources */,
 				08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
 				081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
+				086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +451,10 @@
 				081C39F11681EC93004BC752 /* CustomTextView.m in Sources */,
 				081C39F91682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
 				081C3A0516829B7D004BC752 /* RDActionSheet.m in Sources */,
-				08838E4B1682C01200195750 /* MyCLController.m in Sources */,
+				08838E4B1682C01200195750 /* LocationController.m in Sources */,
+				08AEE78A1683BA7F00038F37 /* SettingDefaultsViewController.m in Sources */,
+				08AEE7921683CB8300038F37 /* SettingViewController.m in Sources */,
+				08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,7 +469,10 @@
 				081C39F21681EC93004BC752 /* CustomTextView.m in Sources */,
 				081C39FA1682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
 				081C3A0616829B7D004BC752 /* RDActionSheet.m in Sources */,
-				08838E4C1682C01200195750 /* MyCLController.m in Sources */,
+				08838E4C1682C01200195750 /* LocationController.m in Sources */,
+				08AEE78B1683BA7F00038F37 /* SettingDefaultsViewController.m in Sources */,
+				08AEE7931683CB8300038F37 /* SettingViewController.m in Sources */,
+				08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

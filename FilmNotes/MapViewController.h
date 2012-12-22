@@ -15,5 +15,5 @@
 @property (strong, nonatomic) NSString *lat;
 @property (strong, nonatomic) NSString *lon;
 @property (strong, nonatomic) NSString *exposure;
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @end

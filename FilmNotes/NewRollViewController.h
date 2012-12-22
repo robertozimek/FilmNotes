@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MyCLController.h"
+#import "LocationController.h"
 #import <sqlite3.h>
 
-@interface NewRollViewController : UIViewController <MyCLControllerDelegate>
+@interface NewRollViewController : UIViewController <LocationControllerDelegate>
 {
     
 }
@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *focalLengthField;
 @property (weak, nonatomic) IBOutlet UITextField *apertureField;
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 - (void)saveData;
 

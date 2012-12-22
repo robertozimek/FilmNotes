@@ -37,16 +37,7 @@
     [self performSegueWithIdentifier:@"NewRollView" sender:nil];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.dataController removeRoll:[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0]];
-        data = [self.dataController readTable:@"SELECT * FROM Roll"];
-        [tableView reloadData];
-        //[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
-    }
-}
-
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     data = [self.dataController readTable:@"SELECT * FROM Roll"];
     [self.aTableView reloadData];
@@ -86,6 +77,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.dataController removeRow:[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Roll"];
+        data = [self.dataController readTable:@"SELECT * FROM Roll"];
+        [tableView reloadData];
+        //[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
     return [data count];
@@ -98,10 +98,14 @@
     CustomCell *cell = [tableView
                         dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        NSLog(@"Cell Created");
         
+        NSLog(@"Cell Created");
+        /*
         NSArray *nibObjects = [[NSBundle mainBundle] loadNibNamed:@"CustomCellView" owner:self options:nil];
         cell = [nibObjects objectAtIndex:0];
+         */
+        cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
     }
     cell.roll.font = [UIFont fontWithName:@"Walkway SemiBold" size:24];
     cell.film.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];

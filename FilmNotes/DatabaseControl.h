@@ -19,5 +19,5 @@
 -(void)createTable;
 -(void) sendSqlData:(NSString *)sql whichTable:(NSString *)table;
 -(NSString *)singleRead:(NSString *)sql;
--(void)removeRoll:(NSString *)rollId;
+-(void)removeRow:(NSString *)defaultID inTable:(NSString *)table;
 @end
