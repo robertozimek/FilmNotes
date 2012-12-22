@@ -21,7 +21,7 @@
 
 - (void)selectAll:(id)sender
 {
-    [self setSelectedRange:NSMakeRange(6,self.text.length)];
+    [self setSelectedRange:NSMakeRange(7,self.text.length)];
     [UIMenuController sharedMenuController].menuVisible = YES;
 }
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {

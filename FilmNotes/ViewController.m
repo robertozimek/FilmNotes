@@ -107,7 +107,7 @@
         cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
     }
-    cell.roll.font = [UIFont fontWithName:@"Walkway SemiBold" size:24];
+    cell.roll.font = [UIFont fontWithName:@"Walkway SemiBold" size:34];
     cell.film.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
     cell.camera.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];
     cell.date.font = [UIFont fontWithName:@"Walkway SemiBold" size:20];

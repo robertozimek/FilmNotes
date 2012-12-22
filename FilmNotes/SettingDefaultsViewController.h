@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *defaultLabel;
 @property (strong, nonatomic) IBOutlet UIButton *gpsButton;
 @property (assign,nonatomic) BOOL update;
-@property (strong, nonatomic) NSString *rowID;
+@property (assign, nonatomic) NSInteger rowID;
 @property (strong, nonatomic) NSArray *data;
 
 @end

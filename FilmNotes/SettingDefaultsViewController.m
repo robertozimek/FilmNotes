@@ -12,6 +12,7 @@
 
 @interface SettingDefaultsViewController ()
 @property (strong,nonatomic) DatabaseControl *dataController;
+@property (assign,nonatomic) NSInteger defaultID;
 @end
 
 @implementation SettingDefaultsViewController
@@ -28,6 +29,7 @@
 @synthesize defaultLabel;
 @synthesize dataController=_dataController;
 @synthesize rowID;
+@synthesize defaultID;
 @synthesize data;
 
 -(DatabaseControl *)dataController
@@ -93,37 +95,37 @@
     filmTextField.textColor = fontColor;
     filmTextField.textAlignment = NSTextAlignmentLeft;
     filmTextField.font = generalFont;
-    filmTextField.placeholder = @"Kodak T-Max";
+    filmTextField.placeholder = @"Fuji Astia";
     filmTextField.clearsOnBeginEditing = YES;
     
     isoTextField.textColor = fontColor;
     isoTextField.textAlignment = NSTextAlignmentLeft;
     isoTextField.font = generalFont;
-    isoTextField.placeholder = @"1600";
+    isoTextField.placeholder = @"100";
     isoTextField.clearsOnBeginEditing = YES;
     
     exposureTextField.textColor = fontColor;
     exposureTextField.textAlignment = NSTextAlignmentLeft;
     exposureTextField.font = generalFont;
-    exposureTextField.placeholder = @"24";
+    exposureTextField.placeholder = @"36";
     exposureTextField.clearsOnBeginEditing = YES;
     
     cameraTextField.textColor = fontColor;
     cameraTextField.textAlignment = NSTextAlignmentLeft;
     cameraTextField.font = generalFont;
-    cameraTextField.placeholder = @"Canonet 28";
+    cameraTextField.placeholder = @"Leica M6";
     cameraTextField.clearsOnBeginEditing = YES;
     
     focalTextField.textColor = fontColor;
     focalTextField.textAlignment = NSTextAlignmentLeft;
     focalTextField.font = generalFont;
-    focalTextField.placeholder = @"40mm";
+    focalTextField.placeholder = @"50mm";
     focalTextField.clearsOnBeginEditing = YES;
     
     apertureTextField.textColor = fontColor;
     apertureTextField.textAlignment = NSTextAlignmentLeft;
     apertureTextField.font = generalFont;
-    apertureTextField.placeholder = @"F/2.8";
+    apertureTextField.placeholder = @"F/0.95";
     apertureTextField.clearsOnBeginEditing = YES;
     
     saveButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
@@ -138,17 +140,19 @@
     
     if (update)
     {
-        
-        NSString *rowData = [NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = %@",rowID];
+        data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+        NSLog(@"data.count %u, rowID %d",data.count,rowID);
+        defaultID = [[[data objectAtIndex:(data.count - rowID - 1)] objectAtIndex:0] integerValue];
+        NSString *rowData = [NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = %d", defaultID];
         data = [self.dataController readTable:rowData];
         defaultLabel.text = @"Update Defaults:";
-        filmTextField.text = [[data objectAtIndex:0] objectAtIndex:2];
-        isoTextField.text = [[data objectAtIndex:0] objectAtIndex:3];
-        exposureTextField.text = [[data objectAtIndex:0] objectAtIndex:4];
-        cameraTextField.text = [[data objectAtIndex:0] objectAtIndex:5];
-        focalTextField.text = [[data objectAtIndex:0] objectAtIndex:6];
-        apertureTextField.text = [[data objectAtIndex:0] objectAtIndex:7];
-        if([[[data objectAtIndex:0] objectAtIndex:8] isEqualToString:@"YES"])
+        filmTextField.text = [[data objectAtIndex:0] objectAtIndex:1];
+        isoTextField.text = [[data objectAtIndex:0] objectAtIndex:2];
+        exposureTextField.text = [[data objectAtIndex:0] objectAtIndex:3];
+        cameraTextField.text = [[data objectAtIndex:0] objectAtIndex:4];
+        focalTextField.text = [[data objectAtIndex:0] objectAtIndex:5];
+        apertureTextField.text = [[data objectAtIndex:0] objectAtIndex:6];
+        if([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
             [gpsButton setTitle:@"YES" forState: UIControlStateNormal];
         else
             [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
@@ -166,15 +170,9 @@
 
 - (void)saveData
 {
-    NSInteger toSelect;
-    NSArray *checkForDefaults = [self.dataController readTable:@"SELECT * FROM Defaults WHERE isDefault = 1;"];
-    if (checkForDefaults.count == 0)
-        toSelect = 1;
-    else{
-        toSelect = 0;
-        [self.dataController sendSqlData:[NSString stringWithFormat:@"UPDATE Defaults SET isDefault = '%d' WHERE id = '%@'",toSelect,[[checkForDefaults objectAtIndex:0] objectAtIndex:0]] whichTable:@"Defaults"];
-        toSelect = 1;
-    }
+    NSString *isDefault = [NSString stringWithFormat:@"%i",0];
+    [[NSUserDefaults standardUserDefaults]
+     setObject:isDefault forKey:@"selectedDefault"];
     
     NSString *focal = @"";
     NSString *aperture = @"";
@@ -183,13 +181,15 @@
     if (apertureTextField.text.length > 2)
         aperture = [apertureTextField.text substringFromIndex:2];
     
-    NSString *defaultsTable = [NSString stringWithFormat:@"INSERT INTO Defaults ('isDefault','FilmName','Iso','Exposure','Camera','Focal','Aperture','Gps') VALUES ('%d','%@','%@','%@','%@','%@','%@','%@');",toSelect,filmTextField.text,isoTextField.text,exposureTextField.text,cameraTextField.text,focal,aperture,gpsButton.currentTitle];
+    NSString *defaultsTable = [NSString stringWithFormat:@"INSERT INTO Defaults ('FilmName','Iso','Exposure','Camera','Focal','Aperture','Gps') VALUES ('%@','%@','%@','%@','%@','%@','%@');",filmTextField.text,isoTextField.text,exposureTextField.text,cameraTextField.text,focal,aperture,gpsButton.currentTitle];
     [self.dataController sendSqlData:defaultsTable whichTable:@"Defaults"];
 }
 
 - (void)updateData
 {
-    
+    NSString *isDefault = [NSString stringWithFormat:@"%i",rowID];
+    [[NSUserDefaults standardUserDefaults]
+     setObject:isDefault forKey:@"selectedDefault"];
     NSString *focal = @"";
     NSString *aperture = @"";
     if (focalTextField.text.length > 2)
@@ -197,7 +197,7 @@
     if (apertureTextField.text.length > 2)
         aperture = [apertureTextField.text substringFromIndex:2];
     
-    NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%@';",filmTextField.text,isoTextField.text,exposureTextField.text,cameraTextField.text,focal,aperture,gpsButton.currentTitle,rowID];
+    NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%d';",filmTextField.text,isoTextField.text,exposureTextField.text,cameraTextField.text,focal,aperture,gpsButton.currentTitle,defaultID];
     [self.dataController sendSqlData:updateData whichTable:@"Defaults"];
 }
 

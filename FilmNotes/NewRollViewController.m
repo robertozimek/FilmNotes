@@ -166,7 +166,10 @@
     
     [self.view addGestureRecognizer:tap];
     
-    data = [self.dataController readTable:@"SELECT * FROM Defaults WHERE isDefault = 1"];
+    NSString *theDefault = [[NSUserDefaults standardUserDefaults]
+                            stringForKey:@"theDefault"];
+    NSLog(@"theDefault: %@",theDefault);
+    data = [self.dataController readTable:[NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = '%@'",theDefault]];
     
     UIFont *generalFont = [UIFont fontWithName:@"Walkway SemiBold" size:24];
     UIColor *fontColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
@@ -178,55 +181,54 @@
     filmField.textColor = fontColor;
     filmField.textAlignment = NSTextAlignmentLeft;
     filmField.font = generalFont;
-    filmField.placeholder = @"Kodak T-Max";
+    filmField.placeholder = @"Fuji Astia";
     filmField.clearsOnBeginEditing = YES;
     
     isoField.textColor = fontColor;
     isoField.textAlignment = NSTextAlignmentLeft;
     isoField.font = generalFont;
-    isoField.placeholder = @"1600";
+    isoField.placeholder = @"100";
     isoField.clearsOnBeginEditing = YES;
         
     exposureField.textColor = fontColor;
     exposureField.textAlignment = NSTextAlignmentLeft;
     exposureField.font = generalFont;
-    exposureField.placeholder = @"24";
+    exposureField.placeholder = @"36";
     exposureField.clearsOnBeginEditing = YES;
     
     cameraField.textColor = fontColor;
     cameraField.textAlignment = NSTextAlignmentLeft;
     cameraField.font = generalFont;
-    cameraField.placeholder = @"Canonet 28";
+    cameraField.placeholder = @"Leica M6";
     cameraField.clearsOnBeginEditing = YES;
         
-    
     focalLengthField.textColor = fontColor;
     focalLengthField.textAlignment = NSTextAlignmentLeft;
     focalLengthField.font = generalFont;
-    focalLengthField.placeholder = @"40mm";
+    focalLengthField.placeholder = @"50mm";
     focalLengthField.clearsOnBeginEditing = YES;
     
     apertureField.textColor = fontColor;
     apertureField.textAlignment = NSTextAlignmentLeft;
     apertureField.font = generalFont;
-    apertureField.placeholder = @"F/2.8";
+    apertureField.placeholder = @"F/0.95";
     
     gps = @"No GPS";
     
     if (data.count != 0)
     {
+        if(!([[[data objectAtIndex:0] objectAtIndex:1] isEqualToString:@""]))
+            filmField.text = [[data objectAtIndex:0] objectAtIndex:1];
         if(!([[[data objectAtIndex:0] objectAtIndex:2] isEqualToString:@""]))
-            filmField.text = [[data objectAtIndex:0] objectAtIndex:2];
+            isoField.text = [[data objectAtIndex:0] objectAtIndex:2];
         if(!([[[data objectAtIndex:0] objectAtIndex:3] isEqualToString:@""]))
-            isoField.text = [[data objectAtIndex:0] objectAtIndex:3];
+            exposureField.text = [[data objectAtIndex:0] objectAtIndex:3];
         if(!([[[data objectAtIndex:0] objectAtIndex:4] isEqualToString:@""]))
-            exposureField.text = [[data objectAtIndex:0] objectAtIndex:4];
+            cameraField.text = [[data objectAtIndex:0] objectAtIndex:4];
         if(!([[[data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""]))
-            cameraField.text = [[data objectAtIndex:0] objectAtIndex:5];
+            focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:5]];
         if(!([[[data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""]))
-            focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:6]];
-        if(!([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@""]))
-            apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:7]];
+            apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
     }
     
     startButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
@@ -240,7 +242,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     if(data.count != 0)
-        if([[[data objectAtIndex:0] objectAtIndex:8] isEqualToString:@"YES"])
+        if([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
         {
             [gpsButton setTitle:@"NO" forState:UIControlStateNormal];
             [self performSelector:@selector(gpsButtonPressed:) withObject:gpsButton];

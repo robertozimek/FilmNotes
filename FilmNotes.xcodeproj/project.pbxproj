@@ -26,6 +26,8 @@
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		08838E4B1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		08838E4C1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
+		0893612B1686586B0065F023 /* backSlashKeyDownBackground-Highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893612A1686586B0065F023 /* backSlashKeyDownBackground-Highlight.png */; };
+		0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893612C168664F10065F023 /* edit-arrow@2x.png */; };
 		08955500166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
 		08955501166DB6010081AD46 /* TTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089554FF166DB6000081AD46 /* TTAlertView.m */; };
 		08955508166DDB850081AD46 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955507166DDB850081AD46 /* MapKit.framework */; };
@@ -98,6 +100,8 @@
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
 		08838E491682C01200195750 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		08838E4A1682C01200195750 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
+		0893612A1686586B0065F023 /* backSlashKeyDownBackground-Highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "backSlashKeyDownBackground-Highlight.png"; sourceTree = "<group>"; };
+		0893612C168664F10065F023 /* edit-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow@2x.png"; sourceTree = "<group>"; };
 		089554FE166DB6000081AD46 /* TTAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAlertView.h; sourceTree = "<group>"; };
 		089554FF166DB6000081AD46 /* TTAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAlertView.m; sourceTree = "<group>"; };
 		08955507166DDB850081AD46 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -285,8 +289,10 @@
 			isa = PBXGroup;
 			children = (
 				086E3B7016845E8A00F3ECA1 /* edit-arrow.png */,
+				0893612C168664F10065F023 /* edit-arrow@2x.png */,
 				08AEE7801683A35400038F37 /* settings-gear.png */,
 				081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */,
+				0893612A1686586B0065F023 /* backSlashKeyDownBackground-Highlight.png */,
 				08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */,
 				08D14F5B16671A1000668779 /* FilmNotes-Info.plist */,
 				08D14F5C16671A1000668779 /* InfoPlist.strings */,
@@ -398,6 +404,8 @@
 				08E144B1166C20110004ACAD /* MainStoryboard.storyboard in Resources */,
 				081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 				086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */,
+				0893612B1686586B0065F023 /* backSlashKeyDownBackground-Highlight.png in Resources */,
+				0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

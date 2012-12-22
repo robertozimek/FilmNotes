@@ -8,6 +8,7 @@
 
 #import "NumberKeypadBackSlash.h"
 
+static UIImage *backgroundImage;
 static UIImage *backgroundImageDepressed;
 
 /**
@@ -16,16 +17,18 @@ static UIImage *backgroundImageDepressed;
 @implementation BackSlashButton
 
 + (void) initialize {
-	backgroundImageDepressed = [[UIImage imageNamed:@"backSlashKeyDownBackground.png"] retain];
+	backgroundImage = [[UIImage imageNamed:@"backSlashKeyDownBackground.png"] retain];
+    backgroundImageDepressed = [[UIImage imageNamed:@"backSlashKeyDownBackground-Highlight.png"] retain];
 }
 
 - (id) init {
 	if(self = [super initWithFrame:CGRectMake(0, 480, 105, 53)]) { //Initially hidden	
 		//[super adjustsImageWhenDisabled:NO];
 		self.titleLabel.font = [UIFont systemFontOfSize:35];
-		[self setTitleColor:[UIColor colorWithRed:77.0f/255.0f green:84.0f/255.0f blue:98.0f/255.0f alpha:1.0] forState:UIControlStateNormal];	
+		[self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self setBackgroundImage:backgroundImage forState:UIControlStateNormal];
 		[self setBackgroundImage:backgroundImageDepressed forState:UIControlStateHighlighted];
-		[self setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+		[self setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
 		[self setTitle:@"/" forState:UIControlStateNormal];
 	}
 	return self;

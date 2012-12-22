@@ -37,7 +37,7 @@
 {
     [self openDB];
     char *err;
-    NSString *sql = @"CREATE TABLE IF NOT EXISTS Roll (id INTEGER PRIMARY KEY AUTOINCREMENT,ExposureId INTEGER,FilmName TEXT,Iso INTEGER,Camera TEXT,Date TEXT);CREATE TABLE IF NOT EXISTS Exposure (id INTEGER NOT NULL,Roll_id INTEGER,Exposure_Id INTEGER,Focal INTEGER,Aperture DOUBLE,Shutter TEXT,Gps TEXT, Notes TEXT,FOREIGN KEY (Roll_id) REFERENCES Roll(id) ON DELETE CASCADE);CREATE TABLE IF NOT EXISTS Defaults (id INTEGER PRIMARY KEY AUTOINCREMENT,isDefault INTEGER,FilmName TEXT,Iso INTEGER,Exposure INTEGER,Camera TEXT,Focal INTEGER,Aperture DOUBLE,Gps TEXT);";
+    NSString *sql = @"CREATE TABLE IF NOT EXISTS Roll (id INTEGER PRIMARY KEY AUTOINCREMENT,ExposureId INTEGER,FilmName TEXT,Iso INTEGER,Camera TEXT,Date TEXT);CREATE TABLE IF NOT EXISTS Exposure (id INTEGER NOT NULL,Roll_id INTEGER,Exposure_Id INTEGER,Focal INTEGER,Aperture DOUBLE,Shutter TEXT,Gps TEXT, Notes TEXT,FOREIGN KEY (Roll_id) REFERENCES Roll(id) ON DELETE CASCADE);CREATE TABLE IF NOT EXISTS Defaults (id INTEGER PRIMARY KEY AUTOINCREMENT,FilmName TEXT,Iso INTEGER,Exposure INTEGER,Camera TEXT,Focal INTEGER,Aperture DOUBLE,Gps TEXT);";
     if(sqlite3_exec(_FilmNotesDB, [sql UTF8String], NULL,NULL,&err) != SQLITE_OK)
     {
         sqlite3_close(_FilmNotesDB);
@@ -79,7 +79,6 @@
             NSString *field6Str = @"";
             NSString *field7Str = @"";
             NSString *field8Str = @"";
-            NSString *field9Str = @"";
             
             
             char *field1 = (char *) sqlite3_column_text(statement,0);
@@ -127,11 +126,6 @@
             if (field8 != NULL)
                 field8Str = [[NSString alloc]initWithUTF8String:field8];
             [entries addObject:field8Str];
-            
-            char *field9 = (char *) sqlite3_column_text(statement,8);
-            if (field9 != NULL)
-                field9Str = [[NSString alloc]initWithUTF8String:field9];
-            [entries addObject:field9Str];
             
  
             [filmArray addObject:[entries copy]];

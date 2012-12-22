@@ -14,5 +14,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *cameraLabel;
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
-
+@property (assign, nonatomic) NSInteger index;
 @end

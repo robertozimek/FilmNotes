@@ -14,9 +14,8 @@
 @interface SettingViewController ()
 @property (strong,nonatomic) DatabaseControl *dataController;
 @property (strong,nonatomic) NSArray *data;
-@property (strong,nonatomic) NSString *lastSelected;
-@property (strong,nonatomic) NSIndexPath *selectedPath;
-@property (assign) NSInteger buttonTag;
+@property (assign,nonatomic) NSInteger buttonTag;
+@property (strong,nonatomic) NSString *isDefault;
 @end
 
 @implementation SettingViewController
@@ -25,10 +24,8 @@
 @synthesize selectDefaultLabel;
 @synthesize dataController=_dataController;
 @synthesize data;
-@synthesize lastSelected;
-@synthesize selectedPath;
 @synthesize buttonTag;
-
+@synthesize isDefault;
 
 -(DatabaseControl *)dataController
 {
@@ -82,12 +79,42 @@
     else
         selectDefaultLabel.hidden = NO;
     [defaultsTableView reloadData];
+    
+    isDefault = [[NSUserDefaults standardUserDefaults]
+                           stringForKey:@"selectedDefault"];
+ 
+    if (![isDefault isEqualToString:@"No Default"] && (isDefault != nil))
+    {
+        NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[isDefault integerValue] inSection:0];
+        [defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
+    
+    
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"theDefault %@",isDefault);
+    if (![isDefault isEqualToString:@"No Default"] && (isDefault != nil))
+        [[NSUserDefaults standardUserDefaults] setObject:[[data objectAtIndex:([data count]-[isDefault integerValue]-1)] objectAtIndex:0] forKey:@"theDefault"];
+    else
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"theDefault"];
+    NSLog(@"NSUserDefault theDefault %@",[[NSUserDefaults standardUserDefaults]
+                           stringForKey:@"theDefault"]);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.dataController removeRow:[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Defaults"];
         data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+        NSLog(@"deleted row");
+        if (indexPath.row == [isDefault integerValue])
+        {
+            NSLog(@"default unset");
+            isDefault = @"No Default";
+            [[NSUserDefaults standardUserDefaults] setObject:isDefault forKey:@"selectedDefault"];
+        }
+        
         [tableView reloadData];
         if ([data count] == 0)
             selectDefaultLabel.hidden = YES;
@@ -128,45 +155,34 @@
     cell.isoLabel.textAlignment = NSTextAlignmentLeft;
     cell.cameraLabel.textAlignment = NSTextAlignmentLeft;
     
-    cell.filmLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:2];
-    cell.isoLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:3];
+    cell.filmLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:1];
+    cell.isoLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:2];
     cell.cameraLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:4];
-    cell.editButton.tag = [[[data objectAtIndex:reserveIndex] objectAtIndex:0] integerValue];
-    
-    if([[[data objectAtIndex:reserveIndex] objectAtIndex:1]  isEqualToString:@"1"])
-    {
-        selectedPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
-        lastSelected = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-        [tableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
+    cell.editButton.tag = indexPath.row;
     
     return cell;
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath != tableView.indexPathForSelectedRow)
+        [tableView deselectRowAtIndexPath:tableView.indexPathForSelectedRow animated:NO];
+    
+    return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row != (long)[lastSelected integerValue])
-        [tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[lastSelected integerValue] inSection:0] animated:YES];
-    if (![lastSelected isEqualToString:@""])
-    {
-        NSString *removeDefault = [NSString stringWithFormat:@"UPDATE Defaults SET isDefault = '%d' WHERE id = '%@';",0,[[data objectAtIndex:[data count]-[lastSelected integerValue]-1] objectAtIndex:0]];
-        [self.dataController sendSqlData:removeDefault whichTable:@"Defaults"];
-    }
+    isDefault = [NSString stringWithFormat:@"%d",indexPath.row];
+    [[NSUserDefaults standardUserDefaults]
+     setObject:isDefault forKey:@"selectedDefault"];
     
-    NSString *addDefault = [NSString stringWithFormat:@"UPDATE Defaults SET isDefault = '%d' WHERE id = '%@';",1,[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0]];
-    
-    [self.dataController sendSqlData:addDefault whichTable:@"Defaults"];
-    
-    lastSelected = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == (long)[lastSelected integerValue])
-    {
-        NSString *removeDefault = [NSString stringWithFormat:@"UPDATE Defaults SET isDefault = '%d' WHERE id = '%@';",0,[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0]];
-        [self.dataController sendSqlData:removeDefault whichTable:@"Defaults"];
-    }
+    isDefault = @"No Default";
+    [[NSUserDefaults standardUserDefaults] setObject:isDefault forKey:@"selectedDefault"];
 }
 
 
@@ -178,7 +194,7 @@
     if ([segue.identifier isEqualToString:@"UpdateDefaultsSegue"]) {
         SettingDefaultsViewController *settingDefaultsViewController = segue.destinationViewController;
         settingDefaultsViewController.update = YES;
-        settingDefaultsViewController.rowID = [NSString stringWithFormat:@"%ld",(long)buttonTag];
+        settingDefaultsViewController.rowID = buttonTag;
     }
 }
 

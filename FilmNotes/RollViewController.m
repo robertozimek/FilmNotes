@@ -24,6 +24,7 @@
 @property (strong, nonatomic) NSString *currentExposure;
 @property (strong, nonatomic) LocationController *locationController;
 @property (strong, nonatomic) NSString *gps;
+@property (strong, nonatomic) NSString *rollKey;
 @end
 
 @implementation RollViewController
@@ -42,6 +43,7 @@
 @synthesize notesTextView;
 
 @synthesize RollNumber;
+@synthesize rollKey;
 @synthesize rollData;
 @synthesize exposureData;
 @synthesize currentExposure;
@@ -112,7 +114,7 @@
 -(void)handleSwipeDownFrom:(UISwipeGestureRecognizer *)recognizer {
     [self updateDatabase];
     [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:@"lastExposure"];
+     setObject:currentExposureTextField.text forKey:rollKey];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -136,7 +138,7 @@
 -(void)handleSwipeRightFrom:(UISwipeGestureRecognizer *)recognizer {
     [self dismissKeyboard];
     [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:@"lastExposure"];
+     setObject:currentExposureTextField.text forKey:rollKey];
     [self goBack];
 }
 
@@ -144,7 +146,7 @@
 -(void)handleSwipeLeftFrom:(UISwipeGestureRecognizer *)recognizer {
     [self dismissKeyboard];
     [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:@"lastExposure"];
+     setObject:currentExposureTextField.text forKey:rollKey];
     [self advance];
 }
 
@@ -152,7 +154,7 @@
 - (IBAction)advanceButton:(id)sender {
     [self dismissKeyboard];
     [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:@"lastExposure"];
+     setObject:currentExposureTextField.text forKey:rollKey];
     [self advance];
 }
 
@@ -162,7 +164,7 @@
     NSString *theExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",insertExposure,RollNumber]];
     if([theExposure isEqualToString:@""])
     {
-        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Gps','Notes') VALUES ('%d','%@','%@','%@','%@')",insertExposure,RollNumber,[[rollData objectAtIndex:0] objectAtIndex:1],@"No GPS",@"Notes:"];
+        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Gps','Notes') VALUES ('%d','%@','%@','%@','%@')",insertExposure,RollNumber,[[rollData objectAtIndex:0] objectAtIndex:1],@"No GPS",@"Notes: "];
         [self.dataController sendSqlData:insertExposureToTable whichTable:@"Exposure"];
     }
 }
@@ -242,6 +244,7 @@
     focalLengthTextField.text = @"";
     apertureTextField.text = @"";
     shutterSpeedTextField.text = @"";
+    notesTextView.text = @"Notes: ";
 }
 
 //Reload Exposure Data
@@ -438,33 +441,30 @@
     exposureLabel.font = [UIFont systemFontOfSize:28];
     exposureLabel.textAlignment = NSTextAlignmentLeft;
     
-    currentExposureTextField.textColor = [UIColor redColor];
+    currentExposureTextField.textColor = fontColor;
     currentExposureTextField.textAlignment = NSTextAlignmentRight;
-    currentExposureTextField.font = generalFont;
+    currentExposureTextField.font = [UIFont systemFontOfSize:28];
     currentExposureTextField.clearsOnBeginEditing = YES;
     
     apertureTextField.textColor = fontColor;
     apertureTextField.textAlignment = NSTextAlignmentLeft;
     apertureTextField.font = generalFont;
-    apertureTextField.placeholder = @"F/2.8";
-    apertureTextField.clearsOnBeginEditing = YES;
+    apertureTextField.placeholder = @"F/0.95";
     
     shutterSpeedTextField.textColor = fontColor;
     shutterSpeedTextField.textAlignment = NSTextAlignmentLeft;
     shutterSpeedTextField.font = generalFont;
     shutterSpeedTextField.tag = 5;
-    shutterSpeedTextField.placeholder = @"500";
-    shutterSpeedTextField.clearsOnBeginEditing = YES;
+    shutterSpeedTextField.placeholder = @"1/500";
     
     focalLengthTextField.textColor = fontColor;
     focalLengthTextField.textAlignment = NSTextAlignmentLeft;
     focalLengthTextField.font = generalFont;
-    focalLengthTextField.placeholder = @"40mm";
-    focalLengthTextField.clearsOnBeginEditing = YES;
+    focalLengthTextField.placeholder = @"50mm";
     
     notesTextView.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
     notesTextView.font = [UIFont fontWithName:@"Walkway SemiBold" size:18];
-    notesTextView.text = @"Notes:";
+    notesTextView.text = @"Notes: ";
     
     gpsButton.titleLabel.font = generalFont;
     [gpsButton setTitleColor:fontColor forState:UIControlStateNormal];
@@ -473,14 +473,17 @@
     [advanceButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
     [advanceButton setTitle:@"Advance" forState:UIControlStateNormal];
     
+    rollKey = [NSString stringWithFormat:@"RollNumber %@",RollNumber];
     
     NSString *lastExposure = [[NSUserDefaults standardUserDefaults]
-                              stringForKey:@"lastExposure"];
-    
+                              stringForKey:rollKey];
+    if(!lastExposure)
+        lastExposure = @"1";
+      
     //Retrieve First Exposure Data
     NSString *selectRoll = [NSString stringWithFormat:@"SELECT * FROM Roll WHERE id=%@",RollNumber];
     NSString *selectExposure = [NSString stringWithFormat:@"SELECT * FROM Exposure WHERE roll_id=%@ AND id='%@'",RollNumber,lastExposure];
-    rollData = [self.dataController readTable:selectRoll];
+    rollData = [self.dataController readTable:selectRoll];  
     [self reloadViewData:selectExposure];
 }
 
@@ -491,7 +494,7 @@
     NSRange cursorPositon = [textView selectedRange];
     NSString *selectedText = [textView textInRange:textView.selectedTextRange];
     
-    if ((cursorPositon.location < 6) || (((cursorPositon.location == 6) && (selectedText.length == 0)) && ([text isEqualToString:@""])))
+    if ((cursorPositon.location < 7) || (((cursorPositon.location == 7) && (selectedText.length == 0)) && ([text isEqualToString:@""])))
         return NO;
     
     return YES;
@@ -500,6 +503,8 @@
 //Shifting View Up When Editing Notes TextView
 - (void)textViewDidBeginEditing:(CustomTextView *)textView
 {
+    if ([textView.text isEqualToString:@"Notes:"])
+         textView.text = @"Notes: ";
     [self setViewMovedUp:YES];
 }
 
@@ -542,11 +547,11 @@
             [self performSelector:@selector(dismissKeyboard)];
         }
     }
-    if ([textField isEqual:shutterSpeedTextField])
+    if ([textField isEqual:shutterSpeedTextField] && ![string isEqualToString:@""])
     {
-        if((textField.text.length >= 5))
+        if((textField.text.length >= 6))
         {
-            textField.text = [textField.text substringToIndex:5];
+            textField.text = [textField.text substringToIndex:6];
             [self performSelector:@selector(dismissKeyboard)];
         }
     }
@@ -591,7 +596,11 @@
         const NSInteger length = [textField offsetFromPosition:selectionStart toPosition:selectionEnd];
         
         NSRange cursorPositon = NSMakeRange(location, length);
-        
+        if((textField.text.length == cursorPositon.length) || (textField.text.length-1 == cursorPositon.length))
+        {
+            UITextPosition *cutOffPositon = [textField positionFromPosition:selectionStart offset:textField.text.length-2];
+            [textField setSelectedTextRange:[textField textRangeFromPosition:selectionStart toPosition:cutOffPositon]];
+        }
         if(cursorPositon.location > textField.text.length - 2)
             return NO;
     }
@@ -623,14 +632,24 @@
 	}
     if([textField isEqual:apertureTextField])
     {
-        textField.text = @"F/";
+        if([textField.text isEqualToString:@""])
+            textField.text = [NSString stringWithFormat:@"F/%@",textField.text];
     }
     if([textField isEqual:focalLengthTextField])
     {
-        textField.text = @"mm";
-        textField.selectedTextRange = [textField
-                                       textRangeFromPosition:textField.beginningOfDocument
-                                       toPosition:textField.beginningOfDocument];
+        if([textField.text isEqualToString:@""])
+        {
+            textField.text = [NSString stringWithFormat:@"%@mm",textField.text];
+            textField.selectedTextRange = [textField
+                                           textRangeFromPosition:textField.beginningOfDocument
+                                           toPosition:textField.beginningOfDocument];
+        }else
+        {
+            UITextPosition *cutOffPositon = [textField positionFromPosition:textField.beginningOfDocument offset:textField.text.length-2];
+            textField.selectedTextRange = [textField
+                                           textRangeFromPosition:cutOffPositon
+                                           toPosition:cutOffPositon];
+        }
     }
 }
 
@@ -680,7 +699,7 @@
             [self updateDatabase]; // Updating Database
             
             [[NSUserDefaults standardUserDefaults]
-             setObject:currentExposureTextField.text forKey:@"lastExposure"];
+             setObject:currentExposureTextField.text forKey:rollKey];
             
             //Animating Data Based On Whether The User Is Advancing Or Going Back
             if([textField.text intValue] == [currentExposure intValue])
