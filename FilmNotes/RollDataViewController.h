@@ -10,7 +10,7 @@
 #import "LocationController.h"
 #import <sqlite3.h>
 
-@interface NewRollViewController : UIViewController <LocationControllerDelegate>
+@interface RollDataViewController : UIViewController <LocationControllerDelegate>
 {
     
 }
@@ -21,7 +21,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *focalLengthField;
 @property (weak, nonatomic) IBOutlet UITextField *apertureField;
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
-@property (weak, nonatomic) IBOutlet UIButton *startButton;
+@property (strong, nonatomic) IBOutlet UIButton *commitButton;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (assign, nonatomic) NSInteger rowID;
+@property (weak, nonatomic) NSString *fromView;
 
 - (void)saveData;
 

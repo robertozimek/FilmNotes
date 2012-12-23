@@ -9,7 +9,7 @@
 #import "SettingViewController.h"
 #import "DatabaseControl.h"
 #import "CustomDefaultsCell.h"
-#import "SettingDefaultsViewController.h"
+#import "RollDataViewController.h"
 
 @interface SettingViewController ()
 @property (strong,nonatomic) DatabaseControl *dataController;
@@ -94,13 +94,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"theDefault %@",isDefault);
     if (![isDefault isEqualToString:@"No Default"] && (isDefault != nil))
         [[NSUserDefaults standardUserDefaults] setObject:[[data objectAtIndex:([data count]-[isDefault integerValue]-1)] objectAtIndex:0] forKey:@"theDefault"];
     else
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"theDefault"];
-    NSLog(@"NSUserDefault theDefault %@",[[NSUserDefaults standardUserDefaults]
-                           stringForKey:@"theDefault"]);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -187,14 +184,14 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"AddDefaultsSegue"]) {
-        SettingDefaultsViewController *settingDefaultsViewController = segue.destinationViewController;
-        settingDefaultsViewController.update = NO;
+    if ([segue.identifier isEqualToString:@"AddDefaults"]) {
+        RollDataViewController *rollDataViewController = segue.destinationViewController;
+        rollDataViewController.fromView = @"AddDefaults";
     }
-    if ([segue.identifier isEqualToString:@"UpdateDefaultsSegue"]) {
-        SettingDefaultsViewController *settingDefaultsViewController = segue.destinationViewController;
-        settingDefaultsViewController.update = YES;
-        settingDefaultsViewController.rowID = buttonTag;
+    if ([segue.identifier isEqualToString:@"UpdateDefaults"]) {
+        RollDataViewController *rollDataViewController  = segue.destinationViewController;
+        rollDataViewController.fromView = @"UpdateDefaults";
+        rollDataViewController.rowID = buttonTag;
     }
 }
 

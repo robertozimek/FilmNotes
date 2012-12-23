@@ -11,6 +11,7 @@
 #import "CustomCell.h"
 #import "MoreInfoViewController.h"
 #import "RollViewController.h"
+#import "RollDataViewController.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) DatabaseControl *dataController;
@@ -141,6 +142,10 @@
         NSIndexPath *indexPath = [self.aTableView indexPathForSelectedRow];
         RollViewController *rollViewController = segue.destinationViewController;
         rollViewController.RollNumber = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
+    }
+    if ([segue.identifier isEqualToString:@"NewRollView"]) {
+        RollDataViewController *rollDataViewController = segue.destinationViewController;
+        rollDataViewController.fromView = @"MainView";
     }
 }
 

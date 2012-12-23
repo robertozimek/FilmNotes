@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 wtc. All rights reserved.
 //
 
-#import "NewRollViewController.h"
+#import "RollDataViewController.h"
 #import "DatabaseControl.h"
 #import "MoreInfoViewController.h"
 #import <QuartzCore/QuartzCore.h>
@@ -14,15 +14,16 @@
 #import "TTAlertView.h"
 #import "LoadingView.h"
 
-@interface NewRollViewController ()
+@interface RollDataViewController ()
 @property (strong, nonatomic) LoadingView *loadingView;
 @property (strong, nonatomic) DatabaseControl *dataController;
 @property (strong, nonatomic) LocationController *locationController;
+@property (assign, nonatomic) NSInteger defaultID;
 @property (strong, nonatomic) NSString *gps;
 @property (strong, nonatomic) NSArray *data;
 @end
 
-@implementation NewRollViewController
+@implementation RollDataViewController
 #define kOFFSET_FOR_KEYBOARD 80.0
 @synthesize filmField;
 @synthesize isoField;
@@ -31,11 +32,15 @@
 @synthesize focalLengthField;
 @synthesize apertureField;
 @synthesize gpsButton;
-@synthesize startButton;
+@synthesize commitButton;
 @synthesize locationController;
 @synthesize loadingView;
 @synthesize gps;
 @synthesize data;
+@synthesize fromView;
+@synthesize titleLabel;
+@synthesize rowID;
+@synthesize defaultID;
 @synthesize dataController = _dataController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -54,36 +59,51 @@
 }
 
 - (IBAction)gpsButtonPressed:(UIButton *)sender {
-    if([sender.currentTitle isEqualToString:@"NO"])
+    if([fromView isEqualToString:@"MainView"])
     {
-        [self.locationController.locationManager startUpdatingLocation];
-        if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+        if([sender.currentTitle isEqualToString:@"NO"])
         {
-            loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-            [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
-        }else
-        {
-            BOOL loop = YES;
-            while (loop)
+            [self.locationController.locationManager startUpdatingLocation];
+            if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
             {
-                if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+                loadingView = [LoadingView loadLoadingViewIntoView:self.view];
+                [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+            }else
+            {
+                BOOL loop = YES;
+                while (loop)
                 {
-                    loop = NO;
-                    loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-                    [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+                    if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+                    {
+                        loop = NO;
+                        loadingView = [LoadingView loadLoadingViewIntoView:self.view];
+                        [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+                    }
                 }
-            }
             
+            }
+            [self animateButton:@"FromBottom"];
+            [sender setTitle:@"YES" forState: UIControlStateNormal];
         }
-        [self animateButton:@"FromBottom"];
-        [sender setTitle:@"YES" forState: UIControlStateNormal];
-    }
-    else
-    {
+        else
+        {
         
-        [self animateButton:@"FromTop"];
-        gps = @"No GPS";
-        [sender setTitle:@"NO" forState: UIControlStateNormal];
+            [self animateButton:@"FromTop"];
+            gps = @"No GPS";
+            [sender setTitle:@"NO" forState: UIControlStateNormal];
+        }
+    } else if ([fromView isEqualToString:@"AddDefaults"] || [fromView isEqualToString:@"UpdateDefaults"])
+    {
+        if([sender.currentTitle isEqualToString:@"NO"])
+        {
+            [self animateButton:@"FromBottom"];
+            [sender setTitle:@"YES" forState: UIControlStateNormal];
+        }
+        else
+        {
+            [self animateButton:@"FromTop"];
+            [sender setTitle:@"NO" forState: UIControlStateNormal];
+        }
     }
 }
 
@@ -98,13 +118,13 @@
     
 }
 
--(void) retrieveGPS
+-(void)retrieveGPS
 {
     [loadingView removeLoadingView];
     [self.locationController.locationManager stopUpdatingLocation];
 }
 
-- (void)saveData
+- (void)startData
 {
     if(filmField.text.length > 0 && isoField.text.length > 0 && exposureField.text.length > 0 && cameraField.text.length > 0){
         NSString *focal = @"";
@@ -139,10 +159,66 @@
     }
     
 }
-- (IBAction)startButton:(id)sender {
-    [self saveData];
+
+
+- (void)saveData
+{
+    NSString *isDefault = [NSString stringWithFormat:@"%i",0];
+    [[NSUserDefaults standardUserDefaults]
+     setObject:isDefault forKey:@"selectedDefault"];
+    
+    NSString *focal = @"";
+    NSString *aperture = @"";
+    if (focalLengthField.text.length > 2)
+        focal = [focalLengthField.text substringToIndex:focalLengthField.text.length-2];
+    if (apertureField.text.length > 2)
+        aperture = [apertureField.text substringFromIndex:2];
+    
+    NSString *defaultsTable = [NSString stringWithFormat:@"INSERT INTO Defaults ('FilmName','Iso','Exposure','Camera','Focal','Aperture','Gps') VALUES ('%@','%@','%@','%@','%@','%@','%@');",filmField.text,isoField.text,exposureField.text,cameraField.text,focal,aperture,gpsButton.currentTitle];
+    [self.dataController sendSqlData:defaultsTable whichTable:@"Defaults"];
+}
+
+- (void)updateData
+{
+    NSString *isDefault = [NSString stringWithFormat:@"%i",rowID];
+    [[NSUserDefaults standardUserDefaults]
+     setObject:isDefault forKey:@"selectedDefault"];
+    NSLog(@"updateData isDefault %@",isDefault);
+    NSString *focal = @"";
+    NSString *aperture = @"";
+    if (focalLengthField.text.length > 2)
+        focal = [focalLengthField.text substringToIndex:focalLengthField.text.length-2];
+    if (apertureField.text.length > 2)
+        aperture = [apertureField.text substringFromIndex:2];
+    
+    NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%d';",filmField.text,isoField.text,exposureField.text,cameraField.text,focal,aperture,gpsButton.currentTitle,defaultID];
+    [self.dataController sendSqlData:updateData whichTable:@"Defaults"];
+}
+
+- (IBAction)commitButtonPressed:(id)sender {
+    if([fromView isEqualToString:@"MainView"])
+        [self startData];
+    else if ([fromView isEqualToString:@"AddDefaults"] || [fromView isEqualToString:@"UpdateDefaults"])
+    {
+        if ((![filmField.text isEqualToString:@""] && ![isoField.text isEqualToString:@""] && ![cameraField.text isEqualToString:@""]) || ![exposureField.text isEqualToString:@""] || !([focalLengthField.text isEqualToString:@""] || [focalLengthField.text isEqualToString:@"mm"]) || !([apertureField.text isEqualToString:@""] || [apertureField.text isEqualToString:@"F/"]))
+        {
+            if([fromView isEqualToString:@"UpdateDefaults"])
+                [self updateData];
+            else
+                [self saveData];
+        }else
+        {
+            TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Roll Not Saved"
+                                                            message:@"Roll was not saved because required fields film, iso,camera are empty."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 
 -(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -166,13 +242,12 @@
     
     [self.view addGestureRecognizer:tap];
     
-    NSString *theDefault = [[NSUserDefaults standardUserDefaults]
-                            stringForKey:@"theDefault"];
-    NSLog(@"theDefault: %@",theDefault);
-    data = [self.dataController readTable:[NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = '%@'",theDefault]];
-    
     UIFont *generalFont = [UIFont fontWithName:@"Walkway SemiBold" size:24];
     UIColor *fontColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    
+    titleLabel.textColor = [UIColor redColor];
+    titleLabel.font = [UIFont systemFontOfSize:28];
+    
     gpsButton.titleLabel.font = generalFont;
     gpsButton.titleLabel.textAlignment = NSTextAlignmentLeft;
     [gpsButton setTitleColor:fontColor forState:UIControlStateNormal];
@@ -215,38 +290,77 @@
     
     gps = @"No GPS";
     
-    if (data.count != 0)
-    {
-        if(!([[[data objectAtIndex:0] objectAtIndex:1] isEqualToString:@""]))
-            filmField.text = [[data objectAtIndex:0] objectAtIndex:1];
-        if(!([[[data objectAtIndex:0] objectAtIndex:2] isEqualToString:@""]))
-            isoField.text = [[data objectAtIndex:0] objectAtIndex:2];
-        if(!([[[data objectAtIndex:0] objectAtIndex:3] isEqualToString:@""]))
-            exposureField.text = [[data objectAtIndex:0] objectAtIndex:3];
-        if(!([[[data objectAtIndex:0] objectAtIndex:4] isEqualToString:@""]))
-            cameraField.text = [[data objectAtIndex:0] objectAtIndex:4];
-        if(!([[[data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""]))
-            focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:5]];
-        if(!([[[data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""]))
-            apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
-    }
+    commitButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    commitButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    commitButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
+    [commitButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
     
-    startButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
-    startButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    startButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
-    [startButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
-    [startButton setTitle:@"Start" forState: UIControlStateNormal];
+    if ([fromView isEqualToString:@"MainView"])
+    {
+        NSString *theDefault = [[NSUserDefaults standardUserDefaults]
+                                stringForKey:@"theDefault"];
+        NSLog(@"theDefault: %@",theDefault);
+        data = [self.dataController readTable:[NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = '%@'",theDefault]];
+        
+        if (data.count != 0)
+        {
+            if(!([[[data objectAtIndex:0] objectAtIndex:1] isEqualToString:@""]))
+                filmField.text = [[data objectAtIndex:0] objectAtIndex:1];
+            if(!([[[data objectAtIndex:0] objectAtIndex:2] isEqualToString:@""]))
+                isoField.text = [[data objectAtIndex:0] objectAtIndex:2];
+            if(!([[[data objectAtIndex:0] objectAtIndex:3] isEqualToString:@""]))
+                exposureField.text = [[data objectAtIndex:0] objectAtIndex:3];
+            if(!([[[data objectAtIndex:0] objectAtIndex:4] isEqualToString:@""]))
+                cameraField.text = [[data objectAtIndex:0] objectAtIndex:4];
+            if(!([[[data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""]))
+                focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:5]];
+            if(!([[[data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""]))
+                apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
+        }
+        
+        titleLabel.text = @"New Roll:";
+        [commitButton setTitle:@"Start" forState: UIControlStateNormal];
+    }
+    else if ([fromView isEqualToString:@"AddDefaults"])
+    {
+        [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
+        titleLabel.text = @"Add Defaults:";
+        [commitButton setTitle:@"Save" forState: UIControlStateNormal];
+    }else if ([fromView isEqualToString:@"UpdateDefaults"])
+    {
+        data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+        
+        defaultID = [[[data objectAtIndex:(data.count - rowID - 1)] objectAtIndex:0] integerValue];
+        NSString *rowData = [NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = %d", defaultID];
+        data = [self.dataController readTable:rowData];
+        filmField.text = [[data objectAtIndex:0] objectAtIndex:1];
+        isoField.text = [[data objectAtIndex:0] objectAtIndex:2];
+        exposureField.text = [[data objectAtIndex:0] objectAtIndex:3];
+        cameraField.text = [[data objectAtIndex:0] objectAtIndex:4];
+        focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[data objectAtIndex:0] objectAtIndex:5]];
+        apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
+        if([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
+            [gpsButton setTitle:@"YES" forState: UIControlStateNormal];
+        else
+            [gpsButton setTitle:@"NO" forState: UIControlStateNormal];
+        
+        titleLabel.text = @"Update Defaults:";
+        [commitButton setTitle:@"Update" forState: UIControlStateNormal];
+    }
     
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    if(data.count != 0)
-        if([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
-        {
-            [gpsButton setTitle:@"NO" forState:UIControlStateNormal];
-            [self performSelector:@selector(gpsButtonPressed:) withObject:gpsButton];
-        }
+    if([fromView isEqualToString:@"MainView"])
+    {
+        if(data.count != 0)
+            if([[[data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
+            {
+                [gpsButton setTitle:@"NO" forState:UIControlStateNormal];
+                [self performSelector:@selector(gpsButtonPressed:) withObject:gpsButton];
+            }
+    }
 }
 
 - (void)dismissKeyboard
