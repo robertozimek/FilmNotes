@@ -13,7 +13,7 @@
 @end
 
 @implementation MoreInfoViewController
-@synthesize InfoLabel;
+@synthesize InfoTextView;
 @synthesize InfoText;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,11 +41,11 @@
     [self.view addGestureRecognizer:recognizer];
     
     
-    InfoLabel.textColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
+    self.InfoTextView.textColor = [UIColor colorWithRed:255 green:0 blue:0 alpha:1];
     
-    InfoLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:24];
+    self.InfoTextView.font = [UIFont fontWithName:@"Walkway SemiBold" size:24];
     
-    InfoLabel.text = InfoText;
+    self.InfoTextView.text = self.InfoText;
 }
 - (IBAction)infoTouchUpInside:(id)sender {
     [self dismissViewControllerAnimated:YES completion:NULL];
@@ -58,4 +58,8 @@
 }
 
 
+- (void)viewDidUnload {
+    [self setInfoTextView:nil];
+    [super viewDidUnload];
+}
 @end

@@ -20,6 +20,9 @@
 @synthesize lon;
 @synthesize exposure;
 @synthesize mapView;
+@synthesize standardButton;
+@synthesize satelliteButton;
+@synthesize hybridButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,29 +36,123 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    
+    //Font
+    UIFont *mapTypeButtonFont = [UIFont fontWithName:@"Walkway SemiBold" size:18];
+    
+    //Colors
+    UIColor *buttonOneColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    UIColor *buttonTwoColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    
+    //Set Button Fonts
+    self.standardButton.titleLabel.font = mapTypeButtonFont;
+    self.satelliteButton.titleLabel.font = mapTypeButtonFont;
+    self.hybridButton.titleLabel.font = mapTypeButtonFont;
+    
+    //Set Button Background Colors
+    self.standardButton.backgroundColor = buttonOneColor;
+    self.hybridButton.backgroundColor = buttonTwoColor;
+    self.satelliteButton.backgroundColor = buttonTwoColor;
+    
+    //Set Button Title Colors
+    [self.standardButton setTitleColor:buttonTwoColor forState:UIControlStateNormal];
+    [self.satelliteButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+    [self.hybridButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+    
+    //Set Button Titles
+    [self.standardButton setTitle:@"Standard" forState:UIControlStateNormal];
+    [self.satelliteButton setTitle:@"Satellite" forState:UIControlStateNormal];
+    [self.hybridButton setTitle:@"Hybrid" forState:UIControlStateNormal];
+
+    //Set Button Tags
+    self.standardButton.tag = 1;
+    self.satelliteButton.tag = 2;
+    self.hybridButton.tag = 3;
+    
+    //Set Default MapType
+    self.mapView.mapType = MKMapTypeStandard;
+    
+    //Create a type CLLLocation that holds the latitude and longitude
+    self.location = [[CLLocation alloc] initWithLatitude:[lat floatValue] longitude:[lon floatValue]];
 }
+
+- (IBAction)mapTypeButtonPressed:(UIButton *)sender {
+    //Colors
+    UIColor *buttonOneColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    UIColor *buttonTwoColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    
+    //If button with tag one set MapType to Standard and set button colors
+    if(sender.tag == 1)
+    {
+        self.mapView.mapType = MKMapTypeStandard;
+        self.standardButton.backgroundColor = buttonOneColor;
+        [self.standardButton setTitleColor:buttonTwoColor forState:UIControlStateNormal];
+        self.satelliteButton.backgroundColor = buttonTwoColor;
+        [self.satelliteButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+        self.hybridButton.backgroundColor = buttonTwoColor;
+        [self.hybridButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+    }
+    
+    //If button with tag two set MapType to Satellite and set button colors
+    if(sender.tag == 2)
+    {
+        self.mapView.mapType = MKMapTypeSatellite;
+        self.standardButton.backgroundColor = buttonTwoColor;
+        [self.standardButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+        self.satelliteButton.backgroundColor = buttonOneColor;
+        [self.satelliteButton setTitleColor:buttonTwoColor forState:UIControlStateNormal];
+        self.hybridButton.backgroundColor = buttonTwoColor;
+        [self.hybridButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+    }
+    
+    //If button with tag three set MapType to Hybrid and set button colors
+    if(sender.tag == 3)
+    {
+        self.mapView.mapType = MKMapTypeHybrid;
+        self.standardButton.backgroundColor = buttonTwoColor;
+        [self.standardButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+        self.satelliteButton.backgroundColor = buttonTwoColor;
+        [self.satelliteButton setTitleColor:buttonOneColor forState:UIControlStateNormal];
+        self.hybridButton.backgroundColor = buttonOneColor;
+        [self.hybridButton setTitleColor:buttonTwoColor forState:UIControlStateNormal];
+    }
+}
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    location = [[CLLocation alloc] initWithLatitude:[lat floatValue] longitude:[lon floatValue]];
-    AddressAnnotation *addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:location.coordinate];
-    addAnnotation.title = [NSString stringWithFormat:@"Exposure %@",exposure];
+    //Create Pin and Annotation
+    AddressAnnotation *addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:self.location.coordinate];
+    //Set Annotation Title
+    addAnnotation.title = [NSString stringWithFormat:@"Exposure %@",self.exposure];
+    //Add Anotation to MapView
+    [self.mapView addAnnotation:addAnnotation];
+    
+    //Set Zoom in Region
     MKCoordinateSpan span;
     span.latitudeDelta = .009;
     span.longitudeDelta = .009;
     MKCoordinateRegion region;
-    region.center = location.coordinate;
+    region.center = self.location.coordinate;
     region.span = span;
-    [mapView setRegion:region animated: TRUE];
-    [mapView addAnnotation:addAnnotation];
+    
+    //Set Zoom In Region and Animate It
+	[self.mapView setRegion:region animated:YES];
+    
+    //Animate and Add Annotation
+    [self.mapView selectAnnotation:addAnnotation animated:YES];
+    
 }
+
 - (IBAction)backButtonPressed:(id)sender {
+    //Return to Roll View
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (IBAction)openMapsButtonPressed:(id)sender {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     
+    //Convert Coordinates Into Address
     [geocoder reverseGeocodeLocation:location
                    completionHandler:^(NSArray *placemarks, NSError *error) {
                        
@@ -87,17 +184,19 @@
                                                      (NSString *)kABPersonAddressZIPKey: zip,
                                                      (NSString *)kABPersonAddressCountryCodeKey: @"US"
                                                      };
-                           
-                           NSLog(@"%@ %@ %@ %@", address,city, state, zip);
                            CLLocationCoordinate2D coords =
-                           CLLocationCoordinate2DMake(location.coordinate.latitude,location.coordinate.longitude);
+                           CLLocationCoordinate2DMake(self.location.coordinate.latitude,self.location.coordinate.longitude);
                            
-                           
+                           //Store Coordinates with Address
                            MKPlacemark *place = [[MKPlacemark alloc]
                                                  initWithCoordinate:coords addressDictionary:addresses];
+                           //Send the Coordinates and Address to Apple Maps
                            MKMapItem *mapItem = [[MKMapItem alloc]initWithPlacemark:place];
-                           [mapItem setName:[NSString stringWithFormat:@"Exposure %@",exposure]];
                            
+                           //Give the address a Title Annotation
+                           [mapItem setName:[NSString stringWithFormat:@"Exposure %@",self.exposure]];
+                           
+                           //Open In Maps
                            [mapItem openInMapsWithLaunchOptions:nil];
                        }
                        

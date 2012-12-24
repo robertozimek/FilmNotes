@@ -32,11 +32,11 @@
             case kCLAuthorizationStatusAuthorized:
                 status = @"authorized";
                 break;
-            case kCLAuthorizationStatusDenied:
-                status = @"denied";
-                break;
             case kCLAuthorizationStatusRestricted:
                 status = @"restricted";
+                break;
+            case kCLAuthorizationStatusDenied:
+                status = @"denied";
                 break;
             case kCLAuthorizationStatusNotDetermined:
                 status = @"unknown";

@@ -17,16 +17,16 @@
     
 }
 
-@property (strong, nonatomic) IBOutlet UITextField *apertureTextField;
-@property (strong, nonatomic) IBOutlet UITextField *currentExposureTextField;
-@property (strong, nonatomic) IBOutlet UITextField *focalLengthTextField;
-@property (strong, nonatomic) IBOutlet UITextField *shutterSpeedTextField;
+@property (weak, nonatomic) IBOutlet UITextField *apertureTextField;
+@property (weak, nonatomic) IBOutlet UITextField *currentExposureTextField;
+@property (weak, nonatomic) IBOutlet UITextField *focalLengthTextField;
+@property (weak, nonatomic) IBOutlet UITextField *shutterSpeedTextField;
 
-@property (strong, nonatomic) IBOutlet UIButton *gpsButton;
-@property (strong, nonatomic) IBOutlet UIButton *advanceButton;
+@property (weak, nonatomic) IBOutlet UIButton *gpsButton;
+@property (weak, nonatomic) IBOutlet UIButton *advanceButton;
 @property (strong, nonatomic) IBOutlet UILabel *exposureLabel;
-@property (strong, nonatomic) IBOutlet UITextView *notesTextView;
-@property (strong, nonatomic) IBOutlet UILabel *isoLabel;
+@property (weak, nonatomic) IBOutlet UITextView *notesTextView;
+@property (weak, nonatomic) IBOutlet UILabel *isoLabel;
 
 @property (strong, nonatomic) NSString *RollNumber;
 @property (strong, nonatomic) NumberKeypadBackSlash *numberKeyPad;

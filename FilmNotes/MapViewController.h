@@ -14,6 +14,9 @@
 @interface MapViewController : UIViewController
 @property (strong, nonatomic) NSString *lat;
 @property (strong, nonatomic) NSString *lon;
-@property (strong, nonatomic) NSString *exposure;
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) NSString *exposure;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIButton *standardButton;
+@property (weak, nonatomic) IBOutlet UIButton *satelliteButton;
+@property (weak, nonatomic) IBOutlet UIButton *hybridButton;
 @end

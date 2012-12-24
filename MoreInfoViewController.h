@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface MoreInfoViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UILabel *InfoLabel;
-@property (strong, nonatomic) NSString *InfoText;
+@property (weak, nonatomic) IBOutlet UITextView *InfoTextView;
+@property (weak, nonatomic) NSString *InfoText;
 @end

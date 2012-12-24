@@ -10,6 +10,7 @@
 #import "DatabaseControl.h"
 #import "CustomDefaultsCell.h"
 #import "RollDataViewController.h"
+#import "MoreInfoViewController.h"
 
 @interface SettingViewController ()
 @property (strong,nonatomic) DatabaseControl *dataController;
@@ -59,34 +60,35 @@
     self.defaultsTableView.dataSource = self;
     self.defaultsTableView.delegate = self;
     
-    addRollDefaultsButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
-    addRollDefaultsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    addRollDefaultsButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:26];
-    [addRollDefaultsButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
-    [addRollDefaultsButton setTitle:@"Add Roll Defaults" forState: UIControlStateNormal];
+    self.addRollDefaultsButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    self.addRollDefaultsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.addRollDefaultsButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:38];
+    [self.addRollDefaultsButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
+    [self.addRollDefaultsButton setTitle:@"Add Presets" forState: UIControlStateNormal];
     
 }
 - (IBAction)editButtonPressed:(UIButton *)sender {
-    buttonTag = sender.tag;
+    self.buttonTag = sender.tag;
 }
 
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    data = [self.dataController readTable:@"SELECT * FROM Defaults"];
-    if ([data count] == 0)
-        selectDefaultLabel.hidden = YES;
+    self.data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+    if ([self.data count] == 0)
+        self.selectDefaultLabel.hidden = YES;
     else
-        selectDefaultLabel.hidden = NO;
-    [defaultsTableView reloadData];
+        self.selectDefaultLabel.hidden = NO;
+    [self.defaultsTableView reloadData];
     
-    isDefault = [[NSUserDefaults standardUserDefaults]
+    self.isDefault = [[NSUserDefaults standardUserDefaults]
                            stringForKey:@"selectedDefault"];
  
-    if (![isDefault isEqualToString:@"No Default"] && (isDefault != nil))
+    NSLog(@"viewWillAppear self.isDefault %@",self.isDefault);
+    if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
     {
-        NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[isDefault integerValue] inSection:0];
-        [defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
     }
     
     
@@ -94,35 +96,77 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (![isDefault isEqualToString:@"No Default"] && (isDefault != nil))
-        [[NSUserDefaults standardUserDefaults] setObject:[[data objectAtIndex:([data count]-[isDefault integerValue]-1)] objectAtIndex:0] forKey:@"theDefault"];
+    NSLog(@"viewWillDisappear 1 self.isDefault %@",self.isDefault);
+    if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
+        [[NSUserDefaults standardUserDefaults] setObject:[[self.data objectAtIndex:([self.data count]-[self.isDefault integerValue]-1)] objectAtIndex:0] forKey:@"theDefault"];
     else
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"theDefault"];
+    NSLog(@"viewWillDisappear 2 self.isDefault %@",self.isDefault);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.dataController removeRow:[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Defaults"];
-        data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+        NSLog(@"swipedelete 1 self.isDefault %@",self.isDefault);
+        [self.dataController removeRow:[[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Defaults"];
+        self.data = [self.dataController readTable:@"SELECT * FROM Defaults"];
+        NSLog(@"");
+        [tableView reloadData];
         NSLog(@"deleted row");
-        if (indexPath.row == [isDefault integerValue])
+        if (indexPath.row == [self.isDefault integerValue])
         {
             NSLog(@"default unset");
             isDefault = @"No Default";
-            [[NSUserDefaults standardUserDefaults] setObject:isDefault forKey:@"selectedDefault"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.isDefault forKey:@"selectedDefault"];
+        }
+        else{
+            if (self.data.count != 0  && ![self.isDefault isEqualToString:@"No Default"] && [self.isDefault integerValue] > indexPath.row)
+            {
+                self.isDefault = [NSString stringWithFormat:@"%d",[self.isDefault integerValue]-1];
+                NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
+                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+            }
+            else if (self.data.count != 0 && ![self.isDefault isEqualToString:@"No Default"] && [self.isDefault integerValue]  < indexPath.row)
+            {
+                NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
+                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+            }
+            else
+            {
+                self.isDefault = @"No Default";
+            }
+            [[NSUserDefaults standardUserDefaults] setObject:self.isDefault forKey:@"selectedDefault"];
         }
         
-        [tableView reloadData];
-        if ([data count] == 0)
-            selectDefaultLabel.hidden = YES;
+        if ([self.data count] == 0)
+            self.selectDefaultLabel.hidden = YES;
         else
-            selectDefaultLabel.hidden = NO;
+            self.selectDefaultLabel.hidden = NO;
+        NSLog(@"swipedelete 2 self.isDefault %@",self.isDefault);
     }
+}
+
+- (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
+    {
+        NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil) && (![self.isDefault isEqualToString:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]))
+    {
+        NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
+    return UITableViewCellEditingStyleDelete;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return [data count];
+    return [self.data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -136,7 +180,7 @@
         
         cell= [[CustomDefaultsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    NSInteger reserveIndex = [data count]-indexPath.row-1;
+    NSInteger reserveIndex = [self.data count]-indexPath.row-1;
     
     UIFont *cellFont = [UIFont fontWithName:@"Walkway SemiBold" size:20];
     cell.filmLabel.font = cellFont;
@@ -152,9 +196,9 @@
     cell.isoLabel.textAlignment = NSTextAlignmentLeft;
     cell.cameraLabel.textAlignment = NSTextAlignmentLeft;
     
-    cell.filmLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:1];
-    cell.isoLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:2];
-    cell.cameraLabel.text = [[data objectAtIndex:reserveIndex] objectAtIndex:4];
+    cell.filmLabel.text = [[self.data objectAtIndex:reserveIndex] objectAtIndex:1];
+    cell.isoLabel.text = [[self.data objectAtIndex:reserveIndex] objectAtIndex:2];
+    cell.cameraLabel.text = [[self.data objectAtIndex:reserveIndex] objectAtIndex:4];
     cell.editButton.tag = indexPath.row;
     
     return cell;
@@ -170,16 +214,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    isDefault = [NSString stringWithFormat:@"%d",indexPath.row];
+    NSLog(@"selected 1 self.isDefault %@",self.isDefault);
+    self.isDefault = [NSString stringWithFormat:@"%d",indexPath.row];
     [[NSUserDefaults standardUserDefaults]
-     setObject:isDefault forKey:@"selectedDefault"];
-    
+     setObject:self.isDefault forKey:@"selectedDefault"];
+    NSLog(@"selected 2 self.isDefault %@",self.isDefault);
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    isDefault = @"No Default";
-    [[NSUserDefaults standardUserDefaults] setObject:isDefault forKey:@"selectedDefault"];
+    NSLog(@"deselected 1 self.isDefault %@",self.isDefault);
+    self.isDefault = @"No Default";
+    [[NSUserDefaults standardUserDefaults] setObject:self.isDefault forKey:@"selectedDefault"];
+    NSLog(@"deselected 2 self.isDefault %@",self.isDefault);
 }
 
 
@@ -192,6 +239,10 @@
         RollDataViewController *rollDataViewController  = segue.destinationViewController;
         rollDataViewController.fromView = @"UpdateDefaults";
         rollDataViewController.rowID = buttonTag;
+    }
+    if ([segue.identifier isEqualToString:@"DefaultsInfo"]) {
+        MoreInfoViewController *moreInfoViewController  = segue.destinationViewController;
+        moreInfoViewController.InfoText = @"Tap Add Roll Presets to create new preset.\n\nTap on a roll to select it.\n\nTap on arrow to edit the roll presets.\n\nSwipe down to exit.";;
     }
 }
 

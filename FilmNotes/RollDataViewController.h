@@ -21,11 +21,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *focalLengthField;
 @property (weak, nonatomic) IBOutlet UITextField *apertureField;
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
-@property (strong, nonatomic) IBOutlet UIButton *commitButton;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *commitButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (assign, nonatomic) NSInteger rowID;
 @property (weak, nonatomic) NSString *fromView;
 
 - (void)saveData;
+- (IBAction)gpsButtonPressed:(UIButton *)sender;
 
 @end

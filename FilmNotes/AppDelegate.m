@@ -10,9 +10,52 @@
 
 @implementation AppDelegate
 
+- (void)registerDefaultsFromSettingsBundle
+{
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle)
+    {
+        //NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    for(NSDictionary *prefSpecification in preferences)
+    {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if(key)
+        {
+            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"SavePreviousExposure"])
+        [self registerDefaultsFromSettingsBundle];
     self.window.backgroundColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunched"])
+    {
+        UIViewController *mainView = [storyboard instantiateViewControllerWithIdentifier:@"Main"];
+        [self.window setRootViewController:mainView];
+        [self.window makeKeyAndVisible];
+    }
+    else
+    {
+        UIViewController *mainView = [storyboard instantiateViewControllerWithIdentifier:@"Tour"];
+        [self.window setRootViewController:mainView];
+        [self.window makeKeyAndVisible];
+    }
+    
     // Override point for customization after application launch.];
     return YES;
 }
@@ -41,6 +84,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    [[NSUserDefaults standardUserDefaults] synchronize];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

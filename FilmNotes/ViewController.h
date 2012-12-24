@@ -13,5 +13,5 @@
 @property (weak, nonatomic) IBOutlet UITableView *aTableView;
 @property (weak, nonatomic) IBOutlet UIButton *rollButton;
 @property (weak, nonatomic) IBOutlet UIButton *settingGearButton;
-@property (weak, nonatomic) NSArray *data;
+@property (strong, nonatomic) NSArray *data;
 @end

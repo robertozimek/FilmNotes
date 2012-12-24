@@ -39,7 +39,7 @@
     if (self)
     {
         NSLog(@"initWithFrame");
-        [editButton setImage:[UIImage imageNamed:@"edit-arrow.png"] forState:UIControlStateNormal];
+        [self.editButton setImage:[UIImage imageNamed:@"edit-arrow.png"] forState:UIControlStateNormal];
         //editButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
         //editButton.imageView.bounds = CGRectMake(0,0,32,32);
     }
@@ -51,10 +51,10 @@
     [super setSelected:selected animated:animated];
     if(selected)
     {
-        backgroundView.backgroundColor = [UIColor redColor];
+        self.backgroundView.backgroundColor = [UIColor redColor];
     }else
     {
-        backgroundView.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+        self.backgroundView.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
     }
 }
 

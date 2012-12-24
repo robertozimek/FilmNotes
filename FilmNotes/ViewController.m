@@ -40,18 +40,18 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    data = [self.dataController readTable:@"SELECT * FROM Roll"];
+    self.data = [self.dataController readTable:@"SELECT * FROM Roll"];
     [self.aTableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    rollButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
-    [rollButton setTitle: @"New Roll" forState: UIControlStateNormal];
-    rollButton.titleLabel.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
-    [rollButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
-    rollButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
+    self.rollButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
+    [self.rollButton setTitle: @"New Roll" forState: UIControlStateNormal];
+    self.rollButton.titleLabel.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    [self.rollButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
+    self.rollButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
     
     [self.dataController createTable];
     UISwipeGestureRecognizer *recognizer;
@@ -59,7 +59,16 @@
     recognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [recognizer setDirection:UISwipeGestureRecognizerDirectionUp];
     [self.view addGestureRecognizer:recognizer];
+}
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunched"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunched"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self performSegueWithIdentifier:@"SettingsSeque" sender:nil];
+    }
 }
 
 - (BOOL)shouldAutorotate {
@@ -80,16 +89,19 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.dataController removeRow:[[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Roll"];
-        data = [self.dataController readTable:@"SELECT * FROM Roll"];
+        NSString *rollKey = [NSString stringWithFormat:@"RollNumber %@",[[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0]];
+        [self.dataController removeRow:[[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Roll"];
+        if([[NSUserDefaults standardUserDefaults] objectForKey:rollKey])
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:rollKey];
+        self.data = [self.dataController readTable:@"SELECT * FROM Roll"];
         [tableView reloadData];
-        //[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
+        //[self.data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return [data count];
+    return [self.data count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -118,10 +130,10 @@
     cell.camera.textColor = cellTextColor;
     cell.date.textColor = cellTextColor;
 
-    cell.roll.text = [NSString stringWithFormat:@"%d",[data count]-indexPath.row];
-    cell.film.text = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:2];
-    cell.camera.text = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:4];
-    cell.date.text = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:5];
+    cell.roll.text = [NSString stringWithFormat:@"%d",[self.data count]-indexPath.row];
+    cell.film.text = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:2];
+    cell.camera.text = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:4];
+    cell.date.text = [[data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:5];
 
     cell.roll.textAlignment = NSTextAlignmentCenter;
 
@@ -136,12 +148,12 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ViewInfo"]) {
         MoreInfoViewController *moreViewController = segue.destinationViewController;
-        moreViewController.InfoText = @"Tap New Roll to start a new roll or Swipe from bottom to top.\n\nScroll up or down to see more rolls.\n\nTap on a roll to see and edit its details.\n\n\n\n";
+        moreViewController.InfoText = @"Tap New Roll or Swipe up to start a new roll.\n\nTap on a roll to open it.\n\nTap on the gear icon to open roll presets.";
     }
     if ([segue.identifier isEqualToString:@"RollView"]) {
         NSIndexPath *indexPath = [self.aTableView indexPathForSelectedRow];
         RollViewController *rollViewController = segue.destinationViewController;
-        rollViewController.RollNumber = [[data objectAtIndex:[data count]-indexPath.row-1] objectAtIndex:0];
+        rollViewController.RollNumber = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0];
     }
     if ([segue.identifier isEqualToString:@"NewRollView"]) {
         RollDataViewController *rollDataViewController = segue.destinationViewController;

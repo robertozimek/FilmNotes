@@ -10,8 +10,6 @@
 
 @implementation DatabaseControl
 @synthesize FilmNotesDB = _FilmNotesDB;
-@synthesize filmArray;
-@synthesize entries;
 
 -(NSString *)filePath
 {
@@ -45,6 +43,7 @@
     }else{
         NSLog(@"table_create");
     }
+    sqlite3_close(_FilmNotesDB);
 }
 
 -(void) sendSqlData:(NSString *)sql whichTable:(NSString *)table
@@ -58,13 +57,14 @@
     }else{
         NSLog(@"%@ table updated",table);
     }
+    sqlite3_close(_FilmNotesDB);
 }
 
 -(NSMutableArray *)readTable:(NSString *)sql
 {
     [self openDB];
-    filmArray = [[NSMutableArray alloc] init];
-    entries = [[NSMutableArray alloc] init];
+    NSMutableArray *filmArray = [[NSMutableArray alloc] init];
+    NSMutableArray *entries = [[NSMutableArray alloc] init];
     
     sqlite3_stmt *statement;
     if(sqlite3_prepare(_FilmNotesDB, [sql UTF8String],-1,&statement,nil) == SQLITE_OK)
@@ -126,9 +126,10 @@
             if (field8 != NULL)
                 field8Str = [[NSString alloc]initWithUTF8String:field8];
             [entries addObject:field8Str];
-            
  
-            [filmArray addObject:[entries copy]];
+            //NSLog(@"[entries mutableCopy] %@",[entries mutableCopy]);
+            
+            [filmArray addObject:[entries mutableCopy]];
             [entries removeAllObjects];
         }
     }
@@ -144,10 +145,7 @@
 {
     [self openDB];
     NSString *str = @"";
-    filmArray = [[NSMutableArray alloc] init];
-    entries = [[NSMutableArray alloc] init];
     
-    //NSString *sql = [NSString stringWithFormat:@"SELECT MAX(ID) FROM Roll"];
     sqlite3_stmt *statement;
     if(sqlite3_prepare(_FilmNotesDB, [sql UTF8String],-1,&statement,nil) == SQLITE_OK)
     {
@@ -176,6 +174,7 @@
     {
         NSAssert(0,@"Unable to remove row at id=%@ in table '%@",defaultID,table);
     }
+    sqlite3_close(_FilmNotesDB);
 }
 
 @end

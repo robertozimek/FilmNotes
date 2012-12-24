@@ -18,8 +18,8 @@
 
 @interface RollViewController ()
 @property (strong, nonatomic) DatabaseControl *dataController;
-@property (strong, nonatomic) NSMutableArray *rollData;
-@property (strong, nonatomic) LoadingView *loadingView;
+@property (weak, nonatomic) NSMutableArray *rollData;
+@property (weak, nonatomic) LoadingView *loadingView;
 @property (strong, nonatomic) NSMutableArray *exposureData;
 @property (strong, nonatomic) NSString *currentExposure;
 @property (strong, nonatomic) LocationController *locationController;
@@ -28,7 +28,7 @@
 @end
 
 @implementation RollViewController
-#define kOFFSET_FOR_KEYBOARD 120.0
+#define kOFFSET_FOR_KEYBOARD 115.0
 //TextFields
 @synthesize apertureTextField;
 @synthesize currentExposureTextField;
@@ -48,13 +48,14 @@
 @synthesize exposureData;
 @synthesize currentExposure;
 
-@synthesize dataController=_dataController;
+@synthesize dataController = _dataController;
 @synthesize locationController;
 @synthesize loadingView;
 @synthesize numberKeyPad;
 @synthesize gps;
 
 //Allcating Memory for DatabaseController
+
 -(DatabaseControl *)dataController
 {
     if (!_dataController) _dataController = [[DatabaseControl alloc] init];
@@ -102,19 +103,17 @@
 //Dismisses Any Keyboards
 - (void)dismissKeyboard
 {
-    [currentExposureTextField resignFirstResponder];
-    [apertureTextField resignFirstResponder];
-    [shutterSpeedTextField resignFirstResponder];
-    [focalLengthTextField resignFirstResponder];
-    [notesTextView resignFirstResponder];
+    [self.currentExposureTextField resignFirstResponder];
+    [self.apertureTextField resignFirstResponder];
+    [self.shutterSpeedTextField resignFirstResponder];
+    [self.focalLengthTextField resignFirstResponder];
+    [self.notesTextView resignFirstResponder];
 }
 
 
 //Update Database before dismissing view from swipe down
 -(void)handleSwipeDownFrom:(UISwipeGestureRecognizer *)recognizer {
     [self updateDatabase];
-    [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:rollKey];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -137,35 +136,49 @@
 //Go Back if swipe from right and dismiss keyboards
 -(void)handleSwipeRightFrom:(UISwipeGestureRecognizer *)recognizer {
     [self dismissKeyboard];
-    [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:rollKey];
     [self goBack];
 }
 
 //Advance if swipe from left and dismiss keyboards
 -(void)handleSwipeLeftFrom:(UISwipeGestureRecognizer *)recognizer {
     [self dismissKeyboard];
-    [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:rollKey];
     [self advance];
 }
 
 //Dismisses Keyboards and Advances to next exposure
 - (IBAction)advanceButton:(id)sender {
     [self dismissKeyboard];
-    [[NSUserDefaults standardUserDefaults]
-     setObject:currentExposureTextField.text forKey:rollKey];
     [self advance];
 }
 
 //Create Exposure If It Does Not Exist Yet
 -(void)checkAndCreateExposure:(int)insertExposure
 {
-    NSString *theExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",insertExposure,RollNumber]];
+    NSString *theExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",insertExposure,self.RollNumber]];
     if([theExposure isEqualToString:@""])
     {
-        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Gps','Notes') VALUES ('%d','%@','%@','%@','%@')",insertExposure,RollNumber,[[rollData objectAtIndex:0] objectAtIndex:1],@"No GPS",@"Notes: "];
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"SavePreviousExposure"])
+                [self clearFields];
+        
+        NSString *focal = @"";
+        NSString *aperture = @"";
+        
+        if (self.focalLengthTextField.text.length > 2)
+            focal = [self.focalLengthTextField.text substringToIndex:self.focalLengthTextField.text.length-2];
+        if (self.apertureTextField.text.length > 2)
+            aperture = [self.apertureTextField.text substringFromIndex:2];
+        NSString *exposureId = [[self.exposureData objectAtIndex:0] objectAtIndex:2];
+        
+        [[self.exposureData objectAtIndex:0] removeAllObjects];
+        [self.exposureData removeAllObjects];
+        
+        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%@','%@','%@','%@','%@','%@','%@')",insertExposure,self.RollNumber,exposureId,focal,aperture,self.shutterSpeedTextField.text,@"No GPS",@"Notes: "];
         [self.dataController sendSqlData:insertExposureToTable whichTable:@"Exposure"];
+    }
+    else
+    {
+        [[self.exposureData objectAtIndex:0] removeAllObjects];
+        [self.exposureData removeAllObjects];
     }
 }
 
@@ -173,39 +186,31 @@
 -(void)updateDatabase
 {
     //Escape quote marks from textfields
-    NSString *shutterEscape = [shutterSpeedTextField.text stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
-    NSString *notesEscape = [notesTextView.text stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+    NSString *notesEscape = [self.notesTextView.text stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
     NSString *focal = @"";
     NSString *aperture = @"";
     
-    if (focalLengthTextField.text.length > 2)
-        focal = [focalLengthTextField.text substringToIndex:focalLengthTextField.text.length-2];
-    if (apertureTextField.text.length > 2)
-        aperture = [apertureTextField.text substringFromIndex:2];
+    if (self.focalLengthTextField.text.length > 2)
+        focal = [self.focalLengthTextField.text substringToIndex:self.focalLengthTextField.text.length-2];
+    if (self.apertureTextField.text.length > 2)
+        aperture = [self.apertureTextField.text substringFromIndex:2];
     
     //Storing sqlite update commands in NSStrings
-    NSString *updateAperture = [NSString stringWithFormat:@"UPDATE Exposure SET Aperture = '%@' WHERE id=%@ AND Roll_id=%@",aperture,currentExposure,RollNumber];
-    NSString *updateShutter = [NSString stringWithFormat:@"UPDATE Exposure SET Shutter = '%@' WHERE id=%@ AND Roll_id=%@",shutterEscape,currentExposure,RollNumber];
-    NSString *updateFocal = [NSString stringWithFormat:@"UPDATE Exposure SET Focal = '%@' WHERE id=%@ AND Roll_id=%@",focal,currentExposure,RollNumber];
-    NSString *updateNotes = [[NSString stringWithFormat:@"UPDATE Exposure SET Notes = '%@' WHERE id=%@ AND Roll_id=%@",notesEscape,currentExposure,RollNumber] stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\'"];
+    NSString *updateFields = [NSString stringWithFormat:@"UPDATE Exposure SET Aperture = '%@', Shutter = '%@', Focal = '%@', Notes = '%@' WHERE id='%@' AND Roll_id='%@'",aperture,self.shutterSpeedTextField.text,focal,notesEscape,self.currentExposure,self.RollNumber];
     
     //Sending sqlite update commands
-    [self.dataController sendSqlData:updateAperture whichTable:@"Exposure"];
-    [self.dataController sendSqlData:updateShutter whichTable:@"Exposure"];
-    [self.dataController sendSqlData:updateFocal whichTable:@"Exposure"];
-    [self.dataController sendSqlData:updateNotes whichTable:@"Exposure"];
+    [self.dataController sendSqlData:updateFields whichTable:@"Exposure"];
 }
 
 //Load Next Exposure Data
 -(void)advance
 {
-    int nextExposureId = [currentExposure intValue] + 1;
-    if(!(nextExposureId > [[[rollData objectAtIndex:0]objectAtIndex:1] intValue]))
+    int nextExposureId = [self.currentExposure intValue] + 1;
+    if(!(nextExposureId > [[[self.exposureData objectAtIndex:0]objectAtIndex:2] intValue]))
          {
              [self updateDatabase];
-             [self clearFields];
              [self checkAndCreateExposure:nextExposureId];
-             [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",nextExposureId,RollNumber]];
+             [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",nextExposureId,self.RollNumber]];
              [self animateData:@"Left"];
          }else
          {
@@ -219,14 +224,13 @@
 }
 
 //Load Previous Exposure Data
--(void) goBack
+- (void)goBack
 {
-    int previousExposureId = [currentExposure intValue] - 1;
+    int previousExposureId = [self.currentExposure intValue] - 1;
     if (!(previousExposureId < 1)){
         [self updateDatabase];
-        [self clearFields];
         [self checkAndCreateExposure:previousExposureId];
-        [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",previousExposureId,RollNumber]];
+        [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",previousExposureId,self.RollNumber]];
         [self animateData:@"Right"];
     }else{
         TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reach beginning"
@@ -241,10 +245,10 @@
 //Clear All Textfields Except currentExposureTextField
 -(void)clearFields
 {
-    focalLengthTextField.text = @"";
-    apertureTextField.text = @"";
-    shutterSpeedTextField.text = @"";
-    notesTextView.text = @"Notes: ";
+    self.focalLengthTextField.text = nil;
+    self.apertureTextField.text = nil;
+    self.shutterSpeedTextField.text = nil;
+    self.notesTextView.text = @"Notes: ";
 }
 
 //Reload Exposure Data
@@ -253,45 +257,55 @@
     [self clearFields];
     
     //Store All Current Exposure Data In Array
-    exposureData = [self.dataController readTable:selectExposure];
+    self.exposureData = [self.dataController readTable:selectExposure];
     
     //Store Current Exposure(Number) For Use In Other Functions
-    currentExposure = [[exposureData objectAtIndex:0] objectAtIndex:0];
+    self.currentExposure = [[self.exposureData objectAtIndex:0] objectAtIndex:0];
     
-    //Set Shutter Speed TextField 
-    shutterSpeedTextField.text = [[exposureData objectAtIndex:0] objectAtIndex:5];
+    //Set Shutter Speed TextField
+    if([[[self.exposureData objectAtIndex:0] objectAtIndex:5] isEqualToString:@""] && [self.currentExposure isEqualToString:@"1"] && ![[NSUserDefaults standardUserDefaults] objectForKey:self.rollKey])
+        self.shutterSpeedTextField.text = @"1/500";
+    else
+        self.shutterSpeedTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:5];
     
-    //Set Film and ISO Label
-    isoLabel.text = [[rollData objectAtIndex:0] objectAtIndex:3];
+    NSLog(@"[[[NSUserDefaults standardUserDefaults] stringForKey:self.rollKey] %@",self.rollKey);
     
     //Set Current Exposure Text Field
-    currentExposureTextField.text = [[exposureData objectAtIndex:0] objectAtIndex:0];
+    self.currentExposureTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:0];
     
     //Set Total Exposure Label
-    exposureLabel.text = [NSString stringWithFormat:@"/ %@",[[exposureData objectAtIndex:0] objectAtIndex:2]];
+    self.exposureLabel.text = [NSString stringWithFormat:@"/ %@",[[self.exposureData objectAtIndex:0] objectAtIndex:2]];
+    
+    NSString *aperture = [NSString stringWithFormat:@"F/%@",[[self.exposureData objectAtIndex:0] objectAtIndex:4]];
     
     //Set Aperture TextField
-    if(![[[exposureData objectAtIndex:0] objectAtIndex:4] isEqualToString:@""])
-       apertureTextField.text = [NSString stringWithFormat:@"F/%@",[[exposureData objectAtIndex:0] objectAtIndex:4]];
+    if(![aperture isEqualToString:@"F/0.0"] && ![aperture isEqualToString:@"F/"] )
+        if([[aperture substringFromIndex:aperture.length-2] isEqualToString:@".0"])
+            self.apertureTextField.text = [aperture substringToIndex:aperture.length-2];
+        else
+            self.apertureTextField.text = aperture;
     else
-        apertureTextField.text = @"";
+        self.apertureTextField.text = @"";
     
     //Set Focal TextField
-    if(![[[exposureData objectAtIndex:0] objectAtIndex:3] isEqualToString:@""])
-        focalLengthTextField.text = [NSString stringWithFormat:@"%@mm",[[exposureData objectAtIndex:0] objectAtIndex:3]];
+    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:3] isEqualToString:@""])
+        self.focalLengthTextField.text = [NSString stringWithFormat:@"%@mm",[[self.exposureData objectAtIndex:0] objectAtIndex:3]];
     else
-        focalLengthTextField.text = @"";
+        self.focalLengthTextField.text = @"";
     
     //Check If Current Exposure Has GPS Data and Determine Button Title
-    if(![[[exposureData objectAtIndex:0] objectAtIndex:6] isEqualToString:@"No GPS"])
+    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:6] isEqualToString:@"No GPS"])
     {
-        [gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
+        [self.gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
     }else{
-        [gpsButton setTitle:@"No" forState:UIControlStateNormal];
+        [self.gpsButton setTitle:@"No" forState:UIControlStateNormal];
     }
     
     //Set Notes TextView
-    notesTextView.text = [[exposureData objectAtIndex:0] objectAtIndex:7];
+    self.notesTextView.text = [[self.exposureData objectAtIndex:0] objectAtIndex:7];
+    
+    [[NSUserDefaults standardUserDefaults]
+     setObject:self.currentExposureTextField.text forKey:self.rollKey];
 }
 
 //GPS Button Animation
@@ -304,31 +318,31 @@
     else if ([direction isEqualToString:@"FromTop"])
         [animation setSubtype:kCATransitionFromTop];
 	[animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
-    [[gpsButton layer] addAnimation:animation forKey:direction];
+    [[self.gpsButton layer] addAnimation:animation forKey:direction];
 }
 
 - (void)locationUpdate:(CLLocation *)location
 {
-    gps = [NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude];
+    self.gps = [NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude];
 }
 
 - (void)locationError:(NSError *)error
 {
-    
+    self.gps= @"";
 }
 
 //Retrieve GPS Data and Insert into Sqlite Database
 -(void)getGPSData{
-    [loadingView removeLoadingView];
-    NSString *insertGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",gps,currentExposure,RollNumber];
+    [self.loadingView removeLoadingView];
+    NSString *insertGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",self.gps,self.currentExposure,self.RollNumber];
     [self.dataController sendSqlData:insertGPS whichTable:@"Exposure"];
-    [locationController.locationManager stopUpdatingLocation];
+    [self.locationController.locationManager stopUpdatingLocation];
 }
 
 //Determine what action sheet to display with options
-- (IBAction)gpsButtonPressed:(id)sender {
+- (IBAction)gpsButtonPressed:(UIButton *)sender {
     [self dismissKeyboard];
-    if ([[gpsButton currentTitle] isEqualToString:@"Yes"])
+    if ([[sender currentTitle] isEqualToString:@"Yes"])
     {
         RDActionSheet *actionSheet = [[RDActionSheet alloc] initWithCancelButtonTitle:@"Cancel" primaryButtonTitle:@"Show Map" destroyButtonTitle:@"Clear GPS" otherButtonTitles:nil , nil];
         actionSheet.callbackBlock = ^(RDActionSheetResult result, NSInteger buttonIndex) {
@@ -338,10 +352,10 @@
                     NSLog(@"Pressed %i", buttonIndex);
                     if(buttonIndex == 0)
                     {
-                        NSString *removeGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",@"No GPS",currentExposure,RollNumber];
+                        NSString *removeGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",@"No GPS",self.currentExposure,self.RollNumber];
                         [self.dataController sendSqlData:removeGPS whichTable:@"Exposure"];
                         [self animateButton:@"FromTop"];
-                        [gpsButton setTitle:@"No" forState:UIControlStateNormal];
+                        [self.gpsButton setTitle:@"No" forState:UIControlStateNormal];
                         
                     }else if (buttonIndex == 1){
                         [self performSegueWithIdentifier:@"mapSegue" sender:nil];
@@ -362,27 +376,45 @@
                     NSLog(@"Pressed %i", buttonIndex);
                     if(buttonIndex == 0)
                     {
-                        [locationController.locationManager startUpdatingLocation];
-                        if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
+                        [self.locationController.locationManager startUpdatingLocation];
+                        
+                        BOOL loop = YES;
+                        while (loop)
                         {
-                            loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-                            [self performSelector:@selector(getGPSData) withObject:nil afterDelay:1.0];
-                        }else
-                        {
-                            BOOL loop = YES;
-                            while (loop)
+                            if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
                             {
-                                if ([self.locationController.locationServicesStatus isEqualToString:@"authorized"])
-                                {
-                                    loop = NO;
-                                    loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-                                    [self performSelector:@selector(getGPSData) withObject:nil afterDelay:1.0];
-                                }
+                                loop = NO;
+                                self.loadingView = [LoadingView loadLoadingViewIntoView:self.view];
+                                [self performSelector:@selector(getGPSData) withObject:nil afterDelay:1.0];
+                                [self animateButton:@"FromBottom"];
+                                [self.gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
                             }
-                            
+                            else if ([self.locationController.locationServicesStatus isEqualToString:@"restricted"])
+                            {
+                                loop = NO;
+                                TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Restricted"
+                                                                                message:@"Unable to retrieve GPS coordinates. Parental Controls restricts core location access."
+                                                                               delegate:nil
+                                                                      cancelButtonTitle:@"OK"
+                                                                      otherButtonTitles:nil];
+                                [alert show];
+                                [self dismissKeyboard];
+                                [self animateButton:@"FromBottom"];
+                            }
+                            else if ([self.locationController.locationServicesStatus isEqualToString:@"denied"] || [self.locationController.locationServicesStatus isEqualToString:@"disabled"])
+                            {
+                                loop = NO;
+                                TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Denied"
+                                                                                message:@"Unable to retrieve GPS coordinates. Location services were denied."
+                                                                               delegate:nil
+                                                                      cancelButtonTitle:@"OK"
+                                                                      otherButtonTitles:nil];
+                                [alert show];
+                                [self dismissKeyboard];
+                                [self animateButton:@"FromBottom"];
+                            }
                         }
-                        [self animateButton:@"FromBottom"];
-                        [gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
+                        
                     }
                     break;
                 case RDActionSheetResultResultCancelled:
@@ -398,8 +430,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    locationController = [[LocationController alloc] init];
-	locationController.delegate = self;
+    self.locationController = [[LocationController alloc] init];
+	self.locationController.delegate = self;
     
     //Swipe Down To Dismiss
     UISwipeGestureRecognizer *swipeDown;
@@ -433,60 +465,76 @@
     UIFont *generalFont = [UIFont fontWithName:@"Walkway SemiBold" size:26];
     UIColor *fontColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
     
-    isoLabel.textColor = [UIColor redColor];
-    isoLabel.font = [UIFont systemFontOfSize:28];
-    isoLabel.textAlignment = NSTextAlignmentLeft;
+    self.isoLabel.font = [UIFont systemFontOfSize:28];
+    self.exposureLabel.font = [UIFont systemFontOfSize:28];
+     
+    self.isoLabel.textColor = [UIColor redColor];
+    self.exposureLabel.textColor = [UIColor redColor];
     
-    exposureLabel.textColor = [UIColor redColor];
-    exposureLabel.font = [UIFont systemFontOfSize:28];
-    exposureLabel.textAlignment = NSTextAlignmentLeft;
+    self.isoLabel.textAlignment = NSTextAlignmentLeft;
+    self.exposureLabel.textAlignment = NSTextAlignmentLeft;
     
-    currentExposureTextField.textColor = fontColor;
-    currentExposureTextField.textAlignment = NSTextAlignmentRight;
-    currentExposureTextField.font = [UIFont systemFontOfSize:28];
-    currentExposureTextField.clearsOnBeginEditing = YES;
+    self.currentExposureTextField.textColor = fontColor;
+    self.currentExposureTextField.textAlignment = NSTextAlignmentRight;
+    self.currentExposureTextField.font = [UIFont systemFontOfSize:28];
+    self.currentExposureTextField.clearsOnBeginEditing = YES;
     
-    apertureTextField.textColor = fontColor;
-    apertureTextField.textAlignment = NSTextAlignmentLeft;
-    apertureTextField.font = generalFont;
-    apertureTextField.placeholder = @"F/0.95";
+    self.apertureTextField.textColor = fontColor;
+    self.apertureTextField.textAlignment = NSTextAlignmentLeft;
+    self.apertureTextField.font = generalFont;
+    self.apertureTextField.placeholder = @"F/0.95";
     
-    shutterSpeedTextField.textColor = fontColor;
-    shutterSpeedTextField.textAlignment = NSTextAlignmentLeft;
-    shutterSpeedTextField.font = generalFont;
-    shutterSpeedTextField.tag = 5;
-    shutterSpeedTextField.placeholder = @"1/500";
+    self.shutterSpeedTextField.textColor = fontColor;
+    self.shutterSpeedTextField.textAlignment = NSTextAlignmentLeft;
+    self.shutterSpeedTextField.font = generalFont;
+    self.shutterSpeedTextField.tag = 5;
+    self.shutterSpeedTextField.placeholder = @"1/500";
     
-    focalLengthTextField.textColor = fontColor;
-    focalLengthTextField.textAlignment = NSTextAlignmentLeft;
-    focalLengthTextField.font = generalFont;
-    focalLengthTextField.placeholder = @"50mm";
+    self.focalLengthTextField.textColor = fontColor;
+    self.focalLengthTextField.textAlignment = NSTextAlignmentLeft;
+    self.focalLengthTextField.font = generalFont;
+    self.focalLengthTextField.placeholder = @"50mm";
     
-    notesTextView.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
-    notesTextView.font = [UIFont fontWithName:@"Walkway SemiBold" size:18];
-    notesTextView.text = @"Notes: ";
+    self.notesTextView.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
+    self.notesTextView.font = [UIFont fontWithName:@"Walkway SemiBold" size:18];
+    self.notesTextView.text = @"Notes: ";
     
-    gpsButton.titleLabel.font = generalFont;
-    [gpsButton setTitleColor:fontColor forState:UIControlStateNormal];
+    self.gpsButton.titleLabel.font = generalFont;
+    [self.gpsButton setTitleColor:fontColor forState:UIControlStateNormal];
     
-    advanceButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:42];
-    [advanceButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
-    [advanceButton setTitle:@"Advance" forState:UIControlStateNormal];
-    
-    rollKey = [NSString stringWithFormat:@"RollNumber %@",RollNumber];
+    self.advanceButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:42];
+    [self.advanceButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
+    [self.advanceButton setTitle:@"Advance" forState:UIControlStateNormal];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.rollKey = [NSString stringWithFormat:@"RollNumber %@",RollNumber];
     
     NSString *lastExposure = [[NSUserDefaults standardUserDefaults]
-                              stringForKey:rollKey];
+                              stringForKey:self.rollKey];
+    
     if(!lastExposure)
         lastExposure = @"1";
-      
+    
     //Retrieve First Exposure Data
-    NSString *selectRoll = [NSString stringWithFormat:@"SELECT * FROM Roll WHERE id=%@",RollNumber];
-    NSString *selectExposure = [NSString stringWithFormat:@"SELECT * FROM Exposure WHERE roll_id=%@ AND id='%@'",RollNumber,lastExposure];
-    rollData = [self.dataController readTable:selectRoll];  
+    NSString *selectRoll = [NSString stringWithFormat:@"SELECT * FROM Roll WHERE id=%@",self.RollNumber];
+    NSString *selectExposure = [NSString stringWithFormat:@"SELECT * FROM Exposure WHERE roll_id=%@ AND id='%@'",self.RollNumber,lastExposure];
+    
+    self.rollData = [self.dataController readTable:selectRoll];
+    
+    //Set Film and ISO Label
+    self.isoLabel.text = [[self.rollData objectAtIndex:0] objectAtIndex:3];
+    
+    [[self.rollData objectAtIndex:0] removeAllObjects];
+    [self.rollData removeAllObjects];
+    
     [self reloadViewData:selectExposure];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+}
 
 //Prevent Users From Deleting Notes Placeholder
 - (BOOL)textView:(CustomTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
@@ -517,7 +565,7 @@
 //Retrieve GPS Data
 -(NSString *)retrieveGPSData
 {
-    NSString *gpsData = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT Gps FROM Exposure WHERE Id = '%@' AND Roll_Id = '%@'",currentExposure,RollNumber]];
+    NSString *gpsData = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT Gps FROM Exposure WHERE Id = '%@' AND Roll_Id = '%@'",self.currentExposure,self.RollNumber]];
     return gpsData;
 }
 
@@ -526,7 +574,7 @@
     //Sending More Info Data to More Info View
     if ([segue.identifier isEqualToString:@"RollInfo"]) {
         MoreInfoViewController *moreViewController = segue.destinationViewController;
-        moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Advance to move to the next frame.\n\nSwipe Left to go back to the previous frame.\n\nSwipe from the bottom finish roll early.\n\n";
+        moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Advance to move to the next frame.\n\nSwipe Left to go back to the previous frame.";
     }
     //Sending GPS Data to GPS View
     if ([segue.identifier isEqualToString:@"mapSegue"]) {
@@ -534,20 +582,20 @@
         NSString *gpsData = [self retrieveGPSData];
         mapViewController.lat = [gpsData substringToIndex:[gpsData rangeOfString:@","].location];
         mapViewController.lon = [gpsData substringFromIndex:[gpsData rangeOfString:@","].location+1];
-        mapViewController.exposure = currentExposure;
+        mapViewController.exposure = self.currentExposure;
     }
 }
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if ([textField isEqual:currentExposureTextField])
+    if ([textField isEqual:self.currentExposureTextField])
     {
         if((textField.text.length >2 )){
             textField.text = [textField.text substringToIndex:2];
             [self performSelector:@selector(dismissKeyboard)];
         }
     }
-    if ([textField isEqual:shutterSpeedTextField] && ![string isEqualToString:@""])
+    if ([textField isEqual:self.shutterSpeedTextField] && ![string isEqualToString:@""])
     {
         if((textField.text.length >= 6))
         {
@@ -555,7 +603,7 @@
             [self performSelector:@selector(dismissKeyboard)];
         }
     }
-    if ([textField isEqual:apertureTextField])
+    if ([textField isEqual:self.apertureTextField])
     {
         if((textField.text.length >= 6) && ![string isEqualToString:@""]){
             textField.text = [textField.text substringToIndex:6];
@@ -579,7 +627,7 @@
         if(((cursorPositon.location <= 2 && [string isEqualToString:@""]) || cursorPositon.location < 2) && cursorPositon.length < 1)
             return NO;
     }
-    if ([textField isEqual:focalLengthTextField])
+    if ([textField isEqual:self.focalLengthTextField])
     {
         if((textField.text.length >= 6) && ![string isEqualToString:@""]){
             textField.text = [textField.text substringToIndex:6];
@@ -609,16 +657,16 @@
 
 
 - (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:shutterSpeedTextField]) {
-        if (numberKeyPad) {
-            numberKeyPad.currentTextField = textField;
+    if ([textField isEqual:self.shutterSpeedTextField]) {
+        if (self.numberKeyPad) {
+            self.numberKeyPad.currentTextField = textField;
         }
     }
 	return YES;
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField isEqual:shutterSpeedTextField]) {
+    if ([textField isEqual:self.shutterSpeedTextField]) {
 		/*
 		 Show the numberKeyPad
 		 */
@@ -628,14 +676,13 @@
 			//if we go from one field to another - just change the textfield, don't reanimate the decimal point button
 			self.numberKeyPad.currentTextField = textField;
 		}
-        NSLog(@"numberKeyPad: %@, self.numberKeyPad: %@, !self.numberKeyPad: %d",numberKeyPad,self.numberKeyPad,!self.numberKeyPad);
 	}
-    if([textField isEqual:apertureTextField])
+    if([textField isEqual:self.apertureTextField])
     {
         if([textField.text isEqualToString:@""])
             textField.text = [NSString stringWithFormat:@"F/%@",textField.text];
     }
-    if([textField isEqual:focalLengthTextField])
+    if([textField isEqual:self.focalLengthTextField])
     {
         if([textField.text isEqualToString:@""])
         {
@@ -654,9 +701,9 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-	if ([textField isEqual:shutterSpeedTextField])
+	if ([textField isEqual:self.shutterSpeedTextField])
     {
-        if (textField == numberKeyPad.currentTextField) {
+        if (textField == self.numberKeyPad.currentTextField) {
             /*
              Hide the number keypad
              */
@@ -664,13 +711,13 @@
             self.numberKeyPad = nil;
         }
     }
-    if([textField isEqual:currentExposureTextField])
+    if([textField isEqual:self.currentExposureTextField])
     {
         //Check If Current Exposure TextField is empty
         if([textField.text isEqualToString:@""])
-            textField.text = currentExposure;
+            textField.text = self.currentExposure;
         //Check To Make Sure Current Exposure Does Not Exceed Total Exposures
-        else if([textField.text intValue] > [[[rollData objectAtIndex:0] objectAtIndex:1] intValue])
+        else if([textField.text intValue] > [[[self.exposureData objectAtIndex:0] objectAtIndex:2] intValue])
         {
             //Alerts the user if true
             TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Exposure Exceeded"
@@ -679,7 +726,7 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
-            textField.text = currentExposure;
+            textField.text = self.currentExposure;
         }
         //Check To Make Sure Current Exposure Is Not Less Then 1
         else if ([textField.text intValue] < 1)
@@ -691,20 +738,17 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
             [alert show];
-            textField.text = currentExposure;
+            textField.text = self.currentExposure;
         }
         //Update Database And Jump To Exposure
         else
         {
             [self updateDatabase]; // Updating Database
             
-            [[NSUserDefaults standardUserDefaults]
-             setObject:currentExposureTextField.text forKey:rollKey];
-            
             //Animating Data Based On Whether The User Is Advancing Or Going Back
-            if([textField.text intValue] == [currentExposure intValue])
+            if([textField.text intValue] == [self.currentExposure intValue])
                 [self animateData:@"Bottom"];
-            else if([textField.text intValue] > [currentExposure intValue])
+            else if([textField.text intValue] > [self.currentExposure intValue])
                 [self animateData:@"Left"];
             else
                 [self animateData:@"Right"];
@@ -713,7 +757,7 @@
             [self checkAndCreateExposure:[textField.text intValue]];
             
             //Load The Exposure
-            [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%@ AND Roll_id=%@",textField.text,RollNumber]];
+            [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%@ AND Roll_id=%@",textField.text,self.RollNumber]];
         }
     }
 }

@@ -10,8 +10,6 @@
 #import <sqlite3.h>
 
 @interface DatabaseControl : NSObject
-@property (strong, nonatomic) NSMutableArray *filmArray;
-@property (strong, nonatomic) NSMutableArray *entries;
 @property (nonatomic) sqlite3 *FilmNotesDB;
 -(NSString *)filePath;
 -(void)openDB;
