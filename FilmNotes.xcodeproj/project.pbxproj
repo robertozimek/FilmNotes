@@ -44,6 +44,8 @@
 		086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 086E3B7016845E8A00F3ECA1 /* edit-arrow.png */; };
 		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
+		08709A9516894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */; };
+		08709A9616894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */; };
 		08838E4B1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		08838E4C1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893612C168664F10065F023 /* edit-arrow@2x.png */; };
@@ -139,6 +141,8 @@
 		086E3B7016845E8A00F3ECA1 /* edit-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow.png"; sourceTree = "<group>"; };
 		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
+		08709A9316894D2F00C1B25F /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		08838E491682C01200195750 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		08838E4A1682C01200195750 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		0893612C168664F10065F023 /* edit-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow@2x.png"; sourceTree = "<group>"; };
@@ -300,6 +304,8 @@
 				0893612E168698480065F023 /* AddressAnnotation.h */,
 				0893612F168698490065F023 /* AddressAnnotation.m */,
 				08AEE7901683CB8300038F37 /* SettingViewController.h */,
+				08709A9316894D2F00C1B25F /* TPKeyboardAvoidingScrollView.h */,
+				08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */,
 				08AEE7911683CB8300038F37 /* SettingViewController.m */,
 				086B143C167015D700E7A76F /* MapViewController.h */,
 				086B143D167015D700E7A76F /* MapViewController.m */,
@@ -553,6 +559,7 @@
 				08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936130168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A21687DD33002F855C /* TourViewController.m in Sources */,
+				08709A9516894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +578,7 @@
 				08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936131168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A31687DD33002F855C /* TourViewController.m in Sources */,
+				08709A9616894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

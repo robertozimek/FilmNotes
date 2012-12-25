@@ -87,13 +87,13 @@
         // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
         // 2. increase the size of the view so that the area behind the keyboard is covered up.
         rect.origin.y -= kOFFSET_FOR_KEYBOARD;
-        rect.size.height += kOFFSET_FOR_KEYBOARD;
+        
     }
     else
     {
         // revert back to the normal state.
         rect.origin.y += kOFFSET_FOR_KEYBOARD;
-        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+        
     }
     self.view.frame = rect;
     
@@ -214,7 +214,7 @@
              [self animateData:@"Left"];
          }else
          {
-             TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reach End"
+             TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reached End"
                                                              message:@"You have reached the last last exposure, cannot go any farther"
                                                             delegate:nil
                                                    cancelButtonTitle:@"OK"
@@ -233,7 +233,7 @@
         [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",previousExposureId,self.RollNumber]];
         [self animateData:@"Right"];
     }else{
-        TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reach beginning"
+        TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reached beginning"
                                                         message:@"You have reached the beginning, cannot go back any farther"
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"

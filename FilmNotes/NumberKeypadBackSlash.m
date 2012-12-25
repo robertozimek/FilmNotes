@@ -21,7 +21,7 @@ static UIImage *backgroundImageDepressed;
 }
 
 - (id) init {
-	if(self = [super initWithFrame:CGRectMake(0, 480, 105, 53)]) { //Initially hidden	
+	if(self = [super initWithFrame:CGRectMake(0,[[UIScreen mainScreen] bounds].size.height, 105, 53)]) { //Initially hidden	
 		//[super adjustsImageWhenDisabled:NO];
 		self.titleLabel.font = [UIFont systemFontOfSize:35];
 		[self setTitleColor:[UIColor colorWithRed:0.353 green:0.38 blue:0.435 alpha:1.0] forState:UIControlStateNormal];
@@ -38,7 +38,7 @@ static UIImage *backgroundImageDepressed;
 	//Bring in the button at same speed as keyboard
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationDuration:0.2]; //we lose 0.1 seconds when we display it with timer
-	self.frame = CGRectMake(0, 427, 105, 53);
+	self.frame = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height-53, 105, 53);
 	[UIView commitAnimations];
 }
 
