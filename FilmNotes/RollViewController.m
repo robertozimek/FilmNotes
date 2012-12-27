@@ -268,8 +268,6 @@
     else
         self.shutterSpeedTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:5];
     
-    NSLog(@"[[[NSUserDefaults standardUserDefaults] stringForKey:self.rollKey] %@",self.rollKey);
-    
     //Set Current Exposure Text Field
     self.currentExposureTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:0];
     

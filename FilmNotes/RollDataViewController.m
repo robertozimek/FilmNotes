@@ -340,7 +340,7 @@
     }
     else if (self.commitButton.tag == 2)
     {
-        self.titleLabel.text = @"Add Presets:";
+        self.titleLabel.text = @"Add Preset:";
         [self.commitButton setTitle:@"Save" forState: UIControlStateNormal];
     }else if (self.commitButton.tag == 3)
     {
@@ -368,7 +368,7 @@
             self.gpsButton.tag = 0;
         }
         
-        self.titleLabel.text = @"Update Presets:";
+        self.titleLabel.text = @"Update Preset:";
         [self.commitButton setTitle:@"Update" forState: UIControlStateNormal];
     }
     self.rect = self.view.frame;

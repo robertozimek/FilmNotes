@@ -17,6 +17,8 @@
 @property (weak, nonatomic) NSString *exposure;
 @property (strong, nonatomic) NSString *camera;
 @property (strong, nonatomic) NSString *film;
+@property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (weak, nonatomic) IBOutlet UIButton *openInMapsButton;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIButton *standardButton;
 @property (weak, nonatomic) IBOutlet UIButton *satelliteButton;

@@ -34,7 +34,6 @@ const CGFloat kButtonPadding = 10;
 const CGFloat kButtonHeight = 47;
 
 const CGFloat kPortrainButtonWidth = 300;
-const CGFloat kLandscapeButtonWidth = 450;
 
 const CGFloat kActionSheetAnimationTime = 0.2;
 const CGFloat kBlackoutViewFadeInOpacity = 0.6;
@@ -54,7 +53,7 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
     
     self = [super init];
     if (self) {
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        self.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         self.buttons = [NSMutableArray array];
         self.opaque = YES;
     }
@@ -146,13 +145,9 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
     for (UIButton *button in self.buttons) {
         
         CGFloat buttonWidth;
-        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-        if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-            buttonWidth = kLandscapeButtonWidth;
-        } 
-        else {
-            buttonWidth = kPortrainButtonWidth;
-        }
+        
+        buttonWidth = kPortrainButtonWidth;
+        
         
         button.frame = CGRectMake(0, 0, buttonWidth, kButtonHeight);
         button.center = CGPointMake(self.center.x, yOffset);
@@ -173,7 +168,7 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
 - (UIView *)buildBlackOutViewWithFrame:(CGRect)frame {
     
     UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    view.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     view.backgroundColor = [UIColor blackColor];
     view.opaque = YES;
     view.alpha = 0;

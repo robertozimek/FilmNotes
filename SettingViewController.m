@@ -64,7 +64,7 @@
     self.addRollDefaultsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.addRollDefaultsButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:38];
     [self.addRollDefaultsButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
-    [self.addRollDefaultsButton setTitle:@"Add Presets" forState: UIControlStateNormal];
+    [self.addRollDefaultsButton setTitle:@"Add Preset" forState: UIControlStateNormal];
 }
 - (IBAction)editButtonPressed:(UIButton *)sender {
     self.buttonTag = sender.tag;

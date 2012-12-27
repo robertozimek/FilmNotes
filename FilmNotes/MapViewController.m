@@ -22,6 +22,8 @@
 @synthesize exposure;
 @synthesize film;
 @synthesize mapView;
+@synthesize backButton;
+@synthesize openInMapsButton;
 @synthesize standardButton;
 @synthesize satelliteButton;
 @synthesize hybridButton;
@@ -40,7 +42,8 @@
 {
     [super viewDidLoad];
     
-    //Font
+    //Fonts
+    UIFont *regularButtonFont = [UIFont fontWithName:@"Walkway SemiBold" size:15];
     UIFont *mapTypeButtonFont = [UIFont fontWithName:@"Walkway SemiBold" size:18];
     
     //Colors
@@ -51,6 +54,8 @@
     self.standardButton.titleLabel.font = mapTypeButtonFont;
     self.satelliteButton.titleLabel.font = mapTypeButtonFont;
     self.hybridButton.titleLabel.font = mapTypeButtonFont;
+    self.backButton.titleLabel.font = regularButtonFont;
+    self.openInMapsButton.titleLabel.font = regularButtonFont;
     
     //Set Button Background Colors
     self.standardButton.backgroundColor = buttonOneColor;
