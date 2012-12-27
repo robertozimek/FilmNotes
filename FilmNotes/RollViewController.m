@@ -215,7 +215,7 @@
          }else
          {
              TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reached End"
-                                                             message:@"You have reached the last exposure, cannot go any farther"
+                                                             message:@"You have reached the last exposure, cannot go any further."
                                                             delegate:nil
                                                    cancelButtonTitle:@"OK"
                                                    otherButtonTitles:nil];
@@ -234,7 +234,7 @@
         [self animateData:@"Right"];
     }else{
         TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reached beginning"
-                                                        message:@"You have reached the beginning, cannot go back any farther"
+                                                        message:@"You have reached the beginning, cannot go back any further."
                                                        delegate:nil
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];

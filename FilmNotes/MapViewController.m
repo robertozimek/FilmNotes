@@ -205,10 +205,11 @@
                            //Store Coordinates with Address
                            MKPlacemark *place = [[MKPlacemark alloc]
                                                  initWithCoordinate:coords addressDictionary:addresses];
-                           //Send the Coordinates and Address to Apple Maps
+                           
+                           //Mark the Coordinates with the Address in Apple Maps
                            MKMapItem *mapItem = [[MKMapItem alloc]initWithPlacemark:place];
                            
-                           //Give the address a Title Annotation
+                           //Give the address a title
                            [mapItem setName:[NSString stringWithFormat:@"Exposure %@",self.exposure]];
                            
                            //Open In Maps
