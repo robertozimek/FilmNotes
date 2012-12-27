@@ -21,10 +21,11 @@
 @property (assign, nonatomic) NSInteger defaultID;
 @property (strong, nonatomic) NSString *gps;
 @property (strong, nonatomic) NSArray *data;
+@property (assign, nonatomic) CGRect rect;
 @end
 
 @implementation RollDataViewController
-#define kOFFSET_FOR_KEYBOARD 40.0
+#define kOFFSET_FOR_KEYBOARD 65.0
 @synthesize filmField;
 @synthesize isoField;
 @synthesize exposureField;
@@ -37,10 +38,11 @@
 @synthesize loadingView;
 @synthesize gps;
 @synthesize data;
-@synthesize fromView;
 @synthesize titleLabel;
 @synthesize rowID;
+@synthesize commitTag;
 @synthesize defaultID;
+@synthesize rect;
 @synthesize dataController = _dataController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -59,9 +61,9 @@
 }
 
 - (IBAction)gpsButtonPressed:(UIButton *)sender {
-    NSLog(@"gpsButton currentTitle: %@",sender.currentTitle);
     if(self.commitButton.tag == 1)
     {
+        [self dismissKeyboard];
         if(sender.tag == 0)
         {
             [self.locationController.locationManager startUpdatingLocation];
@@ -149,9 +151,9 @@
     if(self.filmField.text.length > 0 && self.isoField.text.length > 0 && self.exposureField.text.length > 0 && self.cameraField.text.length > 0){
         NSString *focal = @"";
         NSString *aperture = @"";
-        if (self.focalLengthField.text.length > 2)
+        if (self.focalLengthField.text.length > 2 && ![self.focalLengthField.text isEqualToString:@"mm"])
             focal = [self.focalLengthField.text substringToIndex:self.focalLengthField.text.length-2];
-        if (self.apertureField.text.length > 2)
+        if (self.apertureField.text.length > 2 && ![self.apertureField.text isEqualToString:@"F/"])
             aperture = [self.apertureField.text substringFromIndex:2];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"MMM. dd. yyyy"];
@@ -189,9 +191,9 @@
     
     NSString *focal = @"";
     NSString *aperture = @"";
-    if (self.focalLengthField.text.length > 2)
+    if (self.focalLengthField.text.length > 2 && ![self.focalLengthField.text isEqualToString:@"mm"])
         focal = [self.focalLengthField.text substringToIndex:self.focalLengthField.text.length-2];
-    if (self.apertureField.text.length > 2)
+    if (self.apertureField.text.length > 2 && ![self.apertureField.text isEqualToString:@"F/"])
         aperture = [self.apertureField.text substringFromIndex:2];
     
     NSString *defaultsTable = [NSString stringWithFormat:@"INSERT INTO Defaults ('FilmName','Iso','Exposure','Camera','Focal','Aperture','Gps') VALUES ('%@','%@','%@','%@','%@','%@','%@');",self.filmField.text,self.isoField.text,self.exposureField.text,self.cameraField.text,focal,aperture,self.gpsButton.currentTitle];
@@ -203,12 +205,11 @@
     NSString *isDefault = [NSString stringWithFormat:@"%i",self.rowID];
     [[NSUserDefaults standardUserDefaults]
      setObject:isDefault forKey:@"selectedDefault"];
-    NSLog(@"updateData isDefault %@",isDefault);
     NSString *focal = @"";
     NSString *aperture = @"";
-    if (self.focalLengthField.text.length > 2)
+    if (self.focalLengthField.text.length > 2 && ![self.focalLengthField.text isEqualToString:@"mm"])
         focal = [self.focalLengthField.text substringToIndex:self.focalLengthField.text.length-2];
-    if (self.apertureField.text.length > 2)
+    if (self.apertureField.text.length > 2 && ![self.apertureField.text isEqualToString:@"F/"])
         aperture = [self.apertureField.text substringFromIndex:2];
     
     NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%d';",self.filmField.text,self.isoField.text,self.exposureField.text,self.cameraField.text,focal,aperture,self.gpsButton.currentTitle,self.defaultID];
@@ -222,7 +223,7 @@
     {
         if ((![self.filmField.text isEqualToString:@""] && ![self.isoField.text isEqualToString:@""] && ![self.cameraField.text isEqualToString:@""]) || ![self.exposureField.text isEqualToString:@""] || !([self.focalLengthField.text isEqualToString:@""] || [self.focalLengthField.text isEqualToString:@"mm"]) || !([self.apertureField.text isEqualToString:@""] || [self.apertureField.text isEqualToString:@"F/"]))
         {
-            if([self.fromView isEqualToString:@"UpdateDefaults"])
+            if(self.commitButton.tag == 3)
                 [self updateData];
             else
                 [self saveData];
@@ -246,6 +247,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.focalLengthField.delegate = self;
+    self.apertureField.delegate = self;
     self.locationController = [[LocationController alloc] init];
 	self.locationController.delegate = self;
     
@@ -308,7 +311,9 @@
     self.commitButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:48];
     [self.commitButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
     
-    if ([self.fromView isEqualToString:@"MainView"])
+    self.commitButton.tag = self.commitTag;
+    
+    if (self.commitButton.tag == 1)
     {
         NSString *theDefault = [[NSUserDefaults standardUserDefaults]
                                 stringForKey:@"theDefault"];
@@ -332,14 +337,12 @@
         
         self.titleLabel.text = @"New Roll:";
         [self.commitButton setTitle:@"Start" forState: UIControlStateNormal];
-        self.commitButton.tag = 1;
     }
-    else if ([self.fromView isEqualToString:@"AddDefaults"])
+    else if (self.commitButton.tag == 2)
     {
         self.titleLabel.text = @"Add Presets:";
         [self.commitButton setTitle:@"Save" forState: UIControlStateNormal];
-        self.commitButton.tag = 2;
-    }else if ([self.fromView isEqualToString:@"UpdateDefaults"])
+    }else if (self.commitButton.tag == 3)
     {
         self.data = [self.dataController readTable:@"SELECT * FROM Defaults"];
         
@@ -350,8 +353,10 @@
         self.isoField.text = [[self.data objectAtIndex:0] objectAtIndex:2];
         self.exposureField.text = [[self.data objectAtIndex:0] objectAtIndex:3];
         self.cameraField.text = [[self.data objectAtIndex:0] objectAtIndex:4];
-        self.focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[self.data objectAtIndex:0] objectAtIndex:5]];
-        self.apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
+        if (![[[self.data objectAtIndex:0] objectAtIndex:5] isEqualToString:@""])
+            self.focalLengthField.text = [NSString stringWithFormat:@"%@mm",[[self.data objectAtIndex:0] objectAtIndex:5]];
+        if (![[[self.data objectAtIndex:0] objectAtIndex:6] isEqualToString:@""])
+            self.apertureField.text = [NSString stringWithFormat:@"F/%@",[[data objectAtIndex:0] objectAtIndex:6]];
         if([[[self.data objectAtIndex:0] objectAtIndex:7] isEqualToString:@"YES"])
         {
             [self.gpsButton setTitle:@"YES" forState: UIControlStateNormal];
@@ -365,8 +370,8 @@
         
         self.titleLabel.text = @"Update Presets:";
         [self.commitButton setTitle:@"Update" forState: UIControlStateNormal];
-        self.commitButton.tag = 3;
     }
+    self.rect = self.view.frame;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -395,24 +400,30 @@
 
 -(void)setViewMovedUp:(BOOL)movedUp
 {
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
-    
-    CGRect rect = self.view.frame;
-    if (movedUp)
+    CGRect currentFrame = self.view.frame;
+    if (([UIScreen mainScreen].bounds.size.height == 480) && ((currentFrame.origin.y == rect.origin.y) && movedUp))
     {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+        
         // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
         // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        rect.origin.y -= kOFFSET_FOR_KEYBOARD;
+        currentFrame.origin.y -= kOFFSET_FOR_KEYBOARD;
+        
+        self.view.frame = currentFrame;
+        [UIView commitAnimations];
     }
-    else
+    else if (([UIScreen mainScreen].bounds.size.height == 480) && ((currentFrame.origin.y + kOFFSET_FOR_KEYBOARD == rect.origin.y) && !movedUp))
     {
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+        
         // revert back to the normal state.
-        rect.origin.y += kOFFSET_FOR_KEYBOARD;
+        currentFrame.origin.y += kOFFSET_FOR_KEYBOARD;
+        
+        self.view.frame = currentFrame;
+        [UIView commitAnimations];
     }
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
 }
 
 - (void) animateButton:(NSString*)direction{
@@ -430,7 +441,6 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     if([textField isEqual:self.focalLengthField])
     {
-        [self setViewMovedUp:YES];
         if([textField.text isEqualToString:@""])
         {
             textField.text = [NSString stringWithFormat:@"%@mm",textField.text];
@@ -447,17 +457,27 @@
     }
     if([textField isEqual:self.apertureField])
     {
-        [self setViewMovedUp:YES];
         if ([textField.text isEqualToString:@""])
         textField.text = @"F/";
     }
+    if(![textField isEqual:self.focalLengthField] && ![textField isEqual:self.apertureField])
+        [self setViewMovedUp:NO];
 }
 
+-(void)moveViewTextField:(UITextField *)textField
+{
+    if([textField isFirstResponder])
+    {
+        [self setViewMovedUp:YES];
+    }
+}
 
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    if([textField isEqual:self.focalLengthField] || [textField isEqual:self.apertureField])
+-(void)dismissMoveViewTextField:(UITextField *)textField
+{
+    if(![textField isFirstResponder])
+    {
         [self setViewMovedUp:NO];
-       
+    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

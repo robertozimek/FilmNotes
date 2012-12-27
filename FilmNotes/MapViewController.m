@@ -12,6 +12,7 @@
 
 @interface MapViewController ()
 @property (strong, nonatomic) CLLocation *location;
+@property (strong, nonatomic) AddressAnnotation *anAnnotation;
 @end
 
 @implementation MapViewController
@@ -19,10 +20,12 @@
 @synthesize lat;
 @synthesize lon;
 @synthesize exposure;
+@synthesize film;
 @synthesize mapView;
 @synthesize standardButton;
 @synthesize satelliteButton;
 @synthesize hybridButton;
+@synthesize anAnnotation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -122,11 +125,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     //Create Pin and Annotation
-    AddressAnnotation *addAnnotation = [[AddressAnnotation alloc] initWithCoordinate:self.location.coordinate];
+    self.anAnnotation = [[AddressAnnotation alloc] initWithCoordinate:self.location.coordinate];
     //Set Annotation Title
-    addAnnotation.title = [NSString stringWithFormat:@"Exposure %@",self.exposure];
+    self.anAnnotation.title = [NSString stringWithFormat:@"Exposure %@",self.exposure];
+    self.anAnnotation.subtitle = [NSString stringWithFormat:@"Camera: %@",self.camera];
+
     //Add Anotation to MapView
-    [self.mapView addAnnotation:addAnnotation];
+    [self.mapView addAnnotation:anAnnotation];
     
     //Set Zoom in Region
     MKCoordinateSpan span;
@@ -140,8 +145,18 @@
 	[self.mapView setRegion:region animated:YES];
     
     //Animate and Add Annotation
-    [self.mapView selectAnnotation:addAnnotation animated:YES];
+    [self.mapView selectAnnotation:self.anAnnotation animated:YES];
     
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.mapView removeAnnotation:self.anAnnotation];
+    self.anAnnotation = nil;
+    self.mapView.mapType = MKMapTypeSatellite;
+    [self.mapView removeFromSuperview];
+    self.mapView.delegate = nil;
+    self.mapView = nil;
 }
 
 - (IBAction)backButtonPressed:(id)sender {
@@ -203,6 +218,7 @@
                    }];
     
 }
+
 
 - (void)didReceiveMemoryWarning
 {

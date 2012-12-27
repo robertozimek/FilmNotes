@@ -12,7 +12,7 @@
 #import "CustomTextView.h"
 #import "NumberKeypadBackSlash.h"
 
-@interface RollViewController : UIViewController <LocationControllerDelegate>
+@interface RollViewController : UIViewController <LocationControllerDelegate,UIGestureRecognizerDelegate>
 {
     
 }
@@ -28,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *notesTextView;
 @property (weak, nonatomic) IBOutlet UILabel *isoLabel;
 
-@property (strong, nonatomic) NSString *RollNumber;
+@property (strong, nonatomic) NSString *rollNumber;
 @property (strong, nonatomic) NumberKeypadBackSlash *numberKeyPad;
 @property (strong, nonatomic) NSTimer *locationTimer;
 

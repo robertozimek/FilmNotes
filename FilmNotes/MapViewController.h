@@ -11,10 +11,12 @@
 #import <UIKit/UIKit.h>
 #import "LocationController.h"
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController <MKMapViewDelegate>
 @property (strong, nonatomic) NSString *lat;
 @property (strong, nonatomic) NSString *lon;
 @property (weak, nonatomic) NSString *exposure;
+@property (strong, nonatomic) NSString *camera;
+@property (strong, nonatomic) NSString *film;
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIButton *standardButton;
 @property (weak, nonatomic) IBOutlet UIButton *satelliteButton;

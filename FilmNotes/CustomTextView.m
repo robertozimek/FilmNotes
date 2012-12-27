@@ -30,6 +30,7 @@
         //[UIPasteboard generalPasteboard].string = selectAllStarting;
         return YES;
     }
+    
     return [super canPerformAction:action withSender:sender];
 }
 

@@ -37,15 +37,18 @@
 		081C39FA1682851F004BC752 /* NumberKeypadBackSlash.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */; };
 		081C3A0516829B7D004BC752 /* RDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C3A0416829B7C004BC752 /* RDActionSheet.m */; };
 		081C3A0616829B7D004BC752 /* RDActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 081C3A0416829B7C004BC752 /* RDActionSheet.m */; };
+		081EFBA0168A6E060048E717 /* MoveViewTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 081EFB9F168A6E050048E717 /* MoveViewTextField.m */; };
 		084552581681AD79002C7BFB /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 084552571681AD79002C7BFB /* LoadingView.m */; };
+		084A814A168BE5D5001C8C29 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 084A8149168BE5D5001C8C29 /* MainStoryboard.storyboard */; };
+		084A814D168BE781001C8C29 /* Tour.png in Resources */ = {isa = PBXBuildFile; fileRef = 084A814B168BE781001C8C29 /* Tour.png */; };
+		084A814E168BE781001C8C29 /* Tour4s.png in Resources */ = {isa = PBXBuildFile; fileRef = 084A814C168BE781001C8C29 /* Tour4s.png */; };
+		084A8151168BE801001C8C29 /* TourImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 084A8150168BE800001C8C29 /* TourImageViewController.m */; };
 		085CB70A16692ABA00AA7D74 /* RollDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085CB70916692ABA00AA7D74 /* RollDataViewController.m */; };
 		086B143E167015D700E7A76F /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 086B143D167015D700E7A76F /* MapViewController.m */; };
 		086D888C1669CF7D00E90A91 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 086D888B1669CF7D00E90A91 /* libsqlite3.dylib */; };
 		086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 086E3B7016845E8A00F3ECA1 /* edit-arrow.png */; };
 		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
-		08709A9516894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */; };
-		08709A9616894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */; };
 		08838E4B1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		08838E4C1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893612C168664F10065F023 /* edit-arrow@2x.png */; };
@@ -61,8 +64,6 @@
 		08AEE7931683CB8300038F37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7911683CB8300038F37 /* SettingViewController.m */; };
 		08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
 		08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
-		08B478BA1686CBBB00DE429F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08B478B81686CBBB00DE429F /* MainStoryboard.storyboard */; };
-		08B478BB1686CBBB00DE429F /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08B478B81686CBBB00DE429F /* MainStoryboard.storyboard */; };
 		08B478BD1686D45400DE429F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B478BC1686D45400DE429F /* Settings.bundle */; };
 		08B478BE1686D45400DE429F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B478BC1686D45400DE429F /* Settings.bundle */; };
 		08BEE48F1687B136002F855C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE48E1687B136002F855C /* Default@2x.png */; };
@@ -131,8 +132,15 @@
 		081C39F81682851E004BC752 /* NumberKeypadBackSlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberKeypadBackSlash.m; sourceTree = "<group>"; };
 		081C3A0316829B7B004BC752 /* RDActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDActionSheet.h; sourceTree = "<group>"; };
 		081C3A0416829B7C004BC752 /* RDActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RDActionSheet.m; sourceTree = "<group>"; };
+		081EFB9E168A6E050048E717 /* MoveViewTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveViewTextField.h; sourceTree = "<group>"; };
+		081EFB9F168A6E050048E717 /* MoveViewTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoveViewTextField.m; sourceTree = "<group>"; };
 		084552561681AD78002C7BFB /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		084552571681AD79002C7BFB /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
+		084A8149168BE5D5001C8C29 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		084A814B168BE781001C8C29 /* Tour.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tour.png; sourceTree = "<group>"; };
+		084A814C168BE781001C8C29 /* Tour4s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tour4s.png; sourceTree = "<group>"; };
+		084A814F168BE800001C8C29 /* TourImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourImageViewController.h; sourceTree = "<group>"; };
+		084A8150168BE800001C8C29 /* TourImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourImageViewController.m; sourceTree = "<group>"; };
 		085CB70816692ABA00AA7D74 /* RollDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollDataViewController.h; sourceTree = "<group>"; };
 		085CB70916692ABA00AA7D74 /* RollDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollDataViewController.m; sourceTree = "<group>"; };
 		086B143C167015D700E7A76F /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -141,8 +149,6 @@
 		086E3B7016845E8A00F3ECA1 /* edit-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow.png"; sourceTree = "<group>"; };
 		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
-		08709A9316894D2F00C1B25F /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
-		08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		08838E491682C01200195750 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		08838E4A1682C01200195750 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		0893612C168664F10065F023 /* edit-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow@2x.png"; sourceTree = "<group>"; };
@@ -157,7 +163,6 @@
 		08AEE7911683CB8300038F37 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = ../SettingViewController.m; sourceTree = "<group>"; };
 		08AEE7941683D09100038F37 /* CustomDefaultsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDefaultsCell.h; sourceTree = "<group>"; };
 		08AEE7951683D09300038F37 /* CustomDefaultsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDefaultsCell.m; sourceTree = "<group>"; };
-		08B478B91686CBBB00DE429F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		08B478BC1686D45400DE429F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		08BEE48E1687B136002F855C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		08BEE4911687B165002F855C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -240,6 +245,71 @@
 			name = RDActionSheet;
 			sourceTree = "<group>";
 		};
+		084A813B168B7F0B001C8C29 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				0893612E168698480065F023 /* AddressAnnotation.h */,
+				0893612F168698490065F023 /* AddressAnnotation.m */,
+				086B143C167015D700E7A76F /* MapViewController.h */,
+				086B143D167015D700E7A76F /* MapViewController.m */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		084A813C168B7F5B001C8C29 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				08AEE7901683CB8300038F37 /* SettingViewController.h */,
+				08AEE7911683CB8300038F37 /* SettingViewController.m */,
+				080F5088166795E000595BDF /* MoreInfoViewController.h */,
+				080F5089166795E000595BDF /* MoreInfoViewController.m */,
+				08BEE4A01687DD32002F855C /* TourViewController.h */,
+				08BEE4A11687DD32002F855C /* TourViewController.m */,
+				085CB70816692ABA00AA7D74 /* RollDataViewController.h */,
+				085CB70916692ABA00AA7D74 /* RollDataViewController.m */,
+				080F508B1667CF4E00595BDF /* RollViewController.h */,
+				080F508C1667CF4E00595BDF /* RollViewController.m */,
+				08D14F6E16671A1000668779 /* ViewController.h */,
+				08D14F6F16671A1000668779 /* ViewController.m */,
+				084A814F168BE800001C8C29 /* TourImageViewController.h */,
+				084A8150168BE800001C8C29 /* TourImageViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		084A813D168B7F80001C8C29 /* Custom Subclassed Objects */ = {
+			isa = PBXGroup;
+			children = (
+				081C39EF1681EC92004BC752 /* CustomTextView.h */,
+				081C39F01681EC93004BC752 /* CustomTextView.m */,
+				081EFB9E168A6E050048E717 /* MoveViewTextField.h */,
+				081EFB9F168A6E050048E717 /* MoveViewTextField.m */,
+				08AEE7941683D09100038F37 /* CustomDefaultsCell.h */,
+				08AEE7951683D09300038F37 /* CustomDefaultsCell.m */,
+				08D14F9016671B8F00668779 /* CustomCell.h */,
+				08D14F9116671B8F00668779 /* CustomCell.m */,
+			);
+			name = "Custom Subclassed Objects";
+			sourceTree = "<group>";
+		};
+		084A813E168B7F97001C8C29 /* DatabaseControl */ = {
+			isa = PBXGroup;
+			children = (
+				086E6D5B166B3A88001D11BB /* DatabaseControl.h */,
+				086E6D5C166B3A89001D11BB /* DatabaseControl.m */,
+			);
+			name = DatabaseControl;
+			sourceTree = "<group>";
+		};
+		084A813F168B7FB7001C8C29 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				084552561681AD78002C7BFB /* LoadingView.h */,
+				084552571681AD79002C7BFB /* LoadingView.m */,
+			);
+			name = LoadingView;
+			sourceTree = "<group>";
+		};
 		086E3B7216850DC800F3ECA1 /* LocationController */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,41 +367,18 @@
 		08D14F5916671A0F00668779 /* FilmNotes */ = {
 			isa = PBXGroup;
 			children = (
+				084A813B168B7F0B001C8C29 /* Maps */,
 				086E3B7216850DC800F3ECA1 /* LocationController */,
+				084A813E168B7F97001C8C29 /* DatabaseControl */,
 				081C3A0716829B88004BC752 /* RDActionSheet */,
+				08955554166DFCF50081AD46 /* TTAlertView */,
+				084A813D168B7F80001C8C29 /* Custom Subclassed Objects */,
+				084A813F168B7FB7001C8C29 /* LoadingView */,
 				081C39FC16828532004BC752 /* NumberKeypadBackSlash */,
-				08B478B81686CBBB00DE429F /* MainStoryboard.storyboard */,
-				0893612E168698480065F023 /* AddressAnnotation.h */,
-				0893612F168698490065F023 /* AddressAnnotation.m */,
-				08AEE7901683CB8300038F37 /* SettingViewController.h */,
-				08709A9316894D2F00C1B25F /* TPKeyboardAvoidingScrollView.h */,
-				08709A9416894D3000C1B25F /* TPKeyboardAvoidingScrollView.m */,
-				08AEE7911683CB8300038F37 /* SettingViewController.m */,
-				086B143C167015D700E7A76F /* MapViewController.h */,
-				086B143D167015D700E7A76F /* MapViewController.m */,
-				080F5088166795E000595BDF /* MoreInfoViewController.h */,
-				080F5089166795E000595BDF /* MoreInfoViewController.m */,
+				084A813C168B7F5B001C8C29 /* ViewControllers */,
+				084A8149168BE5D5001C8C29 /* MainStoryboard.storyboard */,
 				08D14F6216671A1000668779 /* AppDelegate.h */,
 				08D14F6316671A1000668779 /* AppDelegate.m */,
-				08BEE4A01687DD32002F855C /* TourViewController.h */,
-				08BEE4A11687DD32002F855C /* TourViewController.m */,
-				085CB70816692ABA00AA7D74 /* RollDataViewController.h */,
-				085CB70916692ABA00AA7D74 /* RollDataViewController.m */,
-				080F508B1667CF4E00595BDF /* RollViewController.h */,
-				080F508C1667CF4E00595BDF /* RollViewController.m */,
-				081C39EF1681EC92004BC752 /* CustomTextView.h */,
-				081C39F01681EC93004BC752 /* CustomTextView.m */,
-				084552561681AD78002C7BFB /* LoadingView.h */,
-				084552571681AD79002C7BFB /* LoadingView.m */,
-				08D14F6E16671A1000668779 /* ViewController.h */,
-				08D14F6F16671A1000668779 /* ViewController.m */,
-				086E6D5B166B3A88001D11BB /* DatabaseControl.h */,
-				086E6D5C166B3A89001D11BB /* DatabaseControl.m */,
-				08AEE7941683D09100038F37 /* CustomDefaultsCell.h */,
-				08AEE7951683D09300038F37 /* CustomDefaultsCell.m */,
-				08D14F9016671B8F00668779 /* CustomCell.h */,
-				08D14F9116671B8F00668779 /* CustomCell.m */,
-				08955554166DFCF50081AD46 /* TTAlertView */,
 				08D14F5A16671A0F00668779 /* Supporting Files */,
 			);
 			path = FilmNotes;
@@ -340,6 +387,8 @@
 		08D14F5A16671A0F00668779 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				084A814B168BE781001C8C29 /* Tour.png */,
+				084A814C168BE781001C8C29 /* Tour4s.png */,
 				08BEE49D1687DB9A002F855C /* tour-logo.png */,
 				081269D01686EF240000A488 /* iTunesArtwork */,
 				081269D11686EF250000A488 /* iTunesArtwork@2x */,
@@ -467,7 +516,6 @@
 				081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 				086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */,
 				0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */,
-				08B478BA1686CBBB00DE429F /* MainStoryboard.storyboard in Resources */,
 				08B478BD1686D45400DE429F /* Settings.bundle in Resources */,
 				081269C01686ECA00000A488 /* Icon-72.png in Resources */,
 				081269C21686ECA00000A488 /* Icon-72@2x.png in Resources */,
@@ -485,6 +533,9 @@
 				08BEE4981687D2E6002F855C /* edit-arrow-highlight@2x.png in Resources */,
 				08BEE49E1687DB9A002F855C /* tour-logo.png in Resources */,
 				08BEE4A81687EA6A002F855C /* Walkway_Bold.ttf in Resources */,
+				084A814A168BE5D5001C8C29 /* MainStoryboard.storyboard in Resources */,
+				084A814D168BE781001C8C29 /* Tour.png in Resources */,
+				084A814E168BE781001C8C29 /* Tour4s.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,7 +547,6 @@
 				08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */,
 				081C39ED1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 				08AEE7821683A35400038F37 /* settings-gear.png in Resources */,
-				08B478BB1686CBBB00DE429F /* MainStoryboard.storyboard in Resources */,
 				08B478BE1686D45400DE429F /* Settings.bundle in Resources */,
 				081269C11686ECA00000A488 /* Icon-72.png in Resources */,
 				081269C31686ECA00000A488 /* Icon-72@2x.png in Resources */,
@@ -559,7 +609,8 @@
 				08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936130168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A21687DD33002F855C /* TourViewController.m in Sources */,
-				08709A9516894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */,
+				081EFBA0168A6E060048E717 /* MoveViewTextField.m in Sources */,
+				084A8151168BE801001C8C29 /* TourImageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,7 +629,6 @@
 				08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936131168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A31687DD33002F855C /* TourViewController.m in Sources */,
-				08709A9616894D3000C1B25F /* TPKeyboardAvoidingScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -593,14 +643,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		08B478B81686CBBB00DE429F /* MainStoryboard.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				08B478B91686CBBB00DE429F /* en */,
-			);
-			name = MainStoryboard.storyboard;
-			sourceTree = "<group>";
-		};
 		08D14F5C16671A1000668779 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -629,6 +671,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Ozimek (B99AA774J3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -644,6 +687,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "15F4C152-5BAB-40D5-AD2B-3767D3F40A80";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -657,6 +701,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Ozimek (B99AA774J3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -665,6 +710,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "15F4C152-5BAB-40D5-AD2B-3767D3F40A80";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -673,10 +719,13 @@
 		08D14F8916671A1100668779 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotes/FilmNotes-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -684,10 +733,13 @@
 		08D14F8A16671A1100668779 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotes/FilmNotes-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

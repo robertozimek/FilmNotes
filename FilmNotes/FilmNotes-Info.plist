@@ -69,7 +69,7 @@
 				<key>Green</key>
 				<real>1</real>
 				<key>Red</key>
-				<real>0</real>
+				<real>0.0</real>
 			</dict>
 			<key>Translucent</key>
 			<false/>

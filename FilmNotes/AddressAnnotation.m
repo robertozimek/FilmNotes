@@ -11,11 +11,13 @@
 @implementation AddressAnnotation
 @synthesize coordinate;
 @synthesize title;
+@synthesize subtitle;
 
+/*
 - (NSString *)subtitle{
 	return nil;
 }
-
+*/
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D) c{
 	coordinate=c;

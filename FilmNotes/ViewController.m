@@ -47,6 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.rollButton.backgroundColor = [UIColor colorWithRed:0.91 green:0.91 blue:0.91 alpha:1.0];
     [self.rollButton setTitle: @"New Roll" forState: UIControlStateNormal];
     self.rollButton.titleLabel.textColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
@@ -61,14 +62,20 @@
     [self.view addGestureRecognizer:recognizer];
 }
 
+
 - (void)viewDidAppear:(BOOL)animated
 {
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunched"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunched"];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        [self performSegueWithIdentifier:@"SettingsSeque" sender:nil];
+        [self performSelector:@selector(firstRunOpenPreset) withObject:nil afterDelay:0.25];
     }
+}
+
+- (void)firstRunOpenPreset
+{
+    [self performSegueWithIdentifier:@"SettingsSeque" sender:nil];
 }
 
 - (BOOL)shouldAutorotate {
@@ -157,7 +164,7 @@
     }
     if ([segue.identifier isEqualToString:@"NewRollView"]) {
         RollDataViewController *rollDataViewController = segue.destinationViewController;
-        rollDataViewController.fromView = @"MainView";
+        rollDataViewController.commitTag = 1;
     }
 }
 

@@ -65,7 +65,6 @@
     self.addRollDefaultsButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:38];
     [self.addRollDefaultsButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
     [self.addRollDefaultsButton setTitle:@"Add Presets" forState: UIControlStateNormal];
-    
 }
 - (IBAction)editButtonPressed:(UIButton *)sender {
     self.buttonTag = sender.tag;
@@ -82,39 +81,43 @@
     [self.defaultsTableView reloadData];
     
     self.isDefault = [[NSUserDefaults standardUserDefaults]
-                           stringForKey:@"selectedDefault"];
- 
-    NSLog(@"viewWillAppear self.isDefault %@",self.isDefault);
+                      stringForKey:@"selectedDefault"];
+    
+    if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
+    {
+        [self.defaultsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0] animated:NO scrollPosition:UITableViewRowAnimationTop];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self selectIndex];
+}
+
+-(void)selectIndex
+{
     if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
     {
         NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
-        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
-    
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"viewWillDisappear 1 self.isDefault %@",self.isDefault);
     if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
         [[NSUserDefaults standardUserDefaults] setObject:[[self.data objectAtIndex:([self.data count]-[self.isDefault integerValue]-1)] objectAtIndex:0] forKey:@"theDefault"];
     else
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"theDefault"];
-    NSLog(@"viewWillDisappear 2 self.isDefault %@",self.isDefault);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSLog(@"swipedelete 1 self.isDefault %@",self.isDefault);
         [self.dataController removeRow:[[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0] inTable:@"Defaults"];
         self.data = [self.dataController readTable:@"SELECT * FROM Defaults"];
-        NSLog(@"");
         [tableView reloadData];
-        NSLog(@"deleted row");
         if (indexPath.row == [self.isDefault integerValue])
         {
-            NSLog(@"default unset");
             isDefault = @"No Default";
             [[NSUserDefaults standardUserDefaults] setObject:self.isDefault forKey:@"selectedDefault"];
         }
@@ -123,12 +126,12 @@
             {
                 self.isDefault = [NSString stringWithFormat:@"%d",[self.isDefault integerValue]-1];
                 NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
-                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
             else if (self.data.count != 0 && ![self.isDefault isEqualToString:@"No Default"] && [self.isDefault integerValue]  < indexPath.row)
             {
                 NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
-                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+                [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
             else
             {
@@ -141,7 +144,6 @@
             self.selectDefaultLabel.hidden = YES;
         else
             self.selectDefaultLabel.hidden = NO;
-        NSLog(@"swipedelete 2 self.isDefault %@",self.isDefault);
     }
 }
 
@@ -150,7 +152,7 @@
     if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
     {
         NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
-        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
 }
 
@@ -159,7 +161,7 @@
     if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil) && (![self.isDefault isEqualToString:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]))
     {
         NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
-        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+        [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
     return UITableViewCellEditingStyleDelete;
 }
@@ -214,30 +216,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"selected 1 self.isDefault %@",self.isDefault);
     self.isDefault = [NSString stringWithFormat:@"%d",indexPath.row];
     [[NSUserDefaults standardUserDefaults]
      setObject:self.isDefault forKey:@"selectedDefault"];
-    NSLog(@"selected 2 self.isDefault %@",self.isDefault);
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"deselected 1 self.isDefault %@",self.isDefault);
     self.isDefault = @"No Default";
     [[NSUserDefaults standardUserDefaults] setObject:self.isDefault forKey:@"selectedDefault"];
-    NSLog(@"deselected 2 self.isDefault %@",self.isDefault);
 }
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"AddDefaults"]) {
         RollDataViewController *rollDataViewController = segue.destinationViewController;
-        rollDataViewController.fromView = @"AddDefaults";
+        rollDataViewController.commitTag = 2;
     }
     if ([segue.identifier isEqualToString:@"UpdateDefaults"]) {
         RollDataViewController *rollDataViewController  = segue.destinationViewController;
-        rollDataViewController.fromView = @"UpdateDefaults";
+        rollDataViewController.commitTag = 3;
         rollDataViewController.rowID = buttonTag;
     }
     if ([segue.identifier isEqualToString:@"DefaultsInfo"]) {

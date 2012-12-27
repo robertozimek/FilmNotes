@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "LocationController.h"
 #import <sqlite3.h>
+#import "MoveViewTextField.h"
 
-@interface RollDataViewController : UIViewController <LocationControllerDelegate>
+@interface RollDataViewController : UIViewController <LocationControllerDelegate,MoveViewTextFieldDelegate>
 {
     
 }
@@ -18,13 +19,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *isoField;
 @property (weak, nonatomic) IBOutlet UITextField *exposureField;
 @property (weak, nonatomic) IBOutlet UITextField *cameraField;
-@property (weak, nonatomic) IBOutlet UITextField *focalLengthField;
-@property (weak, nonatomic) IBOutlet UITextField *apertureField;
+@property (weak, nonatomic) IBOutlet MoveViewTextField *focalLengthField;
+@property (weak, nonatomic) IBOutlet MoveViewTextField *apertureField;
 @property (weak, nonatomic) IBOutlet UIButton *gpsButton;
 @property (weak, nonatomic) IBOutlet UIButton *commitButton;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (assign, nonatomic) NSInteger rowID;
-@property (weak, nonatomic) NSString *fromView;
+@property (assign, nonatomic) NSInteger commitTag;
 
 - (void)saveData;
 - (IBAction)gpsButtonPressed:(UIButton *)sender;

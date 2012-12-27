@@ -37,6 +37,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"SavePreviousExposure"])
         [self registerDefaultsFromSettingsBundle];
     self.window.backgroundColor = [UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0];
@@ -55,7 +56,6 @@
         [self.window setRootViewController:mainView];
         [self.window makeKeyAndVisible];
     }
-    
     // Override point for customization after application launch.];
     return YES;
 }
