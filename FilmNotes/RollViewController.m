@@ -607,10 +607,14 @@
     }
     if ([textField isEqual:self.apertureTextField])
     {
+        
         if((textField.text.length >= 6) && ![string isEqualToString:@""]){
             textField.text = [textField.text substringToIndex:6];
             [self performSelector:@selector(dismissKeyboard)];
         }
+        if (([textField.text rangeOfString:@"." options:NSBackwardsSearch].length != 0) && [string isEqualToString:@"."])
+            return NO;
+        
         UITextPosition* beginning = textField.beginningOfDocument;
         
         UITextRange* selectedRange = textField.selectedTextRange;
