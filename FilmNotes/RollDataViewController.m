@@ -557,15 +557,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"RollDataInfo"] && self.commitButton.tag == 1) {
             MoreInfoViewController *moreViewController = segue.destinationViewController;
-            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Start to begin.\n\nSwipe Down to go cancel the new roll.\n\nSwipe down to exit.";
+            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Start to begin.\n\nSwipe down to exit.";
         }
     if ([segue.identifier isEqualToString:@"RollDataInfo"] && self.commitButton.tag == 2) {
             MoreInfoViewController *moreViewController = segue.destinationViewController;
-            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on save to add preset.\n\nSwipe Down to go cancel.";
+            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on save to add preset.\n\nSwipe down to cancel.";
         }
     if ([segue.identifier isEqualToString:@"RollDataInfo"] && self.commitButton.tag == 3) {
             MoreInfoViewController *moreViewController = segue.destinationViewController;
-            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Update to update the presets.\n\nSwipe Down to cancel.";
+            moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Update to update the presets.\n\nSwipe down to cancel.";
         }
 }
 

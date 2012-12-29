@@ -39,7 +39,6 @@
 	<string>6.0</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Walkway_Bold.ttf</string>
 		<string>Walkway_SemiBold.ttf</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
@@ -69,7 +68,7 @@
 				<key>Green</key>
 				<real>1</real>
 				<key>Red</key>
-				<real>0.0</real>
+				<real>0</real>
 			</dict>
 			<key>Translucent</key>
 			<false/>

@@ -573,7 +573,7 @@
     //Sending More Info Data to More Info View
     if ([segue.identifier isEqualToString:@"RollInfo"]) {
         MoreInfoViewController *moreViewController = segue.destinationViewController;
-        moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Advance to move to the next frame.\n\nSwipe Left to go back to the previous frame.";
+        moreViewController.InfoText = @"Tap on a value to change it.\n\nTap on Advance to move to the next frame.\n\nSwipe left to go back to the previous frame.\n\nSwipe down to exit.";
     }
     //Sending GPS Data to GPS View
     if ([segue.identifier isEqualToString:@"mapSegue"]) {

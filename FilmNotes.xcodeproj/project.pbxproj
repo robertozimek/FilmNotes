@@ -81,8 +81,6 @@
 		08BEE49F1687DB9A002F855C /* tour-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE49D1687DB9A002F855C /* tour-logo.png */; };
 		08BEE4A21687DD33002F855C /* TourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BEE4A11687DD32002F855C /* TourViewController.m */; };
 		08BEE4A31687DD33002F855C /* TourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BEE4A11687DD32002F855C /* TourViewController.m */; };
-		08BEE4A81687EA6A002F855C /* Walkway_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE4A71687EA69002F855C /* Walkway_Bold.ttf */; };
-		08BEE4A91687EA6A002F855C /* Walkway_Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE4A71687EA69002F855C /* Walkway_Bold.ttf */; };
 		08C041C51670262E0091756E /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C041C41670262E0091756E /* AddressBook.framework */; };
 		08D14F5416671A0F00668779 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5316671A0F00668779 /* UIKit.framework */; };
 		08D14F5616671A0F00668779 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D14F5516671A0F00668779 /* Foundation.framework */; };
@@ -177,7 +175,6 @@
 		08BEE49D1687DB9A002F855C /* tour-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tour-logo.png"; sourceTree = "<group>"; };
 		08BEE4A01687DD32002F855C /* TourViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TourViewController.h; sourceTree = "<group>"; };
 		08BEE4A11687DD32002F855C /* TourViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TourViewController.m; sourceTree = "<group>"; };
-		08BEE4A71687EA69002F855C /* Walkway_Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Walkway_Bold.ttf; sourceTree = "<group>"; };
 		08C041C41670262E0091756E /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		08D14F4F16671A0F00668779 /* FilmNotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FilmNotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08D14F5316671A0F00668779 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -417,7 +414,6 @@
 				084A8155168C19CA001C8C29 /* settings-gear@2x.png */,
 				081C39E91681E7A5004BC752 /* backSlashKeyDownBackground.png */,
 				08E02C9316672AD000AD45DA /* Walkway_SemiBold.ttf */,
-				08BEE4A71687EA69002F855C /* Walkway_Bold.ttf */,
 				08D14F5B16671A1000668779 /* FilmNotes-Info.plist */,
 				08D14F5F16671A1000668779 /* main.m */,
 				08D14F6116671A1000668779 /* FilmNotes-Prefix.pch */,
@@ -541,7 +537,6 @@
 				08BEE4961687D2E6002F855C /* edit-arrow-highlight.png in Resources */,
 				08BEE4981687D2E6002F855C /* edit-arrow-highlight@2x.png in Resources */,
 				08BEE49E1687DB9A002F855C /* tour-logo.png in Resources */,
-				08BEE4A81687EA6A002F855C /* Walkway_Bold.ttf in Resources */,
 				084A814A168BE5D5001C8C29 /* MainStoryboard.storyboard in Resources */,
 				084A814D168BE781001C8C29 /* Tour.png in Resources */,
 				084A814E168BE781001C8C29 /* Tour4s.png in Resources */,
@@ -575,7 +570,6 @@
 				08BEE4971687D2E6002F855C /* edit-arrow-highlight.png in Resources */,
 				08BEE4991687D2E6002F855C /* edit-arrow-highlight@2x.png in Resources */,
 				08BEE49F1687DB9A002F855C /* tour-logo.png in Resources */,
-				08BEE4A91687EA6A002F855C /* Walkway_Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
