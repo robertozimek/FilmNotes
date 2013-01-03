@@ -32,4 +32,5 @@
 @property (strong, nonatomic) NumberKeypadBackSlash *numberKeyPad;
 @property (strong, nonatomic) NSTimer *locationTimer;
 
+-(void)updateDatabase;
 @end

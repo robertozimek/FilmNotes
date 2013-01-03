@@ -10,8 +10,8 @@
 	if (self != nil) {
 		self.locationManager = [[CLLocationManager alloc] init];
 		self.locationManager.delegate = self; // send loc updates to myself
-        self.locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-        self.locationManager.distanceFilter=100;
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        self.locationManager.distanceFilter = kCLDistanceFilterNone;
 	}
 	return self;
 }
@@ -20,7 +20,7 @@
 	didUpdateToLocation:(CLLocation *)newLocation
 		   fromLocation:(CLLocation *)oldLocation
 {
-	[self.delegate locationUpdate:newLocation];
+    [self.delegate locationUpdate:newLocation];
 }
 
 -(NSString *)locationServicesStatus

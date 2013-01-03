@@ -326,13 +326,14 @@
 
 - (void)locationError:(NSError *)error
 {
-    self.gps= @"";
+    self.gps= @"No GPS";
 }
 
 //Retrieve GPS Data and Insert into Sqlite Database
 -(void)getGPSData{
     [self.loadingView removeLoadingView];
     NSString *insertGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",self.gps,self.currentExposure,self.rollNumber];
+    NSLog(@"self.gps: %@",self.gps);
     [self.dataController sendSqlData:insertGPS whichTable:@"Exposure"];
     [self.locationController.locationManager stopUpdatingLocation];
 }
@@ -384,7 +385,7 @@
                             {
                                 loop = NO;
                                 self.loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-                                [self performSelector:@selector(getGPSData) withObject:nil afterDelay:1.0];
+                                [self performSelector:@selector(getGPSData) withObject:nil afterDelay:1.2];
                                 [self animateButton:@"FromBottom"];
                                 [self.gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
                             }
@@ -504,6 +505,13 @@
     self.advanceButton.titleLabel.font = [UIFont fontWithName:@"Walkway SemiBold" size:42];
     [self.advanceButton setTitleColor:[UIColor colorWithRed:0.09 green:0.09 blue:0.09 alpha:1.0] forState:UIControlStateNormal];
     [self.advanceButton setTitle:@"Advance" forState:UIControlStateNormal];
+    
+    UIApplication *myApp = [UIApplication sharedApplication];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:myApp];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -531,8 +539,9 @@
     [self reloadViewData:selectExposure];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)applicationWillResignActive:(UIApplication *)application
 {
+    [self updateDatabase];
 }
 
 //Prevent Users From Deleting Notes Placeholder

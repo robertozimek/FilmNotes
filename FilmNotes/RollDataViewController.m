@@ -74,7 +74,7 @@
                 {
                     loop = NO;
                     self.loadingView = [LoadingView loadLoadingViewIntoView:self.view];
-                    [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.0];
+                    [self performSelector:@selector(retrieveGPS) withObject:nil afterDelay:1.2];
                     [self animateButton:@"FromBottom"];
                     sender.tag = 1;
                     [sender setTitle:@"YES" forState: UIControlStateNormal];
