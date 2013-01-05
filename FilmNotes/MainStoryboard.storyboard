@@ -1214,6 +1214,7 @@
         <class className="RollDataViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RollDataViewController.h"/>
             <relationships>
+                <relationship kind="action" name="commitButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="gpsButtonPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="apertureField" candidateClass="MoveViewTextField"/>
                 <relationship kind="outlet" name="cameraField" candidateClass="UITextField"/>
@@ -1276,8 +1277,8 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dC5-bF-JXs"/>
+        <segue reference="Xen-Pa-mAG"/>
         <segue reference="oki-Sc-sxG"/>
-        <segue reference="KLR-20-lqe"/>
+        <segue reference="dC5-bF-JXs"/>
     </inferredMetricsTieBreakers>
 </document>

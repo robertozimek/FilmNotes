@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		080F508A166795E000595BDF /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F5089166795E000595BDF /* MoreInfoViewController.m */; };
 		080F508D1667CF4E00595BDF /* RollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 080F508C1667CF4E00595BDF /* RollViewController.m */; };
 		081269C01686ECA00000A488 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 081269B81686EC9F0000A488 /* Icon-72.png */; };
 		081269C11686ECA00000A488 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 081269B81686EC9F0000A488 /* Icon-72.png */; };
@@ -52,6 +51,12 @@
 		086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 086E3B7016845E8A00F3ECA1 /* edit-arrow.png */; };
 		086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
 		086E6D5E166B3A89001D11BB /* DatabaseControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 086E6D5C166B3A89001D11BB /* DatabaseControl.m */; };
+		08777AF2169775A4008A0EFE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08777AF1169775A4008A0EFE /* Settings.bundle */; };
+		08777AF3169775A4008A0EFE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08777AF1169775A4008A0EFE /* Settings.bundle */; };
+		08777AF6169775D3008A0EFE /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08777AF5169775D3008A0EFE /* SettingViewController.m */; };
+		08777AF7169775D3008A0EFE /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08777AF5169775D3008A0EFE /* SettingViewController.m */; };
+		08777AFA169775E0008A0EFE /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08777AF9169775E0008A0EFE /* MoreInfoViewController.m */; };
+		08777AFB169775E0008A0EFE /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08777AF9169775E0008A0EFE /* MoreInfoViewController.m */; };
 		08838E4B1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		08838E4C1682C01200195750 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08838E4A1682C01200195750 /* LocationController.m */; };
 		0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893612C168664F10065F023 /* edit-arrow@2x.png */; };
@@ -63,12 +68,8 @@
 		08955556166DFE480081AD46 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08955555166DFE480081AD46 /* CoreLocation.framework */; };
 		08AEE7821683A35400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
 		08AEE7831683A3C400038F37 /* settings-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEE7801683A35400038F37 /* settings-gear.png */; };
-		08AEE7921683CB8300038F37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7911683CB8300038F37 /* SettingViewController.m */; };
-		08AEE7931683CB8300038F37 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7911683CB8300038F37 /* SettingViewController.m */; };
 		08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
 		08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEE7951683D09300038F37 /* CustomDefaultsCell.m */; };
-		08B478BD1686D45400DE429F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B478BC1686D45400DE429F /* Settings.bundle */; };
-		08B478BE1686D45400DE429F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 08B478BC1686D45400DE429F /* Settings.bundle */; };
 		08BEE48F1687B136002F855C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE48E1687B136002F855C /* Default@2x.png */; };
 		08BEE4901687B136002F855C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE48E1687B136002F855C /* Default@2x.png */; };
 		08BEE4921687B165002F855C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BEE4911687B165002F855C /* Default.png */; };
@@ -112,8 +113,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		080F5088166795E000595BDF /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MoreInfoViewController.h; path = ../MoreInfoViewController.h; sourceTree = "<group>"; };
-		080F5089166795E000595BDF /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MoreInfoViewController.m; path = ../MoreInfoViewController.m; sourceTree = "<group>"; };
 		080F508B1667CF4E00595BDF /* RollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RollViewController.h; sourceTree = "<group>"; };
 		080F508C1667CF4E00595BDF /* RollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RollViewController.m; sourceTree = "<group>"; };
 		081269B81686EC9F0000A488 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -153,6 +152,11 @@
 		086E3B7016845E8A00F3ECA1 /* edit-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow.png"; sourceTree = "<group>"; };
 		086E6D5B166B3A88001D11BB /* DatabaseControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseControl.h; sourceTree = "<group>"; };
 		086E6D5C166B3A89001D11BB /* DatabaseControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseControl.m; sourceTree = "<group>"; };
+		08777AF1169775A4008A0EFE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = FilmNotes/Settings.bundle; sourceTree = "<group>"; };
+		08777AF4169775D3008A0EFE /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		08777AF5169775D3008A0EFE /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		08777AF8169775E0008A0EFE /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoViewController.h; sourceTree = "<group>"; };
+		08777AF9169775E0008A0EFE /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoViewController.m; sourceTree = "<group>"; };
 		08838E491682C01200195750 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		08838E4A1682C01200195750 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		0893612C168664F10065F023 /* edit-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow@2x.png"; sourceTree = "<group>"; };
@@ -163,11 +167,8 @@
 		08955507166DDB850081AD46 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		08955555166DFE480081AD46 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		08AEE7801683A35400038F37 /* settings-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-gear.png"; sourceTree = "<group>"; };
-		08AEE7901683CB8300038F37 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = ../SettingViewController.h; sourceTree = "<group>"; };
-		08AEE7911683CB8300038F37 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = ../SettingViewController.m; sourceTree = "<group>"; };
 		08AEE7941683D09100038F37 /* CustomDefaultsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomDefaultsCell.h; sourceTree = "<group>"; };
 		08AEE7951683D09300038F37 /* CustomDefaultsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomDefaultsCell.m; sourceTree = "<group>"; };
-		08B478BC1686D45400DE429F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		08BEE48E1687B136002F855C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		08BEE4911687B165002F855C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		08BEE4941687D2E5002F855C /* edit-arrow-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-arrow-highlight.png"; sourceTree = "<group>"; };
@@ -262,10 +263,10 @@
 			children = (
 				086B143C167015D700E7A76F /* MapViewController.h */,
 				086B143D167015D700E7A76F /* MapViewController.m */,
-				08AEE7901683CB8300038F37 /* SettingViewController.h */,
-				08AEE7911683CB8300038F37 /* SettingViewController.m */,
-				080F5088166795E000595BDF /* MoreInfoViewController.h */,
-				080F5089166795E000595BDF /* MoreInfoViewController.m */,
+				08777AF8169775E0008A0EFE /* MoreInfoViewController.h */,
+				08777AF9169775E0008A0EFE /* MoreInfoViewController.m */,
+				08777AF4169775D3008A0EFE /* SettingViewController.h */,
+				08777AF5169775D3008A0EFE /* SettingViewController.m */,
 				08BEE4A01687DD32002F855C /* TourViewController.h */,
 				08BEE4A11687DD32002F855C /* TourViewController.m */,
 				085CB70816692ABA00AA7D74 /* RollDataViewController.h */,
@@ -334,7 +335,7 @@
 		08D14F4416671A0F00668779 = {
 			isa = PBXGroup;
 			children = (
-				08B478BC1686D45400DE429F /* Settings.bundle */,
+				08777AF1169775A4008A0EFE /* Settings.bundle */,
 				08D14F5916671A0F00668779 /* FilmNotes */,
 				08D14F7D16671A1000668779 /* FilmNotesTests */,
 				08D14F5216671A0F00668779 /* Frameworks */,
@@ -521,7 +522,6 @@
 				081C39EC1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 				086E3B7116845E8A00F3ECA1 /* edit-arrow.png in Resources */,
 				0893612D168664F20065F023 /* edit-arrow@2x.png in Resources */,
-				08B478BD1686D45400DE429F /* Settings.bundle in Resources */,
 				081269C01686ECA00000A488 /* Icon-72.png in Resources */,
 				081269C21686ECA00000A488 /* Icon-72@2x.png in Resources */,
 				081269C41686ECA00000A488 /* Icon-Small-50.png in Resources */,
@@ -543,6 +543,7 @@
 				084A8156168C19CB001C8C29 /* settings-gear@2x.png in Resources */,
 				083251EF168CE1B60057EB2D /* Tour4s@2x.png in Resources */,
 				083251F1168CE2510057EB2D /* tour-logo@2x.png in Resources */,
+				08777AF2169775A4008A0EFE /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,7 +555,6 @@
 				08E02C9716672B3200AD45DA /* Walkway_SemiBold.ttf in Resources */,
 				081C39ED1681E7A5004BC752 /* backSlashKeyDownBackground.png in Resources */,
 				08AEE7821683A35400038F37 /* settings-gear.png in Resources */,
-				08B478BE1686D45400DE429F /* Settings.bundle in Resources */,
 				081269C11686ECA00000A488 /* Icon-72.png in Resources */,
 				081269C31686ECA00000A488 /* Icon-72@2x.png in Resources */,
 				081269C51686ECA00000A488 /* Icon-Small-50.png in Resources */,
@@ -570,6 +570,7 @@
 				08BEE4971687D2E6002F855C /* edit-arrow-highlight.png in Resources */,
 				08BEE4991687D2E6002F855C /* edit-arrow-highlight@2x.png in Resources */,
 				08BEE49F1687DB9A002F855C /* tour-logo.png in Resources */,
+				08777AF3169775A4008A0EFE /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,7 +601,6 @@
 				08D14F6416671A1000668779 /* AppDelegate.m in Sources */,
 				08D14F7016671A1000668779 /* ViewController.m in Sources */,
 				08D14F9216671B8F00668779 /* CustomCell.m in Sources */,
-				080F508A166795E000595BDF /* MoreInfoViewController.m in Sources */,
 				080F508D1667CF4E00595BDF /* RollViewController.m in Sources */,
 				085CB70A16692ABA00AA7D74 /* RollDataViewController.m in Sources */,
 				086E6D5D166B3A89001D11BB /* DatabaseControl.m in Sources */,
@@ -611,12 +611,13 @@
 				081C39F91682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
 				081C3A0516829B7D004BC752 /* RDActionSheet.m in Sources */,
 				08838E4B1682C01200195750 /* LocationController.m in Sources */,
-				08AEE7921683CB8300038F37 /* SettingViewController.m in Sources */,
 				08AEE7961683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936130168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A21687DD33002F855C /* TourViewController.m in Sources */,
 				081EFBA0168A6E060048E717 /* MoveViewTextField.m in Sources */,
 				084A8151168BE801001C8C29 /* TourImageViewController.m in Sources */,
+				08777AF6169775D3008A0EFE /* SettingViewController.m in Sources */,
+				08777AFA169775E0008A0EFE /* MoreInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,10 +632,11 @@
 				081C39FA1682851F004BC752 /* NumberKeypadBackSlash.m in Sources */,
 				081C3A0616829B7D004BC752 /* RDActionSheet.m in Sources */,
 				08838E4C1682C01200195750 /* LocationController.m in Sources */,
-				08AEE7931683CB8300038F37 /* SettingViewController.m in Sources */,
 				08AEE7971683D09500038F37 /* CustomDefaultsCell.m in Sources */,
 				08936131168698490065F023 /* AddressAnnotation.m in Sources */,
 				08BEE4A31687DD33002F855C /* TourViewController.m in Sources */,
+				08777AF7169775D3008A0EFE /* SettingViewController.m in Sources */,
+				08777AFB169775E0008A0EFE /* MoreInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
