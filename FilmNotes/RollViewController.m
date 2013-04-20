@@ -18,7 +18,7 @@
 
 @interface RollViewController ()
 @property (strong, nonatomic) DatabaseControl *dataController;
-@property (weak, nonatomic) NSMutableArray *rollData;
+@property (strong, nonatomic) NSMutableArray *rollData;
 @property (weak, nonatomic) LoadingView *loadingView;
 @property (strong, nonatomic) NSMutableArray *exposureData;
 @property (strong, nonatomic) NSString *currentExposure;
