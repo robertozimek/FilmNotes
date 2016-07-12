@@ -268,7 +268,7 @@
         NSString *theDate = [formatter stringFromDate:[NSDate date]];
         
         //Create a formatted string with sqlite command with field values for Roll table
-        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('ExposureId','FilmName','Iso','Camera','Date') VALUES ('%@','%@','%@','%@','%@');",self.exposureField.text,self.filmField.text,self.isoField.text,self.cameraField.text,theDate];
+        NSString *rollTable = [NSString stringWithFormat:@"INSERT INTO Roll ('Exposures','FilmName','Iso','Camera','Date') VALUES ('%@','%@','%@','%@','%@');",self.exposureField.text,self.filmField.text,self.isoField.text,self.cameraField.text,theDate];
         
         //Send command to sqlite to insert row into Roll table
         [self.dataController sendSqlData:rollTable whichTable:@"Roll"];
@@ -278,7 +278,7 @@
         int rollId = [[self.dataController singleRead:@"SELECT MAX(ID) FROM Roll"] intValue];
         
         //Create a formatted string with sqlite command with field values for Exposure table
-        NSString *exposureTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%d','%@','%@','%@','%@','%@','%@');",1,rollId,self.exposureField.text,focal,aperture,@"",self.gps,@"Notes:"];
+        NSString *exposureTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Exposure', 'Roll_Id','Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%d','%@','%@','%@','%@','%@');",1,rollId,focal,aperture,@"",self.gps,@"Notes:"];
         
         //Send command to sqlite to insert row into Exposure table
         [self.dataController sendSqlData:exposureTable whichTable:@"Exposure"];

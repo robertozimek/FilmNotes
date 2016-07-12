@@ -25,6 +25,7 @@
 @property (strong, nonatomic) LocationController *locationController;
 @property (strong, nonatomic) NSString *gps;
 @property (strong, nonatomic) NSString *rollKey;
+@property (strong, nonatomic) NSString *exposureSize;
 @end
 
 @implementation RollViewController
@@ -152,9 +153,9 @@
 }
 
 //Create Exposure If It Does Not Exist Yet
--(void)checkAndCreateExposure:(int)insertExposure
+-(void)checkOrCreateExposure:(int)insertExposure
 {
-    NSString *theExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",insertExposure,self.rollNumber]];
+    NSString *theExposure = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE Exposure=%d AND Roll_id=%@",insertExposure,self.rollNumber]];
     if([theExposure isEqualToString:@""])
     {
         if(![[NSUserDefaults standardUserDefaults] boolForKey:@"SavePreviousExposure"])
@@ -167,12 +168,12 @@
             focal = [self.focalLengthTextField.text substringToIndex:self.focalLengthTextField.text.length-2];
         if (self.apertureTextField.text.length > 2)
             aperture = [self.apertureTextField.text substringFromIndex:2];
-        NSString *exposureId = [[self.exposureData objectAtIndex:0] objectAtIndex:2];
         
         [[self.exposureData objectAtIndex:0] removeAllObjects];
         [self.exposureData removeAllObjects];
         
-        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Id', 'Roll_Id','Exposure_Id','Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%@','%@','%@','%@','%@','%@','%@')",insertExposure,self.rollNumber,exposureId,focal,aperture,self.shutterSpeedTextField.text,@"No GPS",@"Notes: "];
+        NSString *insertExposureToTable = [NSString stringWithFormat:@"INSERT INTO Exposure ('Exposure','Roll_id', 'Focal','Aperture','Shutter','Gps','Notes') VALUES ('%d','%@','%@','%@','%@','%@','%@')",insertExposure,self.rollNumber, focal,aperture,self.shutterSpeedTextField.text,@"No GPS",@"Notes: "];
+        
         [self.dataController sendSqlData:insertExposureToTable whichTable:@"Exposure"];
     }
     else
@@ -196,7 +197,7 @@
         aperture = [self.apertureTextField.text substringFromIndex:2];
     
     //Storing sqlite update commands in NSStrings
-    NSString *updateFields = [NSString stringWithFormat:@"UPDATE Exposure SET Aperture = '%@', Shutter = '%@', Focal = '%@', Notes = '%@' WHERE id='%@' AND Roll_id='%@'",aperture,self.shutterSpeedTextField.text,focal,notesEscape,self.currentExposure,self.rollNumber];
+    NSString *updateFields = [NSString stringWithFormat:@"UPDATE Exposure SET Aperture = '%@', Shutter = '%@', Focal = '%@', Notes = '%@' WHERE Exposure='%@' AND Roll_id='%@'",aperture,self.shutterSpeedTextField.text,focal,notesEscape,self.currentExposure,self.rollNumber];
     
     //Sending sqlite update commands
     [self.dataController sendSqlData:updateFields whichTable:@"Exposure"];
@@ -206,11 +207,11 @@
 -(void)advance
 {
     int nextExposureId = [self.currentExposure intValue] + 1;
-    if(!(nextExposureId > [[[self.exposureData objectAtIndex:0]objectAtIndex:2] intValue]))
+    if(!(nextExposureId > [self.exposureSize intValue]))
          {
              [self updateDatabase];
-             [self checkAndCreateExposure:nextExposureId];
-             [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",nextExposureId,self.rollNumber]];
+             [self checkOrCreateExposure:nextExposureId];
+             [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE Exposure=%d AND Roll_id=%@",nextExposureId,self.rollNumber]];
              [self animateData:@"Left"];
          }else
          {
@@ -229,8 +230,8 @@
     int previousExposureId = [self.currentExposure intValue] - 1;
     if (!(previousExposureId < 1)){
         [self updateDatabase];
-        [self checkAndCreateExposure:previousExposureId];
-        [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%d AND Roll_id=%@",previousExposureId,self.rollNumber]];
+        [self checkOrCreateExposure:previousExposureId];
+        [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE Exposure=%d AND Roll_id=%@",previousExposureId,self.rollNumber]];
         [self animateData:@"Right"];
     }else{
         TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Reached beginning"
@@ -263,18 +264,18 @@
     self.currentExposure = [[self.exposureData objectAtIndex:0] objectAtIndex:0];
     
     //Set Shutter Speed TextField
-    if([[[self.exposureData objectAtIndex:0] objectAtIndex:5] isEqualToString:@""] && [self.currentExposure isEqualToString:@"1"] && ![[NSUserDefaults standardUserDefaults] objectForKey:self.rollKey])
+    if([[[self.exposureData objectAtIndex:0] objectAtIndex:4] isEqualToString:@""] && [self.currentExposure isEqualToString:@"1"] && ![[NSUserDefaults standardUserDefaults] objectForKey:self.rollKey])
         self.shutterSpeedTextField.text = @"1/500";
     else
-        self.shutterSpeedTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:5];
+        self.shutterSpeedTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:4];
     
     //Set Current Exposure Text Field
     self.currentExposureTextField.text = [[self.exposureData objectAtIndex:0] objectAtIndex:0];
     
     //Set Total Exposure Label
-    self.exposureLabel.text = [NSString stringWithFormat:@"/ %@",[[self.exposureData objectAtIndex:0] objectAtIndex:2]];
+    self.exposureLabel.text = [NSString stringWithFormat:@"/ %@", self.exposureSize];
     
-    NSString *aperture = [NSString stringWithFormat:@"F/%@",[[self.exposureData objectAtIndex:0] objectAtIndex:4]];
+    NSString *aperture = [NSString stringWithFormat:@"F/%@",[[self.exposureData objectAtIndex:0] objectAtIndex:3]];
     
     //Set Aperture TextField
     if(![aperture isEqualToString:@"F/0.0"] && ![aperture isEqualToString:@"F/"] )
@@ -286,13 +287,13 @@
         self.apertureTextField.text = @"";
     
     //Set Focal TextField
-    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:3] isEqualToString:@""])
-        self.focalLengthTextField.text = [NSString stringWithFormat:@"%@mm",[[self.exposureData objectAtIndex:0] objectAtIndex:3]];
+    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:2] isEqualToString:@""])
+        self.focalLengthTextField.text = [NSString stringWithFormat:@"%@mm",[[self.exposureData objectAtIndex:0] objectAtIndex:2]];
     else
         self.focalLengthTextField.text = @"";
     
     //Check If Current Exposure Has GPS Data and Determine Button Title
-    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:6] isEqualToString:@"No GPS"])
+    if(![[[self.exposureData objectAtIndex:0] objectAtIndex:5] isEqualToString:@"No GPS"])
     {
         [self.gpsButton setTitle:@"Yes" forState:UIControlStateNormal];
     }else{
@@ -300,7 +301,7 @@
     }
     
     //Set Notes TextView
-    self.notesTextView.text = [[self.exposureData objectAtIndex:0] objectAtIndex:7];
+    self.notesTextView.text = [[self.exposureData objectAtIndex:0] objectAtIndex:6];
     
     [[NSUserDefaults standardUserDefaults]
      setObject:self.currentExposureTextField.text forKey:self.rollKey];
@@ -332,7 +333,7 @@
 //Retrieve GPS Data and Insert into Sqlite Database
 -(void)getGPSData{
     [self.loadingView removeLoadingView];
-    NSString *insertGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",self.gps,self.currentExposure,self.rollNumber];
+    NSString *insertGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Exposure = '%@' AND Roll_Id = '%@'",self.gps,self.currentExposure,self.rollNumber];
     NSLog(@"self.gps: %@",self.gps);
     [self.dataController sendSqlData:insertGPS whichTable:@"Exposure"];
     [self.locationController.locationManager stopUpdatingLocation];
@@ -351,7 +352,7 @@
                     NSLog(@"Pressed %li", (long)buttonIndex);
                     if(buttonIndex == 0)
                     {
-                        NSString *removeGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",@"No GPS",self.currentExposure,self.rollNumber];
+                        NSString *removeGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Exposure = '%@' AND Roll_Id = '%@'",@"No GPS",self.currentExposure,self.rollNumber];
                         [self.dataController sendSqlData:removeGPS whichTable:@"Exposure"];
                         [self animateButton:@"FromTop"];
                         [self.gpsButton setTitle:@"No" forState:UIControlStateNormal];
@@ -527,9 +528,10 @@
     
     //Retrieve First Exposure Data
     NSString *selectRoll = [NSString stringWithFormat:@"SELECT * FROM Roll WHERE id=%@",self.rollNumber];
-    NSString *selectExposure = [NSString stringWithFormat:@"SELECT * FROM Exposure WHERE roll_id=%@ AND id='%@'",self.rollNumber,lastExposure];
+    NSString *selectExposure = [NSString stringWithFormat:@"SELECT * FROM Exposure WHERE roll_id=%@ AND Exposure='%@'",self.rollNumber,lastExposure];
     
     self.rollData = [self.dataController readTable:selectRoll];
+    self.exposureSize = [[self.rollData objectAtIndex:0] objectAtIndex:1];
     
     //Set ISO Label
     self.isoLabel.text = [[self.rollData objectAtIndex:0] objectAtIndex:3];
@@ -574,7 +576,7 @@
 //Retrieve GPS Data
 -(NSString *)retrieveGPSData
 {
-    NSString *gpsData = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT Gps FROM Exposure WHERE Id = '%@' AND Roll_Id = '%@'",self.currentExposure,self.rollNumber]];
+    NSString *gpsData = [self.dataController singleRead:[NSString stringWithFormat:@"SELECT Gps FROM Exposure WHERE Exposure = '%@' AND Roll_Id = '%@'",self.currentExposure,self.rollNumber]];
     return gpsData;
 }
 
@@ -731,7 +733,7 @@
         if([textField.text isEqualToString:@""])
             textField.text = self.currentExposure;
         //Check To Make Sure Current Exposure Does Not Exceed Total Exposures
-        else if([textField.text intValue] > [[[self.exposureData objectAtIndex:0] objectAtIndex:2] intValue])
+        else if([textField.text intValue] > [self.exposureSize intValue])
         {
             //Alerts the user if true
             TTAlertView *alert = [[TTAlertView alloc] initWithTitle:@"Exposure Exceeded"
@@ -768,10 +770,10 @@
                 [self animateData:@"Right"];
             
             //Checking If Exposure Does Not Exist and If Not Then Create Exposure
-            [self checkAndCreateExposure:[textField.text intValue]];
+            [self checkOrCreateExposure:[textField.text intValue]];
             
             //Load The Exposure
-            [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE id=%@ AND Roll_id=%@",textField.text,self.rollNumber]];
+            [self reloadViewData:[NSString stringWithFormat:@"SELECT * FROM Exposure WHERE Exposure=%@ AND Roll_id=%@",textField.text,self.rollNumber]];
         }
     }
 }
