@@ -124,7 +124,7 @@
         else{
             if (self.data.count != 0  && ![self.isDefault isEqualToString:@"No Default"] && [self.isDefault integerValue] > indexPath.row)
             {
-                self.isDefault = [NSString stringWithFormat:@"%d",[self.isDefault integerValue]-1];
+                self.isDefault = [NSString stringWithFormat:@"%ld",[self.isDefault integerValue]-1];
                 NSIndexPath *selectedPath = [NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0];
                 [self.defaultsTableView selectRowAtIndexPath:selectedPath animated:NO scrollPosition:UITableViewScrollPositionNone];
             }
@@ -216,7 +216,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.isDefault = [NSString stringWithFormat:@"%d",indexPath.row];
+    self.isDefault = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
     [[NSUserDefaults standardUserDefaults]
      setObject:self.isDefault forKey:@"selectedDefault"];
 }

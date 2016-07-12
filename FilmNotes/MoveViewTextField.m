@@ -10,6 +10,7 @@
 
 @implementation MoveViewTextField
 
+@dynamic delegate;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
