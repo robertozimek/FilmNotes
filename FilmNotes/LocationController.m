@@ -29,6 +29,9 @@
     if([CLLocationManager locationServicesEnabled])
     {
         switch([CLLocationManager authorizationStatus]){
+            case kCLAuthorizationStatusAuthorizedWhenInUse:
+                status = @"authorized";
+                break;
             case kCLAuthorizationStatusAuthorized:
                 status = @"authorized";
                 break;

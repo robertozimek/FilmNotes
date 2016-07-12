@@ -348,7 +348,7 @@
             
             switch (result) {
                 case RDActionSheetButtonResultSelected:
-                    NSLog(@"Pressed %i", buttonIndex);
+                    NSLog(@"Pressed %li", (long)buttonIndex);
                     if(buttonIndex == 0)
                     {
                         NSString *removeGPS = [NSString stringWithFormat:@"UPDATE Exposure SET Gps = '%@' WHERE Id = '%@' AND Roll_Id = '%@'",@"No GPS",self.currentExposure,self.rollNumber];
@@ -373,9 +373,10 @@
             
             switch (result) {
                 case RDActionSheetButtonResultSelected:
-                    NSLog(@"Pressed %i", buttonIndex);
+                    NSLog(@"Pressed %li", (long)buttonIndex);
                     if(buttonIndex == 0)
                     {
+                        [self.locationController.locationManager requestWhenInUseAuthorization];
                         [self.locationController.locationManager startUpdatingLocation];
                         
                         BOOL loop = YES;

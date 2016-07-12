@@ -103,6 +103,7 @@
         //If gps button tag is 0 change button title to YES and retrieve GPS cooridnates
         if(sender.tag == 0)
         {
+            [self.locationController.locationManager requestWhenInUseAuthorization];
             //Start the location manager
             [self.locationController.locationManager startUpdatingLocation];
             
@@ -326,7 +327,7 @@
 - (void)updateData
 {
     //Select this present that is about to be updated
-    NSString *isDefault = [NSString stringWithFormat:@"%i",self.rowID];
+    NSString *isDefault = [NSString stringWithFormat:@"%li",(long)self.rowID];
     [[NSUserDefaults standardUserDefaults]
      setObject:isDefault forKey:@"selectedDefault"];
     
@@ -340,7 +341,7 @@
         aperture = [self.apertureField.text substringFromIndex:2];
     
     //Create a formatted string with sqlite command with field values for Defaults table
-    NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%d';",self.filmField.text,self.isoField.text,self.exposureField.text,self.cameraField.text,focal,aperture,self.gpsButton.currentTitle,self.defaultID];
+    NSString *updateData = [NSString stringWithFormat:@"UPDATE Defaults SET Filmname = '%@', Iso = '%@', Exposure ='%@', Camera = '%@', Focal = '%@', Aperture = '%@', Gps = '%@' WHERE Id = '%ld';",self.filmField.text,self.isoField.text,self.exposureField.text,self.cameraField.text,focal,aperture,self.gpsButton.currentTitle,(long)self.defaultID];
     
     //Send sqlite command to update row in Defaults table
     [self.dataController sendSqlData:updateData whichTable:@"Defaults"];
@@ -705,7 +706,7 @@
         self.data = [self.dataController readTable:@"SELECT * FROM Defaults"];
         
         self.defaultID = [[[self.data objectAtIndex:(self.data.count - self.rowID - 1)] objectAtIndex:0] integerValue];
-        NSString *rowData = [NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = %d", self.defaultID];
+        NSString *rowData = [NSString stringWithFormat:@"SELECT * FROM Defaults WHERE id = %ld", (long)self.defaultID];
         self.data = [self.dataController readTable:rowData];
         self.filmField.text = [[self.data objectAtIndex:0] objectAtIndex:1];
         self.isoField.text = [[self.data objectAtIndex:0] objectAtIndex:2];

@@ -8,6 +8,8 @@
 
 #import "DatabaseControl.h"
 
+#define FIELDS 8
+
 @implementation DatabaseControl
 @synthesize FilmNotesDB = _FilmNotesDB;
 
@@ -71,61 +73,13 @@
     {
         while (sqlite3_step(statement)==SQLITE_ROW)
         {
-            NSString *field1Str = @"";
-            NSString *field2Str = @"";
-            NSString *field3Str = @"";
-            NSString *field4Str = @"";
-            NSString *field5Str = @"";
-            NSString *field6Str = @"";
-            NSString *field7Str = @"";
-            NSString *field8Str = @"";
-            
-            
-            char *field1 = (char *) sqlite3_column_text(statement,0);
-            if (field1 != NULL)
-                field1Str = [[NSString alloc]initWithUTF8String:field1];
-            [entries addObject:field1Str];
-                
-            
-            char *field2 = (char *) sqlite3_column_text(statement,1);
-            if (field2 != NULL)
-                field2Str = [[NSString alloc]initWithUTF8String:field2];
-            [entries addObject:field2Str];
-            
-            
-            char *field3 = (char *) sqlite3_column_text(statement,2);
-            if (field3 != NULL)
-                field3Str = [[NSString alloc]initWithUTF8String:field3];
-            [entries addObject:field3Str];
-            
-            
-            char *field4 = (char *) sqlite3_column_text(statement,3);
-            if (field4 != NULL)
-                field4Str = [[NSString alloc]initWithUTF8String:field4];
-            [entries addObject:field4Str];
-            
-            
-            char *field5 = (char *) sqlite3_column_text(statement,4);
-            if (field5 != NULL)
-                field5Str = [[NSString alloc]initWithUTF8String:field5];
-            [entries addObject:field5Str];
-            
-            
-            char *field6 = (char *) sqlite3_column_text(statement,5);
-            if (field6 != NULL)
-                field6Str = [[NSString alloc]initWithUTF8String:field6];
-            [entries addObject:field6Str];
-            
-            
-            char *field7 = (char *) sqlite3_column_text(statement,6);
-            if (field7 != NULL)
-                field7Str = [[NSString alloc]initWithUTF8String:field7];
-            [entries addObject:field7Str];
-            
-            char *field8 = (char *) sqlite3_column_text(statement,7);
-            if (field8 != NULL)
-                field8Str = [[NSString alloc]initWithUTF8String:field8];
-            [entries addObject:field8Str];
+            for(int i = 0; i < FIELDS; i++) {
+                NSString *fieldStr = @"";
+                char *field = (char *) sqlite3_column_text(statement,i);
+                if(field != NULL)
+                    fieldStr = [[NSString alloc]initWithUTF8String:field];
+                [entries addObject:fieldStr];
+            }
  
             //NSLog(@"[entries mutableCopy] %@",[entries mutableCopy]);
             

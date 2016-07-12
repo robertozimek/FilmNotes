@@ -481,7 +481,7 @@
 			name = FilmNotesTests;
 			productName = FilmNotesTests;
 			productReference = 08D14F7616671A1000668779 /* FilmNotesTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -489,8 +489,14 @@
 		08D14F4616671A0F00668779 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = wtc;
+				TargetAttributes = {
+					08D14F4E16671A0F00668779 = {
+						DevelopmentTeam = 68HX7TG47P;
+					};
+				};
 			};
 			buildConfigurationList = 08D14F4916671A0F00668779 /* Build configuration list for PBXProject "FilmNotes" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -682,6 +688,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Robert Ozimek (B99AA774J3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -728,9 +735,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotes/FilmNotes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wtc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -742,9 +752,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotes/FilmNotes-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wtc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -763,6 +776,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotesTests/FilmNotesTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wtc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -780,6 +794,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FilmNotes/FilmNotes-Prefix.pch";
 				INFOPLIST_FILE = "FilmNotesTests/FilmNotesTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wtc.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

@@ -76,7 +76,7 @@ static NumberKeypadBackSlash *keypad;
 - (void) addButtonToKeyboard:(BackSlashButton *)button {	
 	//Add a button to the top, above all windows
 	NSArray *allWindows = [[UIApplication sharedApplication] windows];
-	int topWindow = [allWindows count] - 1;
+	long topWindow = [allWindows count] - 1;
 	UIWindow *keyboardWindow = [allWindows objectAtIndex:topWindow];
 	[keyboardWindow addSubview:button];	
 }

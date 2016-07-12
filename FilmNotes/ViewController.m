@@ -167,7 +167,7 @@
     cell.date.textColor = cellTextColor;
 
     //Set the labels of the rows in reverse so that the newest row is in the first cell
-    cell.roll.text = [NSString stringWithFormat:@"%d",[self.data count]-indexPath.row];
+    cell.roll.text = [NSString stringWithFormat:@"%lu",[self.data count]-indexPath.row];
     cell.film.text = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:2];
     cell.camera.text = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:4];
     cell.date.text = [[data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:5];
@@ -205,7 +205,7 @@
         //Instantiate Roll View Controller
         RollViewController *rollViewController = segue.destinationViewController;
         //Set RollNumber NSInteger to the roll id of selected row
-        rollViewController.RollNumber = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0];
+        rollViewController.rollNumber = [[self.data objectAtIndex:[self.data count]-indexPath.row-1] objectAtIndex:0];
     }
     if ([segue.identifier isEqualToString:@"NewRollView"]) {
         //Instantiate Roll Data View Controller
