@@ -389,7 +389,7 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     //CGSize messageTextSize = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX) lineBreakMode:self.messageLabel.lineBreakMode];
     
     CGRect messageTextRect = [self.messageLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
-                                                                  options:NSStringDrawingUsesFontLeading
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin
                                                                attributes:@{NSFontAttributeName: self.messageLabel.font}
                                                                   context:nil];
     CGSize messageTextSize = messageTextRect.size;
