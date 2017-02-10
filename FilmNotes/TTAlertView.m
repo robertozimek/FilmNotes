@@ -337,7 +337,13 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
     
     // size title label
     CGFloat contentWidth = self.bounds.size.width - self.contentInsets.left - self.contentInsets.right - self.containerLeftInset - self.containerRightInset;
-    CGSize titleTextSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font forWidth:contentWidth lineBreakMode:self.titleLabel.lineBreakMode];
+    //CGSize titleTextSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font forWidth:contentWidth lineBreakMode:self.titleLabel.lineBreakMode];
+    
+    CGRect titleTextRect = [self.messageLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
+                                                                  options:NSStringDrawingUsesFontLeading
+                                                               attributes:@{NSFontAttributeName: self.titleLabel.font}
+                                                                  context:nil];
+    CGSize titleTextSize = titleTextRect.size;
 
     [self.titleLabel setFrame:(CGRect){ { self.contentInsets.left, self.contentInsets.top}, { contentWidth, titleTextSize.height } }];
     
@@ -380,7 +386,13 @@ static CGFloat const kTTDefaultDialogButtonHeight = 44.0f;
 
     // max message size is (height of screen) - (min dialog vertical inset) - (content top inset) - (title height) - (content title-message spacer) - (content bottom inset) - (button top inset) - (button height) - (button bottom inset) - (min dialog vertical inset)
     CGFloat maxMessageHeight = self.bounds.size.height - self.containerMinVerticalInset - self.contentInsets.top - titleTextSize.height - self.contentTitleMessageSpacer - self.contentInsets.bottom - self.buttonInsets.top - totalButtonHeight - self.buttonInsets.bottom  - self.containerMinVerticalInset;
-    CGSize messageTextSize = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX) lineBreakMode:self.messageLabel.lineBreakMode];
+    //CGSize messageTextSize = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX) lineBreakMode:self.messageLabel.lineBreakMode];
+    
+    CGRect messageTextRect = [self.messageLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
+                                                                  options:NSStringDrawingUsesFontLeading
+                                                               attributes:@{NSFontAttributeName: self.messageLabel.font}
+                                                                  context:nil];
+    CGSize messageTextSize = messageTextRect.size;
     
     [self.messageLabel setFrame:(CGRect){ CGPointZero, { contentWidth, messageTextSize.height } }];
     [self.messageScrollView setFrame:(CGRect){ { self.contentInsets.left, self.contentInsets.top + self.titleLabel.frame.size.height + self.contentTitleMessageSpacer }, { contentWidth, MIN( maxMessageHeight, messageTextSize.height ) } }];

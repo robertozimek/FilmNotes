@@ -254,7 +254,7 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
         
     [UIView animateWithDuration:0.4
                           delay:0.0
-                        options:UIViewAnimationCurveEaseIn
+                        options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
         
         CGFloat endPosition = self.frame.origin.y + self.frame.size.height;
@@ -288,7 +288,7 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
                 
     [UIView animateWithDuration:0.4
                           delay:0.0
-                        options:UIViewAnimationCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
         CGFloat endPosition = startPosition - self.frame.size.height;
         self.frame = CGRectMake(self.frame.origin.x, endPosition, self.frame.size.width, self.frame.size.height);

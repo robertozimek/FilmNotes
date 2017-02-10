@@ -32,7 +32,7 @@
             case kCLAuthorizationStatusAuthorizedWhenInUse:
                 status = @"authorized";
                 break;
-            case kCLAuthorizationStatusAuthorized:
+            case kCLAuthorizationStatusAuthorizedAlways:
                 status = @"authorized";
                 break;
             case kCLAuthorizationStatusRestricted:

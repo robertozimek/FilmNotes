@@ -85,7 +85,7 @@
     
     if (![self.isDefault isEqualToString:@"No Default"] && (self.isDefault != nil))
     {
-        [self.defaultsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0] animated:NO scrollPosition:UITableViewRowAnimationTop];
+        [self.defaultsTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.isDefault integerValue] inSection:0] animated:NO scrollPosition:UITableViewScrollPositionTop];
     }
 }
 
